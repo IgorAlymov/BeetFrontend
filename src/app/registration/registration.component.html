@@ -1,0 +1,95 @@
+<div fxLayoutAlign="center center" style="margin-top: 2%;">
+    <mat-card class="example-card" >
+      <mat-card-header fxLayoutAlign="center">
+        <mat-card-title >Добро пожаловать!</mat-card-title>
+      </mat-card-header>
+      <mat-horizontal-stepper linear #stepper>
+        <mat-step [stepControl]="firstFormGroup">
+          <form [formGroup]="firstFormGroup">
+            <ng-template matStepLabel>Основная информация</ng-template>
+            <br/>
+            <div >
+              <div fxLayoutAlign="center">
+                <mat-form-field  appearance="outline" >
+                  <mat-label>Имя</mat-label>
+                  <input matInput required [formControl]="nameFormControl" [(ngModel)]="regUser.firstname">
+                </mat-form-field>
+              </div>
+              <div fxLayoutAlign="center">
+                <mat-form-field  appearance="outline">
+                  <mat-label>Фамилия</mat-label>
+                  <input matInput required [formControl]="lastFormControl" [(ngModel)]="regUser.lastname">
+                </mat-form-field>
+              </div>
+              <div fxLayoutAlign="center">
+                <mat-form-field appearance="outline">
+                  <mat-label>Email</mat-label>
+                  <input matInput required [formControl]="emailFormControl" [(ngModel)]="regUser.email">
+                  <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+                    Введите правильный Email
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div fxLayoutAlign="center">
+                <mat-form-field  appearance="outline">
+                  <mat-label>Пароль</mat-label>
+                  <input matInput required type="password" [formControl]="passwortFormControl" [(ngModel)]="regUser.password">
+                </mat-form-field>
+              </div>
+            </div>
+              <div fxLayoutAlign="end">
+                <button mat-button matStepperNext>Далее</button>
+              </div>
+          </form>
+        </mat-step>
+        <mat-step >
+          <form >
+          <ng-template matStepLabel>Дополнительная информация</ng-template>
+            <br/>
+            <div>
+              <div fxLayoutAlign="center">
+                <mat-form-field appearance="outline" style="width: 210px;">
+                  <mat-label>Дата рождения</mat-label>
+                  <input matInput [matDatepicker]="picker" [formControl]="nameFormControl" [(ngModel)]="regUser.birthday">
+                  <mat-datepicker-toggle matSuffix [for]="picker" ></mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+              </div>
+              <div fxLayoutAlign="center">
+                <mat-form-field  appearance="outline" style="width: 210px;">
+                  <mat-label>Телефон</mat-label>
+                  <span matPrefix>+7 &nbsp;</span>
+                  <input style="margin-bottom: -4px;" type="number" [formControl]="nameFormControl" matInput [(ngModel)]="regUser.phonenumber">
+                </mat-form-field>
+              </div>
+              <div fxLayoutAlign="center">
+                <mat-form-field appearance="outline" style="width: 210px;">
+                  <mat-label>Пол</mat-label>
+                  <mat-select [(ngModel)]="regUser.gender" name="gender.value">
+                    <mat-option *ngFor="let gender of genders" [value]="gender.value" [formControl]="nameFormControl" ngDefaultControl >
+                      {{gender.viewValue}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div fxLayoutAlign="center">
+                <mat-form-field  appearance="outline" style="width: 210px;">
+                  <mat-label>Город</mat-label>
+                  <input matInput [formControl]="nameFormControl" [(ngModel)]="regUser.city">
+                </mat-form-field>
+              </div>
+            </div>
+            <div fxLayoutAlign="space-between end" *ngIf="!progressBarOn">
+              <div >
+                <button mat-button matStepperPrevious>Назад</button>
+              </div>
+              <div >
+                <button (click)="startRegistration(regUser)" mat-button color="primary" style="background-color: rgb(34, 113, 192);color: white;">Зарегистрироваться</button>
+              </div>
+            </div>
+            <mat-progress-bar *ngIf="progressBarOn" mode="indeterminate"></mat-progress-bar >
+          </form>
+        </mat-step>
+      </mat-horizontal-stepper>
+    </mat-card>
+  </div>

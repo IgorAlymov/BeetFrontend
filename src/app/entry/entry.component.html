@@ -1,0 +1,29 @@
+<div fxLayoutAlign="center center" style="margin-top: 2%;">
+    <mat-card class="example-card">
+        <mat-card-header fxLayoutAlign="center center">
+            <mat-card-title>Войдите в аккаунт</mat-card-title>
+        </mat-card-header>
+        <form [formGroup]="firstFormGroup">
+            <div fxLayoutAlign="center">
+                <mat-form-field appearance="outline">
+                    <mat-label>Email</mat-label>
+                    <input matInput required [formControl]="emailFormControl" [(ngModel)]="entryUser.email">
+                    <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+                        Введите правильный Email
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div fxLayoutAlign="center">
+                <mat-form-field appearance="outline">
+                    <mat-label>Пароль</mat-label>
+                    <input matInput required type="password" [formControl]="passwortFormControl" [(ngModel)]="entryUser.password">
+                </mat-form-field>
+            </div>
+            <div fxLayoutAlign="space-between end" *ngIf="!progressBarOn">
+                <button mat-raised-button style="background-color: rgb(34, 113, 192);color: white;" (click)="startEntry()">Войти</button>
+                <button mat-button routerLink="/registration">Зарегистрироваться</button>
+            </div>
+            <mat-progress-bar *ngIf="progressBarOn" mode="indeterminate"></mat-progress-bar >
+        </form>
+    </mat-card>
+</div>

@@ -14,4 +14,7 @@ export class DataService {
   public postRegistration(userReg:UserReg) {
     return this.http.post(this.userUrl+"Register",userReg)
   }
+  public postEntry(userEntry:UserReg) {
+    return this.http.post(this.userUrl+"SignIn",userEntry)
+  }
 }
