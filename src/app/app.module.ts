@@ -20,19 +20,16 @@ import { HttpClientModule} from '@angular/common/http'
 import { DataService } from './data.service';
 import { RegistrationComponent } from './registration/registration.component';
 import { EntryComponent } from './entry/entry.component';
-import { RouterModule, Routes} from '@angular/router'
-
-const appRoutes:Routes= [
-  {path:"registration",component: RegistrationComponent},
-  {path:"entry", component: EntryComponent},
-  {path:"",redirectTo:"/entry",pathMatch:"full"}
-];
+import {MatBadgeModule} from '@angular/material/badge';
+import { MyPageComponent } from './my-page/my-page.component';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
     AppComponent,
     RegistrationComponent,
-    EntryComponent
+    EntryComponent,
+    MyPageComponent
   ],
   imports: [
     BrowserModule,
@@ -53,7 +50,8 @@ const appRoutes:Routes= [
     FormsModule, 
     ReactiveFormsModule,
     HttpClientModule,
-    RouterModule.forRoot(appRoutes)
+    MatBadgeModule,
+    MatSnackBarModule
   ],
   exports: [],
   providers: [DataService],

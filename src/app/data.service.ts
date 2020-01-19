@@ -7,14 +7,19 @@ import { UserReg } from './models/userReg';
 })
 export class DataService {
 
-  constructor(private http:HttpClient) { }
-
   private userUrl="http://localhost:5001/api/";
+
+  constructor(private http:HttpClient) { }
 
   public postRegistration(userReg:UserReg) {
     return this.http.post(this.userUrl+"Register",userReg)
   }
+
   public postEntry(userEntry:UserReg) {
     return this.http.post(this.userUrl+"SignIn",userEntry)
+  }
+
+  public signOut(){
+    return this.http.get(this.userUrl+"SignOut");
   }
 }

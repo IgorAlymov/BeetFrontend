@@ -1,9 +1,48 @@
 <div class="toolbar">
-  <div fxFlex="30" fxLayoutAlign="end" >
+  <div fxFlex="35" fxLayoutAlign="end" >
     <img style="height: 40px;" src="http://localhost:5001/Files/32321.png">
   </div>
-  <div fxFlex="30">
-
+  <div fxFlex="65">
+    <div style="margin-left: 500px;">
+      <button *ngIf="fullView" mat-button (click)="output()">Выйти</button>
+    </div>
   </div>
 </div>
-<router-outlet></router-outlet>>
+<div>
+  <div fxFlex="35" fxLayoutAlign="end start" style="color: rgb(37, 121, 204);margin-right: 10px;margin-top: 10px;">
+    <div *ngIf="fullView" fxLayout="column" style="margin-right: 10px;">
+      <button mat-button fxLayoutAlign="start">
+        <mat-icon style="margin-right: 5px;">home</mat-icon>
+        Моя страница
+      </button>
+      <button mat-button fxLayoutAlign="start">
+        <mat-icon style="margin-right: 5px;">emoji_people</mat-icon>
+        Друзья
+      </button>
+      <button mat-button fxLayoutAlign="start">
+        <mat-icon style="margin-right: 5px;">message</mat-icon>
+        Сообщения
+        <!--
+        <strong style="margin-left: 10px;">0</strong>
+        -->
+      </button>
+      <button mat-button fxLayoutAlign="start">
+        <mat-icon style="margin-right: 5px;">people</mat-icon>
+        Сообщества
+      </button>
+      <button mat-button fxLayoutAlign="start">
+        <mat-icon style="margin-right: 5px;">photo</mat-icon>
+        Фото
+      </button>
+      <button mat-button fxLayoutAlign="start">
+        <mat-icon style="margin-right: 5px;">settings</mat-icon>
+        Настройки
+      </button>
+    </div>
+  </div>
+  <div fxFlex="65">
+    <app-entry *ngIf="!viewReg && !fullView" (onChanged)="onChanged($event)" (onFullView)="onFullView($event)"></app-entry>
+    <app-registration *ngIf="viewReg && !fullView" (onFullView)="onFullView($event)" (onChanged)="onChanged($event)"></app-registration>
+    <router-outlet *ngIf="fullView"></router-outlet>
+  </div>
+</div>

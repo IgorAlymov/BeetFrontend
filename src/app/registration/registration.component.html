@@ -1,4 +1,4 @@
-<div fxLayoutAlign="center center" style="margin-top: 2%;">
+<div fxLayoutAlign="start" style="margin-top: 2%;">
     <mat-card class="example-card" >
       <mat-card-header fxLayoutAlign="center">
         <mat-card-title >Добро пожаловать!</mat-card-title>
@@ -31,13 +31,19 @@
                 </mat-form-field>
               </div>
               <div fxLayoutAlign="center">
-                <mat-form-field  appearance="outline">
+                <mat-form-field  appearance="outline" >
                   <mat-label>Пароль</mat-label>
-                  <input matInput required type="password" [formControl]="passwortFormControl" [(ngModel)]="regUser.password">
+                  <div fxLayout="row" style="height: 25px;">
+                    <input style="height: 30px;" matInput required type={{viewPassword}} [formControl]="passwortFormControl" [(ngModel)]="regUser.password">
+                    <button mat-icon-button class="show-password" (click)="showPassword(viewPassword)">
+                      <mat-icon mat-icon-button style="height: 30px;width: 30px;margin-top: -5px;">remove_red_eye</mat-icon>
+                    </button>
+                  </div>
                 </mat-form-field>
               </div>
             </div>
-              <div fxLayoutAlign="end">
+              <div fxLayoutAlign="space-between">
+                <button mat-button style="color: rgb(34, 113, 192);" (click)="showEntry()">Уже есть аккаунт</button>
                 <button mat-button matStepperNext>Далее</button>
               </div>
           </form>
@@ -78,13 +84,14 @@
                   <input matInput [formControl]="nameFormControl" [(ngModel)]="regUser.city">
                 </mat-form-field>
               </div>
+              <label fxLayoutAlign="center" *ngIf="errorMessage" class="error-message" >Такой Email уже существует</label>
             </div>
             <div fxLayoutAlign="space-between end" *ngIf="!progressBarOn">
               <div >
                 <button mat-button matStepperPrevious>Назад</button>
               </div>
               <div >
-                <button (click)="startRegistration(regUser)" mat-button color="primary" style="background-color: rgb(34, 113, 192);color: white;">Зарегистрироваться</button>
+                <button (click)="startRegistration(regUser)" routerLink= "MyPage" mat-button color="primary" style="background-color: rgb(34, 113, 192);color: white;">Зарегистрироваться</button>
               </div>
             </div>
             <mat-progress-bar *ngIf="progressBarOn" mode="indeterminate"></mat-progress-bar >

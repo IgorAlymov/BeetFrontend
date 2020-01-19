@@ -1,4 +1,4 @@
-<div fxLayoutAlign="center center" style="margin-top: 2%;">
+<div fxLayoutAlign="start" style="margin-top: 2%;">
     <mat-card class="example-card">
         <mat-card-header fxLayoutAlign="center center">
             <mat-card-title>Войдите в аккаунт</mat-card-title>
@@ -13,15 +13,21 @@
                     </mat-error>
                 </mat-form-field>
             </div>
-            <div fxLayoutAlign="center">
-                <mat-form-field appearance="outline">
+            <div fxLayoutAlign="center" >
+                <mat-form-field  appearance="outline" >
                     <mat-label>Пароль</mat-label>
-                    <input matInput required type="password" [formControl]="passwortFormControl" [(ngModel)]="entryUser.password">
-                </mat-form-field>
+                    <div fxLayout="row" style="height: 25px;">
+                      <input style="height: 30px;" matInput required type={{viewPassword}} [formControl]="passwortFormControl" [(ngModel)]="entryUser.password">
+                      <button mat-icon-button class="show-password" (click)="showPassword(viewPassword)">
+                        <mat-icon mat-icon-button style="height: 30px;width: 30px;margin-top: -5px;">remove_red_eye</mat-icon>
+                      </button>
+                    </div>
+                  </mat-form-field>
             </div>
+            <label fxLayoutAlign="center" *ngIf="errorMessage" class="error-message" >Неправильный Email или пароль</label>
             <div fxLayoutAlign="space-between end" *ngIf="!progressBarOn">
                 <button mat-raised-button style="background-color: rgb(34, 113, 192);color: white;" (click)="startEntry()">Войти</button>
-                <button mat-button routerLink="/registration">Зарегистрироваться</button>
+                <button mat-button routerLink= "MyPage"(click)=change(true)>Зарегистрироваться</button>
             </div>
             <mat-progress-bar *ngIf="progressBarOn" mode="indeterminate"></mat-progress-bar >
         </form>
