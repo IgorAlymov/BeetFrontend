@@ -1,1 +1,52 @@
-<p>my-page works!</p>
+<div fxLayoutAlign="start" style="margin-top: 1%;">
+    <!--Аватар-->
+    <div fxLeayout="column">
+        <mat-card class="example-card-left">
+            <button mat-button (click)="openDialog()">
+                <img mat-card-image style="margin-top: 0px;margin-bottom: -1%;border-radius: 5px;" src={{avatarImage}} >
+            </button>
+            <input #fileInput style="display: none;" type="file" name="photo" (change)="addAvatar($event)"/>
+            <button class="long-button" style="margin-top: 20px;" mat-raised-button (click)="fileInput.click()">
+                <div fxLayout="row" fxLayoutAlign="center">
+                    <mat-icon  style="color: rgb(58, 107, 156);margin-top: 2px;"> arrow_upward</mat-icon >
+                    <p class="normal-font" style="margin-top:-2px;">Обновить фото</p>
+                </div>
+            </button>
+        </mat-card>
+    </div>
+    <!--Информация о пользователе-->
+    <mat-card class="example-card-right">
+        <h3 class="large-font">{{activeUser.firstname + " " + activeUser.lastname}}</h3>
+        <mat-divider></mat-divider>
+        <div fxLayout="row" class="height-row-user-date">
+            <p fxFlex="40" class="normal-font-gray">День рождения:</p>
+            <p *ngIf="showBirthday" fxFlex="60" class="normal-font">{{ activeUser.birthday | date:'MMM d' }} </p>
+            <p *ngIf="!showBirthday" fxFlex="60" class="normal-font">{{ activeUser.birthday}} </p>
+        </div>
+        <div fxLayout="row" class="height-row-user-date">
+            <p fxFlex="40" class="normal-font-gray">Город:</p>
+            <p fxFlex="60" class="normal-font">{{ activeUser.city}} </p>
+        </div>
+        <div *ngIf="!fullInformation"  fxLayoutAlign="center">
+            <button mat-button class="long-button" (click)="showFullInformation()">
+                <p class="normal-font" style="margin-top:-2px;">Показать полную информацию</p>
+            </button>
+        </div>
+        <div *ngIf="fullInformation">
+            <div  fxLayoutAlign="center">
+                <button mat-button class="long-button" (click)="showFullInformation()">
+                    <p class="normal-font" style="margin-top:-2px;">Скрыть полную информацию</p>
+                </button>
+            </div>
+            <div fxLayout="row" class="height-row-user-date">
+                <p fxFlex="40" class="normal-font-gray">Телефон:</p>
+                <p fxFlex="60" class="normal-font">{{ activeUser.phoneNumber}} </p>
+            </div>
+            <div fxLayout="row" class="height-row-user-date">
+                <p fxFlex="40" class="normal-font-gray">Пол:</p>
+                <p fxFlex="60" class="normal-font">{{ activeUser.gender}} </p>
+            </div>
+        </div>
+    </mat-card>
+</div>
+

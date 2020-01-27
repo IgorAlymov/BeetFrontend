@@ -1,8 +1,10 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { UserReg } from '../models/userReg';
+import { User } from '../models/user';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { DataService } from '../data.service';
 import { MatSnackBar } from '@angular/material';
+import { Router } from '@angular/router';
+import { AppComponent } from '../app.component';
 
 export interface Gender {
   value: string;
@@ -40,13 +42,17 @@ export class RegistrationComponent implements OnInit {
     Validators.minLength(6)
   ]);
   firstFormGroup: FormGroup;
-  regUser:UserReg = new UserReg();
+  regUser:User = new User();
   public progressBarOn:Boolean=false;
   public errorMessage:Boolean=false;
-  @Output() onFullView = new EventEmitter<boolean>();
-  @Output() onChanged = new EventEmitter<boolean>();
 
-  constructor(private _formBuilder: FormBuilder,  private dataService:DataService, private _snackBar: MatSnackBar) {}
+  constructor(private _formBuilder: FormBuilder,  
+    private dataService:DataService, 
+    private _snackBar: MatSnackBar,
+    private router:Router,
+    private appCom:AppComponent) {
+      appCom.fullView=false;
+    }
 
   ngOnInit() {
     this.firstFormGroup = this._formBuilder.group({
@@ -57,12 +63,17 @@ export class RegistrationComponent implements OnInit {
     });
   }
   
-  public startRegistration(userReg:UserReg) {
+  public startRegistration(userReg:User) {
     this.progressBarOn=true;
     this.dataService.postRegistration(userReg)
-    .subscribe(  fullView => this.changeFullView(true),
+    .subscribe( myPage=>this.myPageNavigation(),
       error=>this.errorValid(error)
     );
+  }
+
+  myPageNavigation(){
+    this.router.navigate(['/mypage']);
+    this.appCom.fullView=true;
   }
 
   errorValid(error:any){
@@ -70,15 +81,6 @@ export class RegistrationComponent implements OnInit {
       this.progressBarOn=false;
       this.errorMessage=true;
     }
-  }
-  
-  changeFullView(increased:any) {
-    this.openSnackBar("Регистрация прошла успешно","Ок");
-    this.onFullView.emit(increased);
-  }
-
-  showEntry(){
-    this.onChanged.emit(false);
   }
 
   openSnackBar(message: string, action: string) {

@@ -1,15 +1,15 @@
 <div class="toolbar">
-  <div fxFlex="35" fxLayoutAlign="end" >
+  <div fxFlex="30" fxLayoutAlign="end" >
     <img style="height: 40px;" src="http://localhost:5001/Files/32321.png">
   </div>
-  <div fxFlex="65">
-    <div style="margin-left: 500px;">
-      <button *ngIf="fullView" mat-button (click)="output()">Выйти</button>
+  <div fxFlex="70">
+    <div style="margin-left: 620px;">
+      <button *ngIf="fullView" mat-button (click)="output()" routerLink="/entry">Выйти</button>
     </div>
   </div>
 </div>
 <div>
-  <div fxFlex="35" fxLayoutAlign="end start" style="color: rgb(37, 121, 204);margin-right: 10px;margin-top: 10px;">
+  <div fxFlex="30" fxLayoutAlign="end start" style="color: rgb(37, 121, 204);margin-right: 10px;margin-top: 10px;">
     <div *ngIf="fullView" fxLayout="column" style="margin-right: 10px;">
       <button mat-button fxLayoutAlign="start">
         <mat-icon style="margin-right: 5px;">home</mat-icon>
@@ -40,9 +40,7 @@
       </button>
     </div>
   </div>
-  <div fxFlex="65">
-    <app-entry *ngIf="!viewReg && !fullView" (onChanged)="onChanged($event)" (onFullView)="onFullView($event)"></app-entry>
-    <app-registration *ngIf="viewReg && !fullView" (onFullView)="onFullView($event)" (onChanged)="onChanged($event)"></app-registration>
-    <router-outlet *ngIf="fullView"></router-outlet>
+  <div fxFlex="70">
+    <router-outlet></router-outlet>
   </div>
 </div>

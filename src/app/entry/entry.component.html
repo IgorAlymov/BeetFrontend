@@ -1,4 +1,4 @@
-<div fxLayoutAlign="start" style="margin-top: 2%;">
+<div fxLayoutAlign="start" style="margin-top: 1%;margin-left: 5%;">
     <mat-card class="example-card">
         <mat-card-header fxLayoutAlign="center center">
             <mat-card-title>Войдите в аккаунт</mat-card-title>
@@ -27,7 +27,7 @@
             <label fxLayoutAlign="center" *ngIf="errorMessage" class="error-message" >Неправильный Email или пароль</label>
             <div fxLayoutAlign="space-between end" *ngIf="!progressBarOn">
                 <button mat-raised-button style="background-color: rgb(34, 113, 192);color: white;" (click)="startEntry()">Войти</button>
-                <button mat-button routerLink= "MyPage"(click)=change(true)>Зарегистрироваться</button>
+                <button mat-button routerLink="/registration">Зарегистрироваться</button>
             </div>
             <mat-progress-bar *ngIf="progressBarOn" mode="indeterminate"></mat-progress-bar >
         </form>

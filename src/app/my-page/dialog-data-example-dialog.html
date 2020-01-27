@@ -1,0 +1,20 @@
+<style>
+.normal-font{
+    color: rgb(58, 107, 156);
+    font-size: 14px;
+  }
+</style>
+
+<div fxLayout="row">
+    <div fxFlex >
+        <img src={{data.avatarImage}} style="border-radius: 5px;height:650px;">
+    </div>
+    <mat-divider style="margin-left: 2%;" [vertical]="true"></mat-divider>
+    <div fxFlex >
+        <div fxLayout="row">
+            <img mat-card-avatar style="margin:5px"  src={{data.avatarImage}} >
+            <p class="normal-font" style="width: 150px;">{{data.activeUser.firstname +" "+ data.activeUser.lastname}}</p>
+        </div>
+        <mat-divider></mat-divider>
+    </div>
+</div>

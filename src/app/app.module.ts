@@ -21,15 +21,18 @@ import { DataService } from './data.service';
 import { RegistrationComponent } from './registration/registration.component';
 import { EntryComponent } from './entry/entry.component';
 import {MatBadgeModule} from '@angular/material/badge';
-import { MyPageComponent } from './my-page/my-page.component';
+import { MyPageComponent, DialogDataExampleDialog } from './my-page/my-page.component';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatDividerModule} from '@angular/material/divider';
+import {MatDialogModule} from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
     AppComponent,
     RegistrationComponent,
     EntryComponent,
-    MyPageComponent
+    MyPageComponent,
+    DialogDataExampleDialog
   ],
   imports: [
     BrowserModule,
@@ -51,7 +54,12 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
     ReactiveFormsModule,
     HttpClientModule,
     MatBadgeModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatDividerModule,
+    MatDialogModule
+  ],
+  entryComponents:[
+    DialogDataExampleDialog
   ],
   exports: [],
   providers: [DataService],

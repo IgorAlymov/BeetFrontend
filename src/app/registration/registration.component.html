@@ -1,4 +1,4 @@
-<div fxLayoutAlign="start" style="margin-top: 2%;">
+<div fxLayoutAlign="start" style="margin-top: 1%;">
     <mat-card class="example-card" >
       <mat-card-header fxLayoutAlign="center">
         <mat-card-title >Добро пожаловать!</mat-card-title>
@@ -43,7 +43,7 @@
               </div>
             </div>
               <div fxLayoutAlign="space-between">
-                <button mat-button style="color: rgb(34, 113, 192);" (click)="showEntry()">Уже есть аккаунт</button>
+                <button mat-button routerLink="/entry" style="color: rgb(34, 113, 192);" (click)="showEntry()">Уже есть аккаунт</button>
                 <button mat-button matStepperNext>Далее</button>
               </div>
           </form>

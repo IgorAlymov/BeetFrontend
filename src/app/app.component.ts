@@ -1,5 +1,4 @@
-import { Component} from '@angular/core';
-import { MatSnackBar } from '@angular/material';
+import { Component, OnInit, Output} from '@angular/core';
 import { DataService } from './data.service';
 
 
@@ -9,19 +8,12 @@ import { DataService } from './data.service';
   styleUrls: ['./app.component.css']
 })
 
-export  class AppComponent {
+export  class AppComponent{
   public viewReg:boolean=false;
-  public fullView:boolean=false;
+  public fullView:boolean;
 
-  constructor(private dataService:DataService) {}
-  
-  onChanged(increased:boolean){
-        this.viewReg=increased;
-        console.log(1);
-  }
-
-  onFullView(increased:boolean){
-      this.fullView=increased;
+  constructor(private dataService:DataService) {
+    this.fullView=true;
   }
 
   output(){

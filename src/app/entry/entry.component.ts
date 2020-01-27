@@ -1,7 +1,9 @@
 import { Component, OnInit,Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { DataService } from '../data.service';
-import { UserReg } from '../models/userReg';
+import { User } from '../models/user';
+import { RouterLink, RouterModule, Router, ActivatedRoute } from '@angular/router';
+import { AppComponent } from '../app.component';
 
 @Component({
   selector: 'app-entry',
@@ -9,7 +11,7 @@ import { UserReg } from '../models/userReg';
   styleUrls: ['./entry.component.css']
 })
 export class EntryComponent implements OnInit {
-  entryUser:UserReg=new UserReg();
+  entryUser:User=new User();
   firstFormGroup: FormGroup;
   passwortFormControl = new FormControl('', [
     Validators.required,
@@ -21,14 +23,14 @@ export class EntryComponent implements OnInit {
   ]);
   public progressBarOn:boolean=false;
   public errorMessage:boolean=false;
-  @Output() public onChanged = new EventEmitter<boolean>();
-  @Output() onFullView = new EventEmitter<boolean>();
   typesPassword: string[]=[
     "password",""
   ];
   viewPassword:string="password";
 
-  constructor(private _formBuilder: FormBuilder, private dataService:DataService) { }
+  constructor(private _formBuilder: FormBuilder, private dataService:DataService,private router:Router,private appCom:AppComponent) {
+    appCom.fullView=false;
+   }
 
   ngOnInit() {
     this.firstFormGroup = this._formBuilder.group({
@@ -41,10 +43,15 @@ export class EntryComponent implements OnInit {
     if(this.firstFormGroup.valid){
       this.progressBarOn=true;
       this.dataService.postEntry(this.entryUser)
-    .subscribe( request => this.changeFullView(true),
+    .subscribe(myPage=>this.myPageNavigation(),
       error=>this.errorValid(error),
     );
     }
+  }
+
+  myPageNavigation(){
+    this.router.navigate(['/mypage']);
+    this.appCom.fullView=true;
   }
 
   errorValid(error:any){
@@ -52,14 +59,6 @@ export class EntryComponent implements OnInit {
       this.progressBarOn=false;
       this.errorMessage=true;
     }
-  }
-  
-  change(increased:boolean) {
-    this.onChanged.emit(increased);
-  }
-  
-  changeFullView(increased:any) {
-    this.onFullView.emit(increased);
   }
 
   showPassword(typesPassword:string){
