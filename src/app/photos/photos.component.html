@@ -1,0 +1,20 @@
+<div fxLayoutAlign="start" style="margin-top: 1%;">
+    <mat-card class="example-card-left">
+        <div fxLayoutAlign="space-between">
+            <div fxLayout="row" style="height: 30px;margin-top: -15px;">
+                <h3 class="large-font">Мои фото</h3>
+                <h3 class="large-font-gray" style="margin-left: 7px;">{{photosCounter}}</h3>
+            </div>
+            <input #fileInput style="display: none;" type="file" name="photo" (change)="addPhoto($event)"/>
+            <button (click)="fileInput.click()" mat-raised-button class="simple-button" style="margin-bottom: 15px;">Добавить фото</button>
+        </div>
+        <mat-divider></mat-divider>
+        <mat-grid-list cols="3" style="margin-top: 15px;">
+            <mat-grid-tile *ngFor="let photo of indexImages" >
+                <button mat-button style="height: 130%;" (click)="openDialog(photo[0],photo[1])"> 
+                    <img  mat-card-image src={{photo[1]}} >
+                </button>              
+            </mat-grid-tile>
+          </mat-grid-list>
+    </mat-card>
+</div>

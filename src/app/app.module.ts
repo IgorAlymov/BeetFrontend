@@ -25,6 +25,8 @@ import { MyPageComponent, DialogDataExampleDialog } from './my-page/my-page.comp
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatDialogModule} from '@angular/material/dialog';
+import { PhotosComponent, DialogDataExampleDialogPhoto } from './photos/photos.component';
+import {MatGridListModule} from '@angular/material/grid-list';
 
 @NgModule({
   declarations: [
@@ -32,7 +34,9 @@ import {MatDialogModule} from '@angular/material/dialog';
     RegistrationComponent,
     EntryComponent,
     MyPageComponent,
-    DialogDataExampleDialog
+    DialogDataExampleDialog,
+    PhotosComponent,
+    DialogDataExampleDialogPhoto
   ],
   imports: [
     BrowserModule,
@@ -56,10 +60,12 @@ import {MatDialogModule} from '@angular/material/dialog';
     MatBadgeModule,
     MatSnackBarModule,
     MatDividerModule,
-    MatDialogModule
+    MatDialogModule,
+    MatGridListModule
   ],
   entryComponents:[
-    DialogDataExampleDialog
+    DialogDataExampleDialog,
+    DialogDataExampleDialogPhoto
   ],
   exports: [],
   providers: [DataService],

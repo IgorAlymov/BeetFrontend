@@ -1,0 +1,21 @@
+  .example-card-left {
+    width: 635px;
+    margin: 5px;
+    margin-top: 5px;
+    height: auto;
+  }
+  .large-font{
+    font-weight: normal;
+    font-size: 22px;
+    height: 15px;
+  }
+  .large-font-gray{
+    font-weight: normal;
+    font-size: 22px;
+    height: 15px;
+    color: gray;
+  }
+  .simple-button{
+    background-color:rgb(37, 121, 204);
+    color:white;
+  }

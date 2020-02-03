@@ -19,12 +19,14 @@ export class MyPageComponent implements OnInit {
   public showBirthday:boolean=false;
   public files: any;
   public avatarImage:string;
+  public allPhotoLength:number;
 
   constructor(private dataService:DataService,public dialog: MatDialog) { }
 
   ngOnInit() {
     this.dataService.getActiveUser().subscribe((data:User) => this.fillingArray(data));
-    this.dataService.getAvatarActiveUser().subscribe((data:any)=>this.avatarImage=data.avatarUrl)
+    this.dataService.getAvatarActiveUser().subscribe((data:any)=>this.avatarImage=data.avatarUrl);
+    this.dataService.getAllPhotos().subscribe((data:any)=> this.allPhotoLength = data.listPhoto.length);
   }
 
   showFullInformation(){
@@ -72,8 +74,6 @@ export class MyPageComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-
     });
   }
 }

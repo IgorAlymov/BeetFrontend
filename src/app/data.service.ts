@@ -1,5 +1,5 @@
 import { Injectable} from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { User } from './models/user';
 import { Observable } from 'rxjs';
 
@@ -33,7 +33,21 @@ export class DataService {
     return this.http.post(this.userUrl+"PostUserPhoto",formData,this.headers);
   }
 
+  public sendPhoto(formData:FormData){
+    return this.http.post(this.userUrl+"PostAddPhoto",formData,this.headers);
+  }
+
   public getAvatarActiveUser(){
     return this.http.get(this.userUrl+"GetUserAvatar",this.headers);
+  }
+
+  public getAllPhotos():Observable<any>{
+    return this.http.get(this.userUrl+"GetAllUserPhoto",this.headers);
+  }
+
+  public removePhoto(text:string){
+    console.log(1111);
+    const params = new HttpParams().set('', text);
+    return this.http.get(this.userUrl+"GetRemovePhoto/" + params.toString());
   }
 }

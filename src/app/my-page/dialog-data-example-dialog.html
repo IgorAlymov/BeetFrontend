@@ -7,13 +7,16 @@
 
 <div fxLayout="row">
     <div fxFlex >
-        <img src={{data.avatarImage}} style="border-radius: 5px;height:650px;">
+        <img src={{data.avatarImage}} style="border-radius: 5px;height:657px;">
     </div>
     <mat-divider style="margin-left: 2%;" [vertical]="true"></mat-divider>
     <div fxFlex >
         <div fxLayout="row">
             <img mat-card-avatar style="margin:5px"  src={{data.avatarImage}} >
             <p class="normal-font" style="width: 150px;">{{data.activeUser.firstname +" "+ data.activeUser.lastname}}</p>
+            <button mat-button style="height: 50%;margin-top: -17px;" (click)="onNoClick()">
+                <mat-icon>close</mat-icon>
+            </button>
         </div>
         <mat-divider></mat-divider>
     </div>

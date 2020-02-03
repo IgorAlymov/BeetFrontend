@@ -3,12 +3,14 @@ import { Routes, RouterModule } from '@angular/router';
 import { MyPageComponent } from './my-page/my-page.component';
 import { EntryComponent } from './entry/entry.component';
 import { RegistrationComponent } from './registration/registration.component';
+import { PhotosComponent } from './photos/photos.component';
 
 
 const routes: Routes = [
    {path:'mypage',component: MyPageComponent},
    {path:'entry',component: EntryComponent},
    {path:'registration',component: RegistrationComponent},
+   {path:'photos',component: PhotosComponent},
    {path: '', redirectTo: '/entry', pathMatch: 'full'}
 ];
 

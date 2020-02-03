@@ -27,12 +27,12 @@
             <p fxFlex="40" class="normal-font-gray">Город:</p>
             <p fxFlex="60" class="normal-font">{{ activeUser.city}} </p>
         </div>
-        <div *ngIf="!fullInformation"  fxLayoutAlign="center">
+        <div *ngIf="!fullInformation"  fxLayoutAlign="center" style="margin-bottom: 10px;">
             <button mat-button class="long-button" (click)="showFullInformation()">
                 <p class="normal-font" style="margin-top:-2px;">Показать полную информацию</p>
             </button>
         </div>
-        <div *ngIf="fullInformation">
+        <div *ngIf="fullInformation" style="margin-bottom: 10px;">
             <div  fxLayoutAlign="center">
                 <button mat-button class="long-button" (click)="showFullInformation()">
                     <p class="normal-font" style="margin-top:-2px;">Скрыть полную информацию</p>
@@ -46,6 +46,17 @@
                 <p fxFlex="40" class="normal-font-gray">Пол:</p>
                 <p fxFlex="60" class="normal-font">{{ activeUser.gender}} </p>
             </div>
+        </div>
+        <mat-divider></mat-divider>
+        <div fxLayout="row" style="margin-top: 25px;" fxLayoutAlign="space-around  center">
+            <button mat-button routerLink="/photos">
+                <p class="large-font" style="height: 0px;margin-top: 5px;color: rgb(58, 107, 156);" >
+                    {{allPhotoLength}}
+                </p>
+                <p class="normal-font-gray"  style="height: 15px;">
+                    фото
+                </p>
+            </button>
         </div>
     </mat-card>
 </div>
