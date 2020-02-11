@@ -5,6 +5,7 @@ import {MatDialog, MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog
 
 export interface DialogData {
   avatarImage:string;
+  image:string;
   activeUser:User;
 }
 
@@ -15,11 +16,21 @@ export interface DialogData {
 })
 export class MyPageComponent implements OnInit {
   public activeUser:User=new User();
+  public userPosts:any[];
   public fullInformation:boolean=false;
   public showBirthday:boolean=false;
-  public files: any;
+  public filesAvatar: any;
+  public filesPostPhotoDisplay: any;
+  public filesPostPhoto: any;
   public avatarImage:string;
   public allPhotoLength:number;
+  public textPost:string;
+  public imageUrl: string;
+  public textPostFull:boolean=false;
+  public photoPostFull:boolean=false;
+  public likeIcons:string[]=["favorite_border","favorite"];
+  public likeIconActive:string;
+  public likesAllPosts:FileList[];
 
   constructor(private dataService:DataService,public dialog: MatDialog) { }
 
@@ -27,8 +38,9 @@ export class MyPageComponent implements OnInit {
     this.dataService.getActiveUser().subscribe((data:User) => this.fillingArray(data));
     this.dataService.getAvatarActiveUser().subscribe((data:any)=>this.avatarImage=data.avatarUrl);
     this.dataService.getAllPhotos().subscribe((data:any)=> this.allPhotoLength = data.listPhoto.length);
+    this.dataService.getActiveUserPost().subscribe((data:any[])=>this.getPosts(data));
   }
-
+  //информация о пользователе
   showFullInformation(){
     if(!this.fullInformation)
     this.fullInformation=true;
@@ -47,12 +59,12 @@ export class MyPageComponent implements OnInit {
     this.showBirthday=true;
     this.activeUser=user;
   }
-
+  //аватар
   addAvatar(event) {
     let target = event.target || event.srcElement;
-    this.files = target.files;
-    if (this.files) {
-      let files :FileList = this.files;
+    this.filesAvatar = target.files;
+    if (this.filesAvatar) {
+      let files :FileList = this.filesAvatar;
       const formData = new FormData();
       for(let i = 0; i < files.length; i++){
            formData.append('file', files[i]);
@@ -65,17 +77,182 @@ export class MyPageComponent implements OnInit {
     }
   }
 
-  openDialog():void {
+  openDialog(image:string):void {
     const dialogRef = this.dialog.open(DialogDataExampleDialog, {
       height:"85%",
       maxHeight:"710px",
       minHeight:"710px",
-      data: {avatarImage:this.avatarImage,activeUser:this.activeUser}
+      data: {
+        avatarImage:this.avatarImage,
+        image:image,
+        activeUser:this.activeUser}
     });
 
     dialogRef.afterClosed().subscribe(result => {
     });
   }
+  //посты
+  getPosts(posts:any[]){
+    posts.forEach(element => {
+      this.dataService.getLikePost(element.postId).subscribe((data)=>element.likeIcon = data.icon),
+      element.firstname=this.activeUser.firstname,
+      element.lastname=this.activeUser.lastname,
+      element.avatar=this.avatarImage,
+      element.showComments=false,
+      element.textComment="",
+      element.showBtnSendCom=false,
+      this.dataService.getPostPhoto(element.postId).subscribe((data:any)=>element.photo=data.photoUrl),
+      this.dataService.getLikePost(element.postId).subscribe((data)=>element.likesCounter = data.likesCounter),
+      this.dataService.getComment(element.postId).subscribe(data=>element.Comments=data),
+      this.dataService.getComment(element.postId).subscribe(data=>element.CommentsCounter=data.length);
+    });
+    this.userPosts=posts;
+  }
+
+  selectPostPhoto(event) {
+    let target = event.target || event.srcElement;
+    this.filesPostPhoto=target.files;
+    this.filesPostPhotoDisplay = target.files;
+    let reader = new FileReader(); 
+    reader.onload = (e: any) => { 
+      this.filesPostPhotoDisplay = e.target.result; 
+     } 
+     reader.readAsDataURL(event.target.files[0]); 
+     this.changePhoto(this.filesPostPhoto);
+  }
+
+  addUserPost(text:string){
+    const formData = new FormData();
+    if (this.filesPostPhoto) {
+      let files :FileList = this.filesPostPhoto;
+      for(let i = 0; i < files.length; i++){
+           formData.append('file', files[i]);
+      }
+    }
+    this.filesPostPhoto="";
+    this.textPost="";
+    this.photoPostFull=false;
+    this.textPostFull=false;
+    this.dataService.addUserPost(text,formData)
+    .subscribe(
+      p => this.dataService.getActiveUserPost().subscribe((data:any[])=>this.getPosts(data))
+    );
+  }
+
+  changeText(text){
+   if(text=="")
+    this.textPostFull=false;
+   else
+    this.textPostFull=true;
+  }
+
+  changePhoto(photo){
+    if(photo=="")
+     this.photoPostFull=false;
+    else
+     this.photoPostFull=true;
+   }
+
+   closeSelectPhoto(){
+    this.filesPostPhotoDisplay="";
+    this.filesPostPhoto="";
+    this.photoPostFull=false;
+   }
+
+   deletePost(post:any){
+    var i:number; 
+    for(i = 0; i < this.userPosts.length; i++) {
+      if(this.userPosts[i].postId==post.postId){
+        this.userPosts.splice(i,1);
+        this.dataService.deletePost(post.postId).subscribe();
+      }
+    }
+   }
+   //лайки постов
+   addLike(likeIcon:string,idPost:number,post:any){
+     
+    if(this.likeIcons[0]==likeIcon){
+      this.userPosts.forEach(element => {
+        if(element.postId==idPost){
+          element.likeIcon=this.likeIcons[1],
+          element.likesCounter++
+        }
+      });
+      this.dataService.addLikePost(idPost).subscribe();
+    }
+    else{
+      this.userPosts.forEach(element => {
+        if(element.postId==idPost){
+          element.likeIcon=this.likeIcons[0],
+          element.likesCounter--
+        }
+      });
+      this.dataService.removeLikePost(idPost).subscribe();
+    }
+   }
+   //комментарии
+   showComments(post:any){
+    if(!post.showComments){
+      this.userPosts.forEach(element => {
+        if(element.postId==post.postId){
+          element.showComments=true;
+        }
+      });
+    }else{
+      this.userPosts.forEach(element => {
+        if(element.postId==post.postId){
+          element.showComments=false;
+        }
+      });
+    }
+   }
+
+   changeComment(post:any){
+    if(post.textComment==""){
+      this.userPosts.forEach(element => {
+        if(element.postId==post.postId){
+          element.showBtnSendCom=false;
+        }
+      });
+    }else{
+      this.userPosts.forEach(element => {
+        if(element.postId==post.postId){
+          element.showBtnSendCom=true;
+        }
+      });
+    }
+   }
+
+   addComment(post:any){
+     let text =post.postId+" "+post.textComment;
+     this.dataService.addComment(text).subscribe(
+       p=> this.userPosts.forEach(element => {
+      if(element.postId==post.postId){
+        element.textComment="";
+        this.dataService.getComment(element.postId).subscribe(data=>element.Comments=data),
+        this.dataService.getComment(element.postId).subscribe(data=>element.CommentsCounter=data.length);
+      }
+     })
+    );
+   }
+
+   deleteComment(comment:any){
+     for(let i = 0; i < this.userPosts.length; i++) {
+      if(this.userPosts[i].postId==comment.postId){
+        for(let j = 0; j < this.userPosts[i].Comments.length; j++)
+        if(this.userPosts[i].Comments[j].commentId==comment.commentId){
+          this.userPosts[i].Comments.splice(j,1);
+          this.dataService.deleteComment(comment.commentId).subscribe(p=>
+            this.userPosts.forEach(element => {
+              if(element.postId==comment.postId){
+                this.dataService.getComment(element.postId).subscribe(data=>element.CommentsCounter=data.length)
+              }
+            })
+          );
+        }
+      }
+    }
+   }
 }
 
 @Component({

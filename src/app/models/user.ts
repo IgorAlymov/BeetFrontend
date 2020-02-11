@@ -1,5 +1,5 @@
 export class User{
-    socialuserud:number;
+    socialUserId:number;
     firstname:string;
     lastname:string;
     email:string;

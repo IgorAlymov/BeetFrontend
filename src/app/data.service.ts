@@ -8,6 +8,7 @@ import { Observable } from 'rxjs';
 })
 
 export class DataService {
+  
   private userUrl="http://localhost:5001/api/"
   headers:any={ headers: new HttpHeaders(), withCredentials: true };
 
@@ -29,6 +30,10 @@ export class DataService {
     return this.http.get(this.userUrl+"GetActiveUser", this.headers);
   }
 
+  public getUser(id:number):Observable<any> {
+    return this.http.get(this.userUrl+"GetUser/"+id, this.headers);
+  }
+
   public sendAvatarPhoto(formData:FormData){
     return this.http.post(this.userUrl+"PostUserPhoto",formData,this.headers);
   }
@@ -46,8 +51,49 @@ export class DataService {
   }
 
   public removePhoto(text:string){
-    console.log(1111);
     const params = new HttpParams().set('', text);
     return this.http.get(this.userUrl+"GetRemovePhoto/" + params.toString());
+  }
+
+  public addUserPost(text:string,formData:FormData){
+    const params = new HttpParams().set('', text);
+    return this.http.post(this.userUrl + "PostAddPost/" + params.toString(),formData , this.headers);
+  }
+
+  public getActiveUserPost():Observable<any> {
+    return this.http.get(this.userUrl + "GetActiveUserPosts",this.headers);
+  }
+
+  public getPostPhoto(id:number) {
+    return this.http.get(this.userUrl+"GetImagePosts/"+id,this.headers);
+  }
+
+  public deletePost(id:number){
+    return this.http.get(this.userUrl+"GetDeletePost/"+id);
+  }
+
+  public addLikePost(id:number){
+    return this.http.get(this.userUrl+"AddLikePost/"+id,this.headers);
+  }
+
+  public getLikePost(id:number):Observable<any>{
+    return this.http.get(this.userUrl+"GetLikePost/"+id,this.headers);
+  }
+
+  public removeLikePost(id:number){
+    return this.http.get(this.userUrl+"RemoveLikePost/"+id,this.headers);
+  }
+
+  public addComment(text:string){
+    const params = new HttpParams().set('', text);
+    return this.http.get(this.userUrl+"AddComment/"+params.toString(),this.headers);
+  }
+
+  public getComment(id:number):Observable<any>{
+    return this.http.get(this.userUrl+"GetComment/"+id,this.headers);
+  }
+
+  public deleteComment(id:number){
+    return this.http.get(this.userUrl+"GetDeleteComment/"+id);
   }
 }

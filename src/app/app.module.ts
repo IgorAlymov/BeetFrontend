@@ -27,6 +27,8 @@ import {MatDividerModule} from '@angular/material/divider';
 import {MatDialogModule} from '@angular/material/dialog';
 import { PhotosComponent, DialogDataExampleDialogPhoto } from './photos/photos.component';
 import {MatGridListModule} from '@angular/material/grid-list';
+import {MatTabsModule} from '@angular/material/tabs';
+import {MatMenuModule} from '@angular/material/menu';
 
 @NgModule({
   declarations: [
@@ -61,7 +63,9 @@ import {MatGridListModule} from '@angular/material/grid-list';
     MatSnackBarModule,
     MatDividerModule,
     MatDialogModule,
-    MatGridListModule
+    MatGridListModule,
+    MatTabsModule,
+    MatMenuModule
   ],
   entryComponents:[
     DialogDataExampleDialog,
