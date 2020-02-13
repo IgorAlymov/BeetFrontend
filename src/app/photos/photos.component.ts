@@ -27,15 +27,17 @@ export class PhotosComponent implements OnInit {
   public avatarImage: any;
   public indexImages:string[][] = new Array();
   
-  constructor(private dataService:DataService,public dialog: MatDialog) { }
+  constructor(private dataService:DataService,public dialog: MatDialog) {
+   }
 
   ngOnInit() {
     this.dataService.getActiveUser().subscribe((data:User) => this.user=data);
     this.dataService.getAllPhotos().subscribe((data:any)=>this.getPhoto(data));
     this.dataService.getAvatarActiveUser().subscribe((data:any)=>this.avatarImage=data.avatarUrl);
+    
   }
 
-  getPhoto(data:any){
+  public getPhoto(data:any){
     this.photos=data.listPhoto;
     this.photosCounter=this.photos.length;
     this.indexImages=new Array();
@@ -43,10 +45,9 @@ export class PhotosComponent implements OnInit {
     for(i = 0; i < this.photos.length; i++) {
       this.indexImages.push([i.toString(),this.photos[i]]);
     }
-    console.log(this.indexImages);
   }
 
-  addPhoto(event) {
+   addPhoto(event) {
     let target = event.target || event.srcElement;
     this.files = target.files;
     console.log(this.files);
@@ -82,6 +83,7 @@ export class PhotosComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       this.photosCounter=this.indexImages.length;
+      this.dataService.getAllPhotos().subscribe((data:any)=>this.getPhoto(data));
     });
   }
 }
@@ -111,8 +113,7 @@ export class DialogDataExampleDialogPhoto {
   }
 
   photoLeft(){
-    var i:number; 
-    for(i = 0; i < this.data.allPhoto.length; i++) {
+    for( let i = 0; i < this.data.allPhoto.length; i++) {
       if(this.data.allPhoto[i][0]==this.data.imageIndex){
         if(this.data.imageIndex!="0")
         this.data.image=this.data.allPhoto[i-1][1];
@@ -131,8 +132,25 @@ export class DialogDataExampleDialogPhoto {
       if(this.data.allPhoto[i][0]==removeIndex){
         var f:string=this.data.allPhoto[i][1];
         var d:string = f.substr(22);
+        
+        if(this.data.imageIndex!="0"){
+          this.data.image=this.data.allPhoto[i-1][1];
+          this.count=parseInt(this.data.imageIndex) - 1;
+          this.data.imageIndex=this.count.toString();
+          this.data.imageIndexNumb--;
+        }
+        else if(this.data.imageIndex!=this.data.allPhoto[this.data.allPhoto.length-1][0]){
+          
+          this.data.image=this.data.allPhoto[i+1][1];
+        }
         this.data.allPhoto.splice([i][0],1);
         this.data.photosCounter=this.data.allPhoto.length;
+        
+        let indexImages:string[][] = new Array();
+        for(let i = 0; i < this.data.allPhoto.length; i++) {
+          indexImages.push([i.toString(),this.data.allPhoto[i][1]]);
+        }
+        this.data.allPhoto=indexImages;
         this.dataService.removePhoto(d).subscribe();
       }
     }

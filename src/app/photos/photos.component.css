@@ -1,8 +1,13 @@
-  .example-card-left {
-    width: 635px;
-    margin: 8px;
-    height: auto;
-  }
+.example-card-left {
+  width: 565px;
+  margin: 8px;
+  height: auto;
+}
+.example-card-right {
+  width: 205px;
+  margin: 8px;
+  height: 52px;
+}
   .large-font{
     font-weight: normal;
     font-size: 22px;

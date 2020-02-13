@@ -18,9 +18,7 @@ export  class AppComponent{
 
   output(){
     this.dataService.signOut()
-    .subscribe(  
-      error=>console.log(error)
-    );
+    .subscribe();
     this.viewReg=false;
     this.fullView=false;
   }

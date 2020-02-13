@@ -46,6 +46,10 @@ export class DataService {
     return this.http.get(this.userUrl+"GetUserAvatar",this.headers);
   }
 
+  public getAvatarUser(id:number){
+    return this.http.get(this.userUrl+"GetUserAvatar/"+id,this.headers);
+  }
+
   public getAllPhotos():Observable<any>{
     return this.http.get(this.userUrl+"GetAllUserPhoto",this.headers);
   }
@@ -62,6 +66,10 @@ export class DataService {
 
   public getActiveUserPost():Observable<any> {
     return this.http.get(this.userUrl + "GetActiveUserPosts",this.headers);
+  }
+
+  public getAllPosts():Observable<any> {
+    return this.http.get(this.userUrl + "GetAllPosts",this.headers);
   }
 
   public getPostPhoto(id:number) {

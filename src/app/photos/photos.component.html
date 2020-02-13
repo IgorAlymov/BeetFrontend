@@ -1,20 +1,31 @@
-<div fxLayoutAlign="start" style="margin-top: 8px;">
-    <mat-card class="example-card-left">
-        <div fxLayoutAlign="space-between">
-            <div fxLayout="row" style="height: 30px;margin-top: -15px;">
-                <h3 class="large-font">Мои фото</h3>
-                <h3 class="large-font-gray" style="margin-left: 7px;">{{photosCounter}}</h3>
+<div fxLayout="row"> 
+    <div fxLayoutAlign="start" style="margin-top: 8px;">
+        <mat-card class="example-card-left">
+            <div fxLayoutAlign="space-between">
+                <div fxLayout="row" style="height: 30px;margin-top: -15px;">
+                    <h3 class="large-font">Мои фото</h3>
+                    <h3 class="large-font-gray" style="margin-left: 7px;">{{photosCounter}}</h3>
+                </div>
+                <input #fileInput style="display: none;" type="file" name="photo" onclick="this.value=null;" (change)="addPhoto($event)"/>
+                <button (click)="fileInput.click()" mat-raised-button class="simple-button" style="margin-bottom: 15px;">Добавить фото</button>
             </div>
-            <input #fileInput style="display: none;" type="file" name="photo" onclick="this.value=null;" (change)="addPhoto($event)"/>
-            <button (click)="fileInput.click()" mat-raised-button class="simple-button" style="margin-bottom: 15px;">Добавить фото</button>
+            <mat-divider></mat-divider>
+            <mat-grid-list cols="3" style="margin-top: 15px;">
+                <mat-grid-tile *ngFor="let photo of indexImages" >
+                    <button mat-button style="height: 130%;" (click)="openDialog(photo[0],photo[1])"> 
+                        <img  mat-card-image src={{photo[1]}} >
+                    </button>              
+                </mat-grid-tile>
+            </mat-grid-list>
+        </mat-card>
+    </div>
+    <mat-card class="example-card-right" fxLayout="row" style="margin-top: 17px;">
+        
+        <mat-icon style="transform: rotate(90deg);font-size: 40px;color: rgb(37, 121, 204);margin-left: -19px;margin-top: -11px;" >remove</mat-icon>
+        <div>
+            <button mat-button style="width: 207px;margin-left: -22px;margin-top: -25px;" routerLink="/photo">
+                Фото
+            </button>
         </div>
-        <mat-divider></mat-divider>
-        <mat-grid-list cols="3" style="margin-top: 15px;">
-            <mat-grid-tile *ngFor="let photo of indexImages" >
-                <button mat-button style="height: 130%;" (click)="openDialog(photo[0],photo[1])"> 
-                    <img  mat-card-image src={{photo[1]}} >
-                </button>              
-            </mat-grid-tile>
-          </mat-grid-list>
     </mat-card>
 </div>

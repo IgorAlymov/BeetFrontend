@@ -168,6 +168,11 @@ export class MyPageComponent implements OnInit {
       }
     }
    }
+
+   clearPostText(){
+    this.textPost="";
+    this.textPostFull=false;
+   }
    //лайки постов
    addLike(likeIcon:string,idPost:number,post:any){
      
@@ -252,6 +257,15 @@ export class MyPageComponent implements OnInit {
         }
       }
     }
+   }
+
+   clearCommentText(post:any){
+    this.userPosts.forEach(element => {
+      if(element.postId==post.postId){
+        element.textComment="";
+        element.showBtnSendCom=false;
+      }
+    });
    }
 }
 

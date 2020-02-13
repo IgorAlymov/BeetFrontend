@@ -36,7 +36,7 @@
         <div fxLayout="row">
             <img mat-card-avatar style="margin:5px"  src={{data.avatarImage}} >
             <p class="normal-font" style="width: 150px;">{{data.activeUser.firstname +" "+ data.activeUser.lastname}}</p>
-            <button mat-button style="height: 50%;margin-top: -17px;" (click)="onNoClick()">
+            <button mat-button style="height: 50%;margin-top: -17px;" (click)="onNoClick()" routerLink="/photo">
                 <mat-icon>close</mat-icon>
             </button>
         </div>

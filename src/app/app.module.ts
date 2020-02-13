@@ -29,6 +29,7 @@ import { PhotosComponent, DialogDataExampleDialogPhoto } from './photos/photos.c
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatMenuModule} from '@angular/material/menu';
+import { NewsComponent, DialogDataExampleDialogNews } from './news/news.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,9 @@ import {MatMenuModule} from '@angular/material/menu';
     MyPageComponent,
     DialogDataExampleDialog,
     PhotosComponent,
-    DialogDataExampleDialogPhoto
+    DialogDataExampleDialogPhoto,
+    NewsComponent,
+    DialogDataExampleDialogNews
   ],
   imports: [
     BrowserModule,
@@ -69,7 +72,8 @@ import {MatMenuModule} from '@angular/material/menu';
   ],
   entryComponents:[
     DialogDataExampleDialog,
-    DialogDataExampleDialogPhoto
+    DialogDataExampleDialogPhoto,
+    DialogDataExampleDialogNews
   ],
   exports: [],
   providers: [DataService],

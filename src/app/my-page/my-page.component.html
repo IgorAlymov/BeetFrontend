@@ -63,9 +63,16 @@
         <!--Поле для поста-->
         <mat-card class="example-card-right">
             <div fxLatout="row">
-                <img style="margin-bottom: -17px;" mat-card-avatar src={{avatarImage}}>
-                <mat-form-field style="width: 82%;margin-left: 15px;margin-top: -55px; margin-bottom: -15px;" >
-                    <input  matInput (input)="changeText(textPost)" [(ngModel)]="textPost" placeholder="Что нового?" >
+                <img style="margin-bottom: -15px;" mat-card-avatar src={{avatarImage}}>
+                <mat-form-field appearance="outline" style="width: 82%;margin-left: 15px;margin-top: -5px; margin-bottom: -25px;" >
+                    <div style="margin-top: -10px;width: 100%;">
+                        <input  matInput  (input)="changeText(textPost)" [(ngModel)]="textPost" placeholder="Что нового?" >
+                    </div>
+                    <div fxLayoutAlign="end" style="margin-top: -30px;height: 30px;">
+                        <button mat-icon-button (click)="clearPostText() ">
+                            <mat-icon style="color: gray;">close</mat-icon>
+                        </button>
+                    </div>
                 </mat-form-field>
                 <input #fileInputPost (input)="changePhoto(filesPostPhotoDisplay)" onclick="this.value=null;"
                        style="display: none;" type="file" name="photo" (change)="selectPostPhoto($event)"/>
@@ -80,7 +87,7 @@
                 </button>
             </div>
             <div fxLayoutAlign="end" *ngIf="textPostFull || photoPostFull">
-                <button mat-button (click)="addUserPost(textPost)" style="background-color: #1976d2; color: white;margin-top: 5px;" >
+                <button mat-button (click)="addUserPost(textPost)" style="background-color: #1976d2; color: white;margin-top: 12px;" >
                     Отправить
                 </button>
             </div>
@@ -170,9 +177,16 @@
                     <div fxLatout="row" style="margin-bottom: -20px;">
                         <mat-divider style="margin-top: 5px;"></mat-divider>
                         <br/>
-                        <img style="margin-bottom: -10px;" mat-card-avatar src={{avatarImage}}>
+                        <img style="margin-bottom: -15px;" mat-card-avatar src={{avatarImage}}>
                         <mat-form-field appearance="outline" style="width: 82%;margin-left: 15px;" >
-                            <input matInput (input)="changeComment(post)" [(ngModel)]="post.textComment" placeholder="Оставьте комментарий..." >
+                            <div style="margin-top: -10px;width: 100%;">
+                                <input matInput (input)="changeComment(post)" [(ngModel)]="post.textComment" placeholder="Оставьте комментарий..." >
+                            </div>
+                            <div fxLayoutAlign="end" style="margin-top: -30px;height: 30px;">
+                                <button mat-icon-button (click)="clearCommentText(post) ">
+                                    <mat-icon style="color: gray;">close</mat-icon>
+                                </button>
+                            </div>
                         </mat-form-field>
                         <button *ngIf="post.showBtnSendCom"  mat-icon-button style="color: rgb(20, 114, 207);margin-bottom: 0;" (click)="addComment(post)">
                             <mat-icon style="margin-top: -10px;">send</mat-icon>
