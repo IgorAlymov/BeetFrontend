@@ -18,6 +18,15 @@ export class DataService {
     return this.http.post(this.userUrl+"Register",userReg,this.headers)
   }
 
+  public changeSave(user:User) {
+    return this.http.post(this.userUrl+"ChangeSave",user,this.headers)
+  }
+  public deletePage() {
+    return this.http.get(this.userUrl+"DeletePage",this.headers)
+  }
+
+  
+
   public postEntry(userEntry:User) {
     return this.http.post(this.userUrl+"SignIn",userEntry,this.headers)
   }

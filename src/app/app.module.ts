@@ -30,6 +30,7 @@ import {MatGridListModule} from '@angular/material/grid-list';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatMenuModule} from '@angular/material/menu';
 import { NewsComponent, DialogDataExampleDialogNews } from './news/news.component';
+import { SettingsComponent, SaveChanges, DeletePage } from './settings/settings.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,10 @@ import { NewsComponent, DialogDataExampleDialogNews } from './news/news.componen
     PhotosComponent,
     DialogDataExampleDialogPhoto,
     NewsComponent,
-    DialogDataExampleDialogNews
+    DialogDataExampleDialogNews,
+    SettingsComponent,
+    SaveChanges,
+    DeletePage
   ],
   imports: [
     BrowserModule,
@@ -73,7 +77,9 @@ import { NewsComponent, DialogDataExampleDialogNews } from './news/news.componen
   entryComponents:[
     DialogDataExampleDialog,
     DialogDataExampleDialogPhoto,
-    DialogDataExampleDialogNews
+    DialogDataExampleDialogNews,
+    SaveChanges,
+    DeletePage
   ],
   exports: [],
   providers: [DataService],

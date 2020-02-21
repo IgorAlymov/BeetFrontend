@@ -1,0 +1,15 @@
+<div>
+    <h3 fxLayoutAlign="center">
+        Удалить свою страницу?
+    </h3>
+    <div fxLayout="row" style="width: 100%;">
+        <div fxLayoutAlign="space-between" style="width: 100%;">
+            <button (click)="deletePage()" routerLink="/entry" mat-button style="color: white;background-color: red;">
+                Да
+            </button>
+            <button (click)="onNoClick()" mat-button style="color: white;background-color: rgb(34, 113, 192);">
+                Нет
+            </button>
+        </div>
+    </div>
+</div>

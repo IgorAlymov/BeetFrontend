@@ -7,8 +7,14 @@ export class User{
     birthday:Date;
     password:string;
     gender:string;
-    phonenumber:string;
+    phoneNumber:string;
     aboutme:string;
     city:string;
     groupid:number;
+    comments:any[];
+    userPosts:any[];
+    userPhotos:any[];
+    likesComments:any[];
+    messageAuthor:any[];
+    messageReceiver:any[];
 }

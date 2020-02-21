@@ -1,0 +1,148 @@
+<div fxLayout="row"> 
+    <div fxLayoutAlign="start" style="margin-top: 8px;">
+        <mat-card class="example-card-left">
+            <div fxLayoutAlign="space-between">
+                <div fxLayout="row" style="height: 30px;margin-top: -15px;">
+                    <h3 class="large-font">Общее</h3>
+                </div>
+            </div>
+            <br>
+            <br>
+            <mat-divider></mat-divider>
+            <div fxLayoutAlign="center" style="margin-top: 20px;margin-bottom: -2px;">
+                <div fxLayoutAlign="start" style="width: 120px;margin-top: 15px;margin-left: -35px;">
+                    <label class="normal-font-gray" >Имя</label>
+                </div>
+                <mat-form-field appearance="outline" style="width: 300px;margin-left: 10px;" >
+                    <div style="margin-top: -10px;width: 100%;">
+                        <input disabled={{!change[0]}} matInput [(ngModel)]="activeUser.firstname">
+                    </div>
+                </mat-form-field>
+                <div >
+                    <button *ngIf="!change[0]" (click)=changeName() mat-button style="width: 100px; margin-left: 25px;margin-right: -30px; margin-top: 4px; height: 49px; background-color: rgb(34, 113, 192);color: white;">
+                        Изменить
+                    </button>
+                    <button *ngIf="change[0]" (click)="changeSave(activeUser)" mat-button style="width: 100px;margin-left: 25px;margin-right: -30px; margin-top: 4px; height: 49px; background-color: rgb(34, 113, 192);color: white;">
+                        Сохранить
+                    </button>
+                </div>
+            </div>
+            <mat-divider></mat-divider>
+            <div fxLayoutAlign="center" style="margin-top: 20px;margin-bottom: -2px;">
+                <div fxLayoutAlign="start" style="width: 120px;margin-top: 15px;margin-left: -35px;">
+                    <label class="normal-font-gray" >Фамилия</label>
+                </div>
+                <mat-form-field appearance="outline" style="width: 300px;margin-left: 10px;" >
+                    <div style="margin-top: -10px;width: 100%;">
+                        <input disabled={{!change[1]}} matInput [(ngModel)]="activeUser.lastname">
+                    </div>
+                </mat-form-field>
+                <div >
+                    <button *ngIf="!change[1]" (click)=changeLastName() mat-button style="width: 100px; margin-left: 25px;margin-right: -30px; margin-top: 4px; height: 49px; background-color: rgb(34, 113, 192);color: white;">
+                        Изменить
+                    </button>
+                    <button *ngIf="change[1]" (click)="changeSave(activeUser)" mat-button style="width: 100px;margin-left: 25px;margin-right: -30px; margin-top: 4px; height: 49px; background-color: rgb(34, 113, 192);color: white;">
+                        Сохранить
+                    </button>
+                </div>
+            </div>
+            <mat-divider></mat-divider>
+            <div fxLayoutAlign="center" style="margin-top: 20px;margin-bottom: -2px;">
+                <div fxLayoutAlign="start" style="width: 120px;margin-top: 15px;margin-left: -35px;">
+                    <label class="normal-font-gray" >День рождения</label>
+                </div>
+                <mat-form-field appearance="outline" style="width: 300px;margin-left: 10px;" >
+                    <div style="margin-top: -10px;width: 100%;height: 16px;" fxLayout="row">
+                        <input placeholder="{{activeUser.birthday}}" disabled={{!change[2]}} [(ngModel)]="activeUser.birthday" matInput [matDatepicker]="picker">
+                        <mat-datepicker-toggle style="margin-top: -12px;" matSuffix [for]="picker" ></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </div>
+                </mat-form-field>
+                <div >
+                    <button *ngIf="!change[2]" (click)=changeBirthDay() mat-button style="width: 100px; margin-left: 25px;margin-right: -30px; margin-top: 4px; height: 49px; background-color: rgb(34, 113, 192);color: white;">
+                        Изменить
+                    </button>
+                    <button *ngIf="change[2]" (click)="changeSave(activeUser)" mat-button style="width: 100px;margin-left: 25px;margin-right: -30px; margin-top: 4px; height: 49px; background-color: rgb(34, 113, 192);color: white;">
+                        Сохранить
+                    </button>
+                </div>
+            </div>
+            <mat-divider></mat-divider>
+            <div fxLayoutAlign="center" style="margin-top: 20px;margin-bottom: -2px;">
+                <div fxLayoutAlign="start" style="width: 120px;margin-top: 15px;margin-left: -35px;">
+                    <label class="normal-font-gray" >Город</label>
+                </div>
+                <mat-form-field appearance="outline" style="width: 300px;margin-left: 10px;" >
+                    <div style="margin-top: -10px;width: 100%;">
+                        <input disabled={{!change[3]}} matInput [(ngModel)]="activeUser.city">
+                    </div>
+                </mat-form-field>
+                <div >
+                    <button *ngIf="!change[3]" (click)=changeCity() mat-button style="width: 100px; margin-left: 25px;margin-right: -30px; margin-top: 4px; height: 49px; background-color: rgb(34, 113, 192);color: white;">
+                        Изменить
+                    </button>
+                    <button *ngIf="change[3]" (click)="changeSave(activeUser)" mat-button style="width: 100px;margin-left: 25px;margin-right: -30px; margin-top: 4px; height: 49px; background-color: rgb(34, 113, 192);color: white;">
+                        Сохранить
+                    </button>
+                </div>
+            </div>
+            <mat-divider></mat-divider>
+            <div fxLayoutAlign="center" style="margin-top: 20px;margin-bottom: -2px;">
+                <div fxLayoutAlign="start" style="width: 120px;margin-top: 15px;margin-left: -35px;">
+                    <label class="normal-font-gray" >Телефон</label>
+                </div>
+                <mat-form-field appearance="outline" style="width: 300px;margin-left: 10px;" >
+                    <div style="margin-top: -10px;width: 100%;height: 15px;" fxLayout="row">
+                        <span matPrefix>+7 &nbsp;</span>
+                        <input placeholder="{{activeUser.phoneNumber}}" disabled={{!change[4]}} style="margin-bottom: -4px;" type="number" matInput [(ngModel)]="activeUser.phoneNumber">
+                    </div>
+                </mat-form-field>
+                <div >
+                    <button *ngIf="!change[4]" (click)=changePhone() mat-button style="width: 100px; margin-left: 25px;margin-right: -30px; margin-top: 4px; height: 49px; background-color: rgb(34, 113, 192);color: white;">
+                        Изменить
+                    </button>
+                    <button *ngIf="change[4]" (click)="changeSave(activeUser)" mat-button style="width: 100px;margin-left: 25px;margin-right: -30px; margin-top: 4px; height: 49px; background-color: rgb(34, 113, 192);color: white;">
+                        Сохранить
+                    </button>
+                </div>
+            </div>
+            <mat-divider></mat-divider>
+            <div fxLayoutAlign="center" style="margin-top: 20px;margin-bottom: -2px;">
+                <div fxLayoutAlign="start" style="width: 120px;margin-top: 15px;margin-left: -35px;">
+                    <label class="normal-font-gray" >Пол</label>
+                </div>
+                <mat-form-field appearance="outline" style="width: 300px;margin-left: 10px;" >
+                    <mat-select placeholder="{{activeUser.gender}}" [(ngModel)]="activeUser.gender" name="gender.value" disabled={{!change[5]}}>
+                        <mat-option *ngFor="let gender of genders" [value]="gender.value" >
+                        {{gender.viewValue}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <div >
+                    <button *ngIf="!change[5]" (click)=changeGender() mat-button style="width: 100px; margin-left: 25px;margin-right: -30px; margin-top: 4px; height: 57px; background-color: rgb(34, 113, 192);color: white;">
+                        Изменить
+                    </button>
+                    <button *ngIf="change[5]" (click)="changeSave(activeUser)" mat-button style="width: 100px;margin-left: 25px;margin-right: -30px; margin-top: 4px; height: 57px; background-color: rgb(34, 113, 192);color: white;">
+                        Сохранить
+                    </button>
+                </div>
+            </div>
+            <mat-divider></mat-divider>
+            <div fxLayoutAlign="center"> 
+                <button (click)="deletePage()" mat-button  style="color: red;background-color: white;height: 50px;margin-top: 1px;margin-bottom: -17px;width: 106%;
+                                    margin-right: -32px;margin-left: -32px;">
+                    Удалить свою страницу
+                </button>
+            </div>
+            
+        </mat-card>
+    </div>
+    <mat-card class="example-card-right" fxLayout="row" style="margin-top: 17px;">
+        <mat-icon style="transform: rotate(90deg);font-size: 40px;color: rgb(37, 121, 204);margin-left: -19px;margin-top: -11px;" >remove</mat-icon>
+        <div>
+            <button mat-button style="width: 207px;margin-left: -22px;margin-top: -25px;" routerLink="/settings">
+                Общее
+            </button>
+        </div>
+    </mat-card>
+</div>

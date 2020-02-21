@@ -5,6 +5,7 @@ import { EntryComponent } from './entry/entry.component';
 import { RegistrationComponent } from './registration/registration.component';
 import { PhotosComponent } from './photos/photos.component';
 import { NewsComponent } from './news/news.component';
+import { SettingsComponent } from './settings/settings.component';
 
 
 const routes: Routes = [
@@ -13,6 +14,7 @@ const routes: Routes = [
    {path:'registration',component: RegistrationComponent},
    {path:'photos',component: PhotosComponent},
    {path:'news',component: NewsComponent},
+   {path:'settings',component: SettingsComponent},
    {path: '', redirectTo: '/entry', pathMatch: 'full'}
 ];
 
