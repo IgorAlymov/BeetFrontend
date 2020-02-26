@@ -1,10 +1,10 @@
-import { Component, OnInit,Inject } from '@angular/core';
-import { DataService } from '../data.service';
+import { Component, OnInit, Inject } from '@angular/core';
 import { User } from '../models/user';
-import {MatDialog, MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
-import { Subscriber } from 'rxjs';
-import { FriendPageComponent } from '../friend-page/friend-page.component';
+import { DataService } from '../data.service';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { Router } from '@angular/router';
+import {ActivatedRoute} from '@angular/router'
+import { Subscription } from 'rxjs';
 
 export interface DialogData {
   avatarImage:string;
@@ -13,12 +13,14 @@ export interface DialogData {
 }
 
 @Component({
-  selector: 'app-my-page',
-  templateUrl: './my-page.component.html',
-  styleUrls: ['./my-page.component.css']
+  selector: 'app-friend-page',
+  templateUrl: './friend-page.component.html',
+  styleUrls: ['./friend-page.component.css']
 })
-export class MyPageComponent implements OnInit {
+export class FriendPageComponent implements OnInit{
+  public idFriend:number;
   public activeUser:User=new User();
+  public user:User=new User();
   public userPosts:any[];
   public fullInformation:boolean=false;
   public showBirthday:boolean=false;
@@ -35,22 +37,25 @@ export class MyPageComponent implements OnInit {
   public likeIcons:string[]=["favorite_border","favorite"];
   public likeIconActive:string;
   public likesAllPosts:FileList[];
+  public subscription: any;
   public allSub:any[]=[];
+  private subscriptions: Subscription;
 
-  constructor(private dataService:DataService,public dialog: MatDialog,private router:Router) { }
+  constructor(private dataService:DataService,public dialog: MatDialog,private router:Router,private activatedRoute:ActivatedRoute) {
+    
+  }
 
   ngOnInit() {
-    this.dataService.getActiveUser().subscribe((data:User) => this.fillingArray(data));
-    this.dataService.getAvatarActiveUser().subscribe((data:any)=>this.avatarImage=data.avatarUrl);
-    this.dataService.getAllPhotos().subscribe((data:any)=> this.allPhotoLength = data.listPhoto.length);
-    this.dataService.getSubscribers().subscribe((data) => this.getAvatarFriend(data));
-    this.dataService.getActiveUserPost().subscribe((data:any[])=>this.getPosts(data));
+    this.idFriend= this.activatedRoute.snapshot.params['id'];
+    this.dataService.getUser(this.idFriend).subscribe((data:User) => this.fillingArray(data));
+    this.dataService.getActiveUser().subscribe((data:User) => this.user=data);
+    this.dataService.getSub(this.idFriend).subscribe((data:any) => this.subscription=data);
+    this.dataService.getSubscruptionFriends(this.idFriend).subscribe((data) => this.getAvatarFriend(data));
+    this.dataService.getAvatarUser(this.idFriend).subscribe((data:any)=>this.avatarImage=data.avatarUrl);
+    this.dataService.getPhotosFriend(this.idFriend).subscribe((data:any)=> this.allPhotoLength = data.listPhoto.length);
+    this.dataService.getFriendPost(this.idFriend).subscribe((data:any[])=>this.getPosts(data));
   }
 
-  updatePage(){
-    this.ngOnInit();
-  }
- //подписки
   getAvatarFriend(subscribers:any[]){
     this.allSub=[];
     this.allSubLength=subscribers.length;
@@ -58,14 +63,48 @@ export class MyPageComponent implements OnInit {
       element.avatar=this.dataService.getAvatarUser(element.socialUserId).subscribe((data:any)=>element.avatar=data.avatarUrl),
       element.subscription=this.dataService.getSub(element.socialUserId).subscribe((data:any) => element.subscription=data);
     });
-
     for(let i = 0; i < 3; i++){
       if(subscribers[i]!=null)
       this.allSub.push(subscribers[i]);
     }
   }
+
+  getPosts(posts:any[]){
+    this.userPosts=[];
+    posts.forEach(element => {
+      this.dataService.getLikePost(element.postId).subscribe((data)=>element.likeIcon = data.icon),
+      element.firstname=this.activeUser.firstname,
+      element.lastname=this.activeUser.lastname,
+      element.avatar=this.avatarImage,
+      element.showComments=false,
+      element.textComment="",
+      element.showBtnSendCom=false,
+      this.dataService.getPostPhoto(element.postId).subscribe((data:any)=>element.photo=data.photoUrl),
+      this.dataService.getLikePost(element.postId).subscribe((data)=>element.likesCounter = data.likesCounter),
+      this.dataService.getComment(element.postId).subscribe(data=>element.Comments=data),
+      this.dataService.getComment(element.postId).subscribe(data=>element.CommentsCounter=data.length);
+    });
+    this.userPosts=posts;
+  }
+
+  updatePage(idF:number){
+    if(this.user.socialUserId!=idF){
+      this.subscriptions = this.activatedRoute.params.subscribe(
+        params=>
+        {
+          if(this.idFriend!=Number(params['id']))
+          this.ngOnInit();
+        }
+      );
+    }
+    else
+    this.router.navigate(['/mypage']);
+  }
+
+  public update(){
+    this.ngOnInit();
+  }
   
-  //информация о пользователе
   showFullInformation(){
     if(!this.fullInformation)
     this.fullInformation=true;
@@ -84,26 +123,9 @@ export class MyPageComponent implements OnInit {
     this.showBirthday=true;
     this.activeUser=user;
   }
-  //аватар
-  addAvatar(event) {
-    let target = event.target || event.srcElement;
-    this.filesAvatar = target.files;
-    if (this.filesAvatar) {
-      let files :FileList = this.filesAvatar;
-      const formData = new FormData();
-      for(let i = 0; i < files.length; i++){
-           formData.append('file', files[i]);
-      }
-      this.dataService.sendAvatarPhoto(formData)
-      .subscribe(
-        p => this.dataService.getAvatarActiveUser()
-        .subscribe((data:any)=>this.avatarImage=data.avatarUrl)
-      );
-    }
-  }
 
   openDialog(image:string):void {
-    const dialogRef = this.dialog.open(DialogDataExampleDialog, {
+    const dialogRef = this.dialog.open(FriendAvatarDialog, {
       height:"85%",
       maxHeight:"710px",
       minHeight:"710px",
@@ -116,90 +138,9 @@ export class MyPageComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
     });
   }
-  //посты
-  getPosts(posts:any[]){
-    posts.forEach(element => {
-      this.dataService.getLikePost(element.postId).subscribe((data)=>element.likeIcon = data.icon),
-      element.firstname=this.activeUser.firstname,
-      element.lastname=this.activeUser.lastname,
-      element.avatar=this.avatarImage,
-      element.showComments=false,
-      element.textComment="",
-      element.showBtnSendCom=false,
-      this.dataService.getPostPhoto(element.postId).subscribe((data:any)=>element.photo=data.photoUrl),
-      this.dataService.getLikePost(element.postId).subscribe((data)=>element.likesCounter = data.likesCounter),
-      this.dataService.getComment(element.postId).subscribe(data=>element.Comments=data),
-      this.dataService.getComment(element.postId).subscribe(data=>element.CommentsCounter=data.length);
-    });
-    this.userPosts=posts;
-  }
 
-  selectPostPhoto(event) {
-    let target = event.target || event.srcElement;
-    this.filesPostPhoto=target.files;
-    this.filesPostPhotoDisplay = target.files;
-    let reader = new FileReader(); 
-    reader.onload = (e: any) => { 
-      this.filesPostPhotoDisplay = e.target.result; 
-     } 
-     reader.readAsDataURL(event.target.files[0]); 
-     this.changePhoto(this.filesPostPhoto);
-  }
-
-  addUserPost(text:string){
-    const formData = new FormData();
-    if (this.filesPostPhoto) {
-      let files :FileList = this.filesPostPhoto;
-      for(let i = 0; i < files.length; i++){
-           formData.append('file', files[i]);
-      }
-    }
-    this.filesPostPhoto="";
-    this.textPost="";
-    this.photoPostFull=false;
-    this.textPostFull=false;
-    this.dataService.addUserPost(text,formData)
-    .subscribe(
-      p => this.dataService.getActiveUserPost().subscribe((data:any[])=>this.getPosts(data))
-    );
-  }
-
-  changeText(text){
-   if(text=="")
-    this.textPostFull=false;
-   else
-    this.textPostFull=true;
-  }
-
-  changePhoto(photo){
-    if(photo=="")
-     this.photoPostFull=false;
-    else
-     this.photoPostFull=true;
-   }
-
-   closeSelectPhoto(){
-    this.filesPostPhotoDisplay="";
-    this.filesPostPhoto="";
-    this.photoPostFull=false;
-   }
-
-   deletePost(post:any){
-    var i:number; 
-    for(i = 0; i < this.userPosts.length; i++) {
-      if(this.userPosts[i].postId==post.postId){
-        this.userPosts.splice(i,1);
-        this.dataService.deletePost(post.postId).subscribe();
-      }
-    }
-   }
-
-   clearPostText(){
-    this.textPost="";
-    this.textPostFull=false;
-   }
-   //лайки постов
-   addLike(likeIcon:string,idPost:number,post:any){
+  //лайки постов
+  addLike(likeIcon:string,idPost:number,post:any){
      
     if(this.likeIcons[0]==likeIcon){
       this.userPosts.forEach(element => {
@@ -292,14 +233,27 @@ export class MyPageComponent implements OnInit {
       }
     });
    }
+
+   addSubscriber(idF:number){
+    this.dataService.addSubscriber(idF).subscribe(
+       p=> this.subscription=true
+    );
+  }
+
+  deleteSubscriber(idF:number){
+    this.dataService.deleteSubscriber(idF).subscribe(
+        p=> this.subscription=false
+    );
+  }
+
 }
 
 @Component({
-  selector: 'dialog-data-example-dialog',
-  templateUrl: 'dialog-data-example-dialog.html',
+  selector: 'friend-avatar-dialog',
+  templateUrl: 'friend-avatar-dialog-dialog.html',
 })
-export class DialogDataExampleDialog {
-  constructor(public dialogRef: MatDialogRef<DialogDataExampleDialog>,
+export class FriendAvatarDialog {
+  constructor(public dialogRef: MatDialogRef<FriendAvatarDialog>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
   
   onNoClick(): void {

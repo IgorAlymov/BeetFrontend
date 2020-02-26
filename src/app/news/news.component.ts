@@ -2,6 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { DataService } from '../data.service';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { User } from '../models/user';
+import { Router } from '@angular/router';
 
 export interface DialogData {
   avatarImage:string;
@@ -24,12 +25,20 @@ export class NewsComponent implements OnInit {
   public searchText:string;
   public searchButtonView:boolean=false;
 
-  constructor(private dataService:DataService,public dialog: MatDialog) { }
+  constructor(private router:Router,private dataService:DataService,public dialog: MatDialog) { }
 
   ngOnInit() {
     this.dataService.getActiveUser().subscribe((data:User) => this.activeUser=data);  
     this.dataService.getAvatarActiveUser().subscribe((data:any)=>this.avatarImage=data.avatarUrl);
     this.dataService.getAllPosts().subscribe((data:any[])=>this.getPosts(data));
+  }
+
+  onPageAuthor(idAuthor:number){
+    if(idAuthor!=this.activeUser.socialUserId){
+      this.router.navigate(['/friendpage',idAuthor]);
+    }else{
+      this.router.navigate(['/mypage']);
+    }
   }
   //посты
   getPosts(posts:any[]){

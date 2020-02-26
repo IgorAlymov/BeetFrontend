@@ -8,11 +8,11 @@
                             <input style="margin-top: -10px;margin-left: 10px;" (input)="changeSearchText(searchText)" [(ngModel)]="searchText" matInput placeholder="Поиск новостей..." >
                         </div>
                         <div fxLayoutAlign="end" style="margin-top: -22px;height: 10px;">
-                            <button mat-icon-button (click)="clearSearchText()">
+                            <button mat-icon-button (click)="clearSearchText()" style="margin-right: -10px;">
                                 <mat-icon style="color: gray;">close</mat-icon>
                             </button>
                         </div>
-                        <div fxLayoutAlign="end" style="margin-top: -13px;" *ngIf="searchButtonView">
+                        <div fxLayoutAlign="end" style="margin-top: -13px;margin-left: 10px;" *ngIf="searchButtonView">
                             <button mat-button (click)="searchingText(searchText)" style="background-color: rgb(37, 121, 204);margin-right: -12px;margin-top: -12px;margin-bottom: -16px;">
                                 <mat-icon style="color: white;">search</mat-icon>
                             </button>
@@ -22,11 +22,13 @@
                 </mat-form-field>
             </div>
         </mat-card>
-        <mat-card *ngFor="let post of userPosts"class="example-card-left" style="height: auto;margin-bottom: 15px;">
-            <div fxLayout="row">
-                <img style="height: 55px;width: 55px;" mat-card-avatar src={{post.avatarAuthor}}>
+        <mat-card *ngFor="let post of userPosts" class="example-card-left" style="height: auto;margin-bottom: 15px;">
+            <div fxLayout="row" *ngIf="post.authorPost.firstname">
+                <button  (click)="onPageAuthor(post.authorPost.socialUserId)" mat-icon-button style="border-radius: 100px;width: 55px;height: 55px;">
+                    <img style="height: 55px;width: 55px;" mat-card-avatar src={{post.avatarAuthor}}>
+                </button>
                 <div style="margin-left: 20px;" fxLayout="column">
-                    <h3 class="normal-font" style="height: 10px;margin-top: 7px;">{{post.authorPost.firstname + " " + post.authorPost.lastname}}</h3>
+                    <a [routerLink]="" (click)="onPageAuthor(post.authorPost.socialUserId)" class="normal-font-name" style="height: 25px;margin-top: 7px;text-decoration: none;">{{post.authorPost.firstname + " " + post.authorPost.lastname}}</a>
                     <p class="normal-font-gray" style="height: 10px;margin-top: -3px;">{{ post.date | date:'MMM d HH:mm' }} </p>
                 </div>
             </div>
@@ -110,12 +112,25 @@
             </div>
         </mat-card>
     </div>
-    <mat-card class="example-card-right" fxLayout="row" style="margin-top: 17px;">
-        <mat-icon style="transform: rotate(90deg);font-size: 40px;color: rgb(37, 121, 204);margin-left: -19px;margin-top: -11px;" >remove</mat-icon>
-        <div>
-            <button mat-button style="width: 207px;margin-left: -22px;margin-top: -25px;" routerLink="/news">
-                Новости
-            </button>
+    <mat-card class="example-card-right"  style="margin-top: 17px;width: 173px;height: 57px;">
+        <div fxLayout="row">
+            <mat-icon style="transform: rotate(90deg);font-size: 40px;color: rgb(37, 121, 204);margin-left: -19px;margin-top: -11px;" >remove</mat-icon>
+            <div>
+                <button mat-button style="width: 207px;margin-left: -23px;margin-top: -28px;" routerLink="/news">
+                    <a style="margin-left: -5px;">
+                        Новости пользователей
+                    </a>
+                </button>
+            </div>
+        </div>
+        <div fxLayout="row">
+            <div>
+                <button mat-button style="width: 207px;margin-left: -18px;margin-top: 0px;" routerLink="/news">
+                    <a style="margin-left: -30px;">
+                        Новости сообществ
+                    </a>
+                </button>
+            </div>
         </div>
     </mat-card>
 </div>

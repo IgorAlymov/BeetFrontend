@@ -5,15 +5,17 @@
             <button mat-button (click)="openDialog(avatarImage)">
                 <img mat-card-image style="margin-top: 0px;margin-bottom: -1%;border-radius: 5px;" src={{avatarImage}} >
             </button>
-            <input #fileInput onclick="this.value=null;" style="display: none;" type="file" name="photo" (change)="addAvatar($event)"/>
-            <button class="long-button" style="margin-top: 20px;" mat-raised-button (click)="fileInput.click()">
+            <button class="long-button" style="margin-top: 20px;" mat-raised-button *ngIf="!subscription" (click)="addSubscriber(activeUser.socialUserId)">
                 <div fxLayout="row" fxLayoutAlign="center">
-                    <mat-icon  style="color: rgb(58, 107, 156);margin-top: 2px;"> arrow_upward</mat-icon >
-                    <p class="normal-font" style="margin-top:-2px;">Обновить фото</p>
+                    <p class="normal-font" style="margin-top:-2px;">Подписаться</p>
+                </div>
+            </button>
+            <button class="long-button" style="margin-top: 20px;" mat-raised-button *ngIf="subscription" (click)="deleteSubscriber(activeUser.socialUserId)">
+                <div fxLayout="row" fxLayoutAlign="center">
+                    <p class="normal-font" style="margin-top:-2px;">Отписаться</p>
                 </div>
             </button>
         </mat-card>
-        <!--Подписки-->
         <mat-card class="example-card-left" style="height: auto;">
             <div>
                 <label class="normal-font-black">
@@ -26,10 +28,10 @@
             <div fxLayout="row" style="margin-top: 13px;">
                 <div *ngFor=" let user of allSub" >
                     <div fxLayout="column" style="width:72px" >
-                        <button  [routerLink]="['/friendpage',user.socialUserId]" mat-icon-button style="border-radius: 100px;width: 55px;height: 55px;">
+                        <button  [routerLink]="['/friendpage',user.socialUserId]" (click)="updatePage(user.socialUserId)" mat-icon-button style="border-radius: 100px;width: 55px;height: 55px;">
                             <img style="height: 54px;width: 54px;" mat-card-avatar src="{{user.avatar}}">
                         </button>
-                        <a [routerLink]="['/friendpage',user.socialUserId]"  class="normal-font" fxLayoutAlign="center" style="margin-top: 10px;text-decoration: none;margin-left: -18px;"> 
+                        <a [routerLink]="['/friendpage',user.socialUserId]" (click)="updatePage(user.socialUserId)" class="normal-font" fxLayoutAlign="center" style="margin-top: 10px;text-decoration: none;margin-left: -18px;"> 
                             {{user.firstname}}
                         </a>
                     </div>  
@@ -73,7 +75,7 @@
             </div>
             <mat-divider></mat-divider>
             <div fxLayout="row" style="margin-top: 25px;" fxLayoutAlign="space-around  center">
-                <button mat-button routerLink="/photos">
+                <button mat-button disabled>
                     <p class="large-font" style="height: 0px;margin-top: 5px;color: rgb(58, 107, 156);" >
                         {{allPhotoLength}}
                     </p>
@@ -81,48 +83,13 @@
                         фото
                     </p>
                 </button>
-                <button mat-button routerLink="/subscribers">
+                <button mat-button disabled>
                     <p class="large-font" style="height: 0px;margin-top: 5px;color: rgb(58, 107, 156);" >
                         {{allSubLength}}
                     </p>
                     <p class="normal-font-gray"  style="height: 15px;">
                         подписки
                     </p>
-                </button>
-            </div>
-        </mat-card>
-        <!--Поле для поста-->
-        <mat-card class="example-card-right">
-            <div fxLatout="row">
-                <button  (click)="updatePage()" mat-icon-button style="border-radius: 100px;width: 40px;height: 43px;">
-                    <img mat-card-avatar src={{avatarImage}}>
-                </button>
-               
-                <mat-form-field appearance="outline" style="width: 82%;margin-left: 15px;margin-top: -5px; margin-bottom: -25px;" >
-                    <div style="margin-top: -10px;width: 100%;">
-                        <input  matInput  (input)="changeText(textPost)" [(ngModel)]="textPost" placeholder="Что нового?" >
-                    </div>
-                    <div fxLayoutAlign="end" style="margin-top: -30px;height: 30px;">
-                        <button mat-icon-button (click)="clearPostText() " style="margin-right: -8px;">
-                            <mat-icon style="color: gray;">close</mat-icon>
-                        </button>
-                    </div>
-                </mat-form-field>
-                <input #fileInputPost (input)="changePhoto(filesPostPhotoDisplay)" onclick="this.value=null;"
-                       style="display: none;" type="file" name="photo" (change)="selectPostPhoto($event)"/>
-                <button mat-icon-button style="color: rgb(20, 114, 207);" (click)="fileInputPost.click()">
-                    <mat-icon>photo</mat-icon>
-                </button>
-            </div>
-            <div fxLayout="row" *ngIf="photoPostFull">
-                <img src={{filesPostPhotoDisplay}} style="width: 50%;margin-top: 10px;border-radius: 5px;">
-                <button mat-icon-button (click)="closeSelectPhoto()" style="height: 25px;width: 25px ;margin-top: 10px;margin-left: -25px;color: white;background-color: gray;">
-                    <mat-icon style="margin-top: -17px;">close</mat-icon>
-                </button>
-            </div>
-            <div fxLayoutAlign="end" *ngIf="textPostFull || photoPostFull">
-                <button mat-button (click)="addUserPost(textPost)" style="background-color: #1976d2; color: white;margin-top: 12px;" >
-                    Отправить
                 </button>
             </div>
         </mat-card>
@@ -136,23 +103,13 @@
         <div style="margin-top: -32px;">
             <mat-card *ngFor="let post of userPosts" class="example-card-right" style="height: auto;margin-bottom: 15px;">
                 <div fxLayout="row">
-                    <button (click)="updatePage()" mat-icon-button style="border-radius: 100px;width: 55px;height: 55px;">
+                    <button (click)="update()" mat-icon-button style="border-radius: 100px;width: 55px;height: 55px;">
                         <img style="height: 55px;width: 55px;" mat-card-avatar src={{avatarImage}}>
                     </button>
                     <div style="margin-left: 20px;" fxLayout="column">
-                        <a routerLink="/mypage" (click)="updatePage()" class="normal-font-name" style="height: 25px;margin-top: 7px;text-decoration: none;">{{activeUser.firstname + " " + activeUser.lastname}}</a>
+                        <a [routerLink]="['/friendpage',activeUser.socialUserId]" (click)="update()" class="normal-font-name" style="height: 25px;margin-top: 7px;text-decoration: none;">{{activeUser.firstname + " " + activeUser.lastname}}</a>
                         <p class="normal-font-gray" style="height: 10px;margin-top: -3px;">{{ post.date | date:'MMM d HH:mm' }} </p>
                     </div>
-                </div>
-                <div fxLayoutAlign="end" style="margin-top: -50px;">
-                    <button mat-icon-button [matMenuTriggerFor]="menu" >
-                        <mat-icon style="color: gray;">keyboard_arrow_down</mat-icon>
-                    </button>
-                    <mat-menu #menu="matMenu">
-                        <button mat-menu-item (click)="deletePost(post)">
-                            <span>Удалить</span>
-                        </button>
-                    </mat-menu>
                 </div>
                 <div fxLayout="column">
                     <p style="margin-top: 25px;height: auto;margin-bottom: 5px;" class="normal-font-black">{{post.text}}</p>
@@ -202,7 +159,7 @@
                                 <p class="normal-font-black" style="margin-top: 0px;width: 450px;">{{comment.text}}</p>
                                 <p class="normal-font-gray" style="height: 10px;margin-top: -3px;">{{ comment.date | date:'MMM d HH:mm' }} </p>
                             </div>
-                            <div fxLayoutAlign="end" style="margin-top: -15px;">
+                            <div fxLayoutAlign="end" style="margin-top: -15px;" *ngIf="comment.authorId==user.socialUserId">
                                 <button mat-icon-button (click)="deleteComment(comment)">
                                     <mat-icon style="color: gray;">close</mat-icon>
                                 </button>
@@ -233,4 +190,3 @@
         </div>
     </div>
 </div>
-

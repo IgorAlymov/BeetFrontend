@@ -25,8 +25,6 @@ export class DataService {
     return this.http.get(this.userUrl+"DeletePage",this.headers)
   }
 
-  
-
   public postEntry(userEntry:User) {
     return this.http.post(this.userUrl+"SignIn",userEntry,this.headers)
   }
@@ -113,4 +111,37 @@ export class DataService {
   public deleteComment(id:number){
     return this.http.get(this.userUrl+"GetDeleteComment/"+id);
   }
+
+  public getAllUsers():Observable<any> {
+    return this.http.get(this.userUrl + "GetAllUsers",this.headers);
+  }
+
+  public addSubscriber(idF:number){
+    return this.http.get(this.userUrl +"GetAddNewFriend/" + idF,this.headers)
+  }
+
+  public deleteSubscriber(idF:number){
+    return this.http.get(this.userUrl +"GetRemoveFriend/" + idF,this.headers)
+  }
+
+  public getSub(idF:number):Observable<any>{
+    return this.http.get(this.userUrl +"getFriend/" + idF,this.headers)
+  }
+
+  public getSubscribers():Observable<any>{
+    return this.http.get(this.userUrl +"getFriends/" ,this.headers)
+  }
+
+  public getSubscruptionFriends(id:number):Observable<any>{
+    return this.http.get(this.userUrl +"GetSubscruptionFriends/"+id ,this.headers)
+  }
+
+  public getPhotosFriend(idF:number):Observable<any>{
+    return this.http.get(this.userUrl+"GetFriendPhoto/"+idF,this.headers);
+  }
+
+  public getFriendPost(idF:number):Observable<any> {
+    return this.http.get(this.userUrl + "GetFriendPost/"+idF,this.headers);
+  }
+
 }

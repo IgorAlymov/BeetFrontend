@@ -41,3 +41,8 @@
     height: 30px;
     margin-top: 5%;
   }
+  .normal-font-name{
+    font-weight: bold ;
+    color: rgb(58, 107, 156);
+    font-size: 14px;
+  }

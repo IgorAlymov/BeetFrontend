@@ -31,6 +31,9 @@ import {MatTabsModule} from '@angular/material/tabs';
 import {MatMenuModule} from '@angular/material/menu';
 import { NewsComponent, DialogDataExampleDialogNews } from './news/news.component';
 import { SettingsComponent, SaveChanges, DeletePage } from './settings/settings.component';
+import { SearchSubscribersComponent } from './search-subscribers/search-subscribers.component';
+import { SubscribersComponent } from './subscribers/subscribers.component';
+import { FriendPageComponent, FriendAvatarDialog } from './friend-page/friend-page.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +48,11 @@ import { SettingsComponent, SaveChanges, DeletePage } from './settings/settings.
     DialogDataExampleDialogNews,
     SettingsComponent,
     SaveChanges,
-    DeletePage
+    DeletePage,
+    SearchSubscribersComponent,
+    SubscribersComponent,
+    FriendPageComponent,
+    FriendAvatarDialog
   ],
   imports: [
     BrowserModule,
@@ -79,7 +86,8 @@ import { SettingsComponent, SaveChanges, DeletePage } from './settings/settings.
     DialogDataExampleDialogPhoto,
     DialogDataExampleDialogNews,
     SaveChanges,
-    DeletePage
+    DeletePage,
+    FriendAvatarDialog
   ],
   exports: [],
   providers: [DataService],

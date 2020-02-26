@@ -1,0 +1,81 @@
+<div fxLayout="row"> 
+    <div fxLayoutAlign="start" style="margin-top: 8px;">
+        <mat-card class="example-card-left">
+            <div fxLayoutAlign="space-between">
+                <div fxLayout="row" style="height: 30px;margin-top: -15px;">
+                    <h3 class="large-font">Подписки</h3>
+                </div>
+            </div>
+            <br>
+            <br>
+            <mat-divider></mat-divider>
+            <div fxLayout="row" style="margin-bottom: -17px;">
+                <mat-form-field appearance="outline" style="width: 100%;margin-left: 0px;margin-top: 13px;" >
+                    <div fxLayout="row">
+                        <div style="margin-top: -10px;width: 100%;">
+                            <input style="margin-top: -10px;margin-left: 10px;" (input)="changeSearchText(searchText)" [(ngModel)]="searchText" matInput placeholder="Поиск подписчиков..." >
+                        </div>
+                        <div fxLayoutAlign="end" style="margin-top: -22px;height: 10px;">
+                            <button mat-icon-button (click)="clearSearchText()" style="margin-right: -10px;">
+                                <mat-icon style="color: gray;">close</mat-icon>
+                            </button>
+                        </div>
+                        <div fxLayoutAlign="end" style="margin-top: -13px;margin-left: 10px;" *ngIf="searchButtonView">
+                            <button mat-button (click)="searchingText(searchText)" style="background-color: rgb(37, 121, 204);margin-right: -12px;margin-top: -12px;margin-bottom: -16px;">
+                                <mat-icon style="color: white;">search</mat-icon>
+                            </button>
+                        </div>
+                    </div>
+                </mat-form-field>
+            </div>
+            <div *ngFor="let user of allSub" style="height: 105px;">
+                <div fxLayout="row" style="margin-top: 7px;">
+                    <mat-divider></mat-divider>
+                    <button  [routerLink]="['/friendpage',user.socialUserId]" mat-button style="margin-top: 14px;margin-bottom: -1%;border-radius: 100px;height: 92px;width: 92px;">
+                        <img style="height: 90px;width: 90px;margin-left: -15px;" mat-card-avatar src="{{user.avatar}}">
+                    </button>
+                    <div style="margin-left: 20px;margin-top: 15px;" fxLayout="column">
+                        <a class="normal-font-black" style="height: 30px;margin-top: 7px;text-decoration: none;" [routerLink]="['/friendpage',user.socialUserId]">{{user.firstname + " " + user.lastname}}</a>
+                        <a class="normal-font-gray" style="height: 10px;margin-top: -3px;text-decoration: none;" >Написать сообщение </a>
+                    </div>
+                </div>
+                <div fxLayoutAlign="end" style="margin-top: -100px;">
+                    <button mat-icon-button [matMenuTriggerFor]="menu" >
+                        <mat-icon style="color: gray;">keyboard_arrow_down </mat-icon>
+                    </button>
+                    <mat-menu #menu="matMenu">
+                        <button mat-menu-item *ngIf="!user.subscription" (click)="addSubscriber(user.socialUserId)">
+                            <span>Подписаться</span>
+                        </button>
+                        <button mat-menu-item *ngIf="user.subscription" (click)="deleteSubscriber(user.socialUserId)">
+                            <span>Отписаться</span>
+                        </button>
+                    </mat-menu>
+                </div>
+            </div>
+        </mat-card>
+    </div>
+
+
+    <mat-card class="example-card-right" style="margin-top: 17px;width: 173px;height: 57px;">
+        <div fxLayout="row" style="margin-top: -10px;">
+            <mat-icon style="transform: rotate(90deg);font-size: 40px;color: rgb(37, 121, 204);margin-left: -19px;margin-top: -1px;" >remove</mat-icon>
+            <div >
+                <button mat-button style="width: 207px;margin-left: -21px;margin-top: 3px;" routerLink="/subscribers">
+                    <a style="margin-left: -105px;">
+                        Подписки
+                    </a>
+                </button>
+            </div>
+        </div>
+        <div fxLayout="row">
+            <div>
+                <button mat-button style="width: 207px;margin-left: -16px;" routerLink="/searchSubscribers">
+                    <a style="margin-left: -60px;">
+                        Поиск подписок
+                    </a>
+                </button>
+            </div>
+        </div>
+    </mat-card>
+</div>

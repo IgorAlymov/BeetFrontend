@@ -2,7 +2,7 @@
   <div fxFlex="30" fxLayoutAlign="end" >
     <img style="height: 40px;" src="http://localhost:5001/Files/BeetLogo.png">
   </div>
-  <div fxFlex="70">
+  <div fxFlex="70" >
     <div style="margin-left: 770px;">
       <button *ngIf="fullView" mat-button (click)="output()" routerLink="/entry">Выйти</button>
     </div>
@@ -23,7 +23,7 @@
         <mat-icon style="margin-right: 5px;">library_books</mat-icon>
         Новости
       </button>
-      <button mat-button fxLayoutAlign="start">
+      <button mat-button fxLayoutAlign="start" routerLink="/subscribers">
         <mat-icon style="margin-right: 5px;">emoji_people</mat-icon>
         Подписки
       </button>

@@ -6,6 +6,9 @@ import { RegistrationComponent } from './registration/registration.component';
 import { PhotosComponent } from './photos/photos.component';
 import { NewsComponent } from './news/news.component';
 import { SettingsComponent } from './settings/settings.component';
+import { SearchSubscribersComponent } from './search-subscribers/search-subscribers.component';
+import { SubscribersComponent } from './subscribers/subscribers.component';
+import { FriendPageComponent } from './friend-page/friend-page.component';
 
 
 const routes: Routes = [
@@ -15,6 +18,9 @@ const routes: Routes = [
    {path:'photos',component: PhotosComponent},
    {path:'news',component: NewsComponent},
    {path:'settings',component: SettingsComponent},
+   {path:'searchSubscribers',component: SearchSubscribersComponent},
+   {path:'subscribers',component: SubscribersComponent},
+   {path:'friendpage/:id',component: FriendPageComponent},
    {path: '', redirectTo: '/entry', pathMatch: 'full'}
 ];
 
