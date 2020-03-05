@@ -16,12 +16,12 @@
         <!--Подписки-->
         <mat-card class="example-card-left" style="height: auto;">
             <div>
-                <label class="normal-font-black">
+                <a class="normal-font-black" style="text-decoration: none;" routerLink="/subscribers">
                     Подписки
-                </label>
-                <label class="normal-font-gray"> 
+                </a>
+                <a class="normal-font-gray" style="text-decoration: none;" routerLink="/subscribers"> 
                     {{allSubLength}}
-                </label>
+                </a>
             </div>
             <div fxLayout="row" style="margin-top: 13px;">
                 <div *ngFor=" let user of allSub" >
@@ -32,6 +32,32 @@
                         <a [routerLink]="['/friendpage',user.socialUserId]"  class="normal-font" fxLayoutAlign="center" style="margin-top: 10px;text-decoration: none;margin-left: -18px;"> 
                             {{user.firstname}}
                         </a>
+                    </div>  
+                </div>
+            </div>
+        </mat-card>
+        <!--Сообщества-->
+        <mat-card class="example-card-left" style="height: auto;">
+            <div>
+                <a class="normal-font-black" style="text-decoration: none;" routerLink="/mycommunities">
+                    Сообщества
+                </a>
+                <a class="normal-font-gray" style="text-decoration: none;" routerLink="/mycommunities"> 
+                    {{allComLength}}
+                </a>
+            </div>
+            <div style="margin-top: 13px;">
+                <div *ngFor=" let com of allCom" >
+                    <div fxLayout="row" style="width:192px;margin-top: 15px;" >
+                        <button  [routerLink]="['/communitypage',com.groupId]" mat-icon-button style="border-radius: 100px;width: 55px;height: 55px;">
+                            <img style="height: 54px;width: 54px;" mat-card-avatar src="{{com.avatar}}">
+                        </button>
+                        <div fxLayout="column">
+                            <a [routerLink]="['/communitypage',com.groupId]"  class="normal-font" style="width: auto;margin-top: 10px;text-decoration: none;margin-left: 10px;margin-top: 0px;"> 
+                                {{com.name}}
+                            </a>
+                            <a class="normal-font-gray" style="width: auto;margin-left: 10px;height: 10px;margin-top: 5px;text-decoration: none;" > {{com.subscribers.length}} подписчиков  </a>
+                        </div>
                     </div>  
                 </div>
             </div>
@@ -174,7 +200,7 @@
                             </div>
                         </div>
                     </button>
-                    <!--Посты-->
+                    <!--Комментарии кнопка-->
                     <button mat-button style="margin-top: 10px;" (click)="showComments(post)">
                         <div fxLayout="row" style="height: 30px;margin-left: -7px;color: gray;">
                             <div>

@@ -1,0 +1,48 @@
+.example-card-left {
+    width: 565px;
+    margin: 8px;
+    height: auto;
+  }
+  .example-card-right {
+    width: 205px;
+    margin: 8px;
+    height: 52px;
+  }
+  .example-form {
+    min-width: 150px;
+    max-width: 500px;
+    width: 100%;
+  }
+  .example-full-width {
+    width: 100%;
+  }
+  .large-font{
+    font-weight: normal;
+    font-size: 22px;
+    height: 15px;
+  }
+  .normal-font{
+    color: rgb(58, 107, 156);
+    font-size: 14px;
+  }
+  .normal-font-black{
+    color: black;
+    font-size: 14px;
+  }
+  .normal-font-gray{
+    font-size: 14px;
+    color: gray;
+  }
+  .height-row-user-date{
+    height: 30px;
+  }
+  .long-button{
+    width: 100%;
+    height: 30px;
+    margin-top: 5%;
+  }
+  .normal-font-name{
+    font-weight: bold ;
+    color: rgb(58, 107, 156);
+    font-size: 14px;
+  }

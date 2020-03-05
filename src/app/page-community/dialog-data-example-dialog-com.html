@@ -1,0 +1,23 @@
+<style>
+    .normal-font{
+        color: rgb(58, 107, 156);
+        font-size: 14px;
+      }
+    </style>
+    
+    <div fxLayout="row">
+        <div fxFlex >
+            <img src={{data.image}} style="border-radius: 5px;height:657px;">
+        </div>
+        <mat-divider style="margin-left: 2%;" [vertical]="true"></mat-divider>
+        <div fxFlex >
+            <div fxLayout="row">
+                <img mat-card-avatar style="margin:5px"  src={{data.avatarImage}} >
+                <p class="normal-font" style="width: 150px;">{{data.activeCom.name}}</p>
+                <button mat-button style="height: 50%;margin-top: -17px;" (click)="onNoClick()">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+            <mat-divider></mat-divider>
+        </div>
+    </div>

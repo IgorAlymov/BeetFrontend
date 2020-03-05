@@ -34,6 +34,12 @@ import { SettingsComponent, SaveChanges, DeletePage } from './settings/settings.
 import { SearchSubscribersComponent } from './search-subscribers/search-subscribers.component';
 import { SubscribersComponent } from './subscribers/subscribers.component';
 import { FriendPageComponent, FriendAvatarDialog } from './friend-page/friend-page.component';
+import { MyCommunityComponent } from './my-community/my-community.component';
+import { SearchCommunityComponent } from './search-community/search-community.component';
+import { MyCommunitiesComponent } from './my-communities/my-communities.component';
+import { PageCommunityComponent, DialogDataExampleDialogCom } from './page-community/page-community.component';
+import { PageMyCommunityComponent, DialogDataExampleDialogMyCom } from './page-my-community/page-my-community.component';
+import { NewsCommunitiesComponent, DialogDataExampleDialogComNews } from './news-communities/news-communities.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +58,16 @@ import { FriendPageComponent, FriendAvatarDialog } from './friend-page/friend-pa
     SearchSubscribersComponent,
     SubscribersComponent,
     FriendPageComponent,
-    FriendAvatarDialog
+    FriendAvatarDialog,
+    MyCommunityComponent,
+    SearchCommunityComponent,
+    MyCommunitiesComponent,
+    PageCommunityComponent,
+    DialogDataExampleDialogCom,
+    PageMyCommunityComponent,
+    DialogDataExampleDialogMyCom,
+    NewsCommunitiesComponent,
+    DialogDataExampleDialogComNews
   ],
   imports: [
     BrowserModule,
@@ -87,7 +102,10 @@ import { FriendPageComponent, FriendAvatarDialog } from './friend-page/friend-pa
     DialogDataExampleDialogNews,
     SaveChanges,
     DeletePage,
-    FriendAvatarDialog
+    FriendAvatarDialog,
+    DialogDataExampleDialogCom,
+    DialogDataExampleDialogMyCom,
+    DialogDataExampleDialogComNews
   ],
   exports: [],
   providers: [DataService],

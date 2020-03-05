@@ -28,6 +28,7 @@ export class MyPageComponent implements OnInit {
   public avatarImage:string;
   public allPhotoLength:number;
   public allSubLength:number;
+  public allComLength:number;
   public textPost:string;
   public imageUrl: string;
   public textPostFull:boolean=false;
@@ -36,6 +37,7 @@ export class MyPageComponent implements OnInit {
   public likeIconActive:string;
   public likesAllPosts:FileList[];
   public allSub:any[]=[];
+  public allCom:any[]=[];
 
   constructor(private dataService:DataService,public dialog: MatDialog,private router:Router) { }
 
@@ -50,6 +52,20 @@ export class MyPageComponent implements OnInit {
   updatePage(){
     this.ngOnInit();
   }
+
+ //Сообщества
+ getCommunities(communities:any){
+  this.allCom=[];
+  this.allComLength=communities.length;
+  communities.forEach(element => {
+    element.avatar=this.dataService.getAvatarCommunity(element.groupId).subscribe((data:any)=>element.avatar=data.avatarUrl),
+    element.subscribers=this.dataService.getCommunitySubscribers(element.groupId).subscribe((data:any) => element.subscribers=data)
+  });
+  for(let i = 0; i < 3; i++){
+    if(communities[i]!=null)
+    this.allCom.push(communities[i]);
+  }
+ }
  //подписки
   getAvatarFriend(subscribers:any[]){
     this.allSub=[];
@@ -83,6 +99,7 @@ export class MyPageComponent implements OnInit {
     else
     this.showBirthday=true;
     this.activeUser=user;
+    this.dataService.getMyCommunities(this.activeUser.socialUserId).subscribe((data) => this.getCommunities(data));
   }
   //аватар
   addAvatar(event) {

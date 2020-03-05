@@ -1,0 +1,78 @@
+<div fxLayout="row"> 
+    <div fxLayoutAlign="start" style="margin-top: 8px;">
+        <mat-card class="example-card-left">
+            <div fxLayoutAlign="space-between">
+                <div fxLayout="row" style="height: 30px;margin-top: -15px;">
+                    <h3 class="large-font">Добавить моё сообщество</h3>
+                </div>
+            </div>
+            <br>
+            <br>
+            <mat-divider></mat-divider>
+            <div style="width: 600px;margin: auto;margin-left: 24.5%;margin-top: 15px;margin-bottom: 2px;" >
+                <div fxLayout="row" *ngIf="photoComFull">
+                    <img  src={{filesComPhotoDisplay}} style="width: 50%;margin-top: 10px;border-radius: 5px;">
+                    <button mat-icon-button (click)="closeSelectPhoto()" style="height: 25px;width: 25px ;margin-top: 10px;margin-left: -25px;color: white;background-color: gray;">
+                        <mat-icon style="margin-top: -17px;">close</mat-icon>
+                    </button>
+                </div>
+            </div>
+            <div fxLayoutAlign="center">
+                <input #fileInput onclick="this.value=null;" style="display: none;" type="file" name="photo" (change)="selectComPhoto($event)"/>
+                <button class="long-button" style="margin-top: 20px;width: 53%;margin-left: 10px;" mat-raised-button (click)="fileInput.click()">
+                    <div fxLayout="row" fxLayoutAlign="center">
+                        <p class="normal-font" style="margin-top:-2px;">Добавить фото</p>
+                    </div>
+                </button>
+            </div>
+            <div fxLayoutAlign="center" style="margin-top: 20px;margin-bottom: -2px;">
+                <mat-form-field appearance="outline" style="width: 300px;margin-left: 10px;" >
+                    <mat-label>Название сообщества</mat-label>
+                    <div style="width: 100%;">
+                        <input matInput [(ngModel)]="comName" (input)="changeText(comName)">
+                    </div>
+                    <div fxLayoutAlign="end" style="margin-top: -35px;height: 35px;">
+                        <button mat-icon-button (click)="clearComText() " style="margin-right: -8px;">
+                            <mat-icon style="color: gray;">close</mat-icon>
+                        </button>
+                    </div>
+                </mat-form-field>
+            </div>
+            <div fxLayoutAlign="center" *ngIf="textComFull && photoComFull" >
+                <button (click)="addCommunity(comName)" class="long-button" style="margin-top: 0px;margin-bottom: 10px; width: 53%;margin-left: 10px;background-color: rgb(34, 113, 192);color: white;" mat-raised-button>
+                    <div fxLayout="row" fxLayoutAlign="center">
+                        <p class="normal-font" style="margin-top:-2px;">Создать сообщество</p>
+                    </div>
+                </button>
+            </div>
+        </mat-card>
+    </div>
+
+
+    <mat-card class="example-card-right" style="margin-top: 17px;width: 173px;height: 94px;">
+        <div style="margin-top: -7px;">
+            <button mat-button style="width: 207px;margin-left: -16px;" routerLink="/mycommunities">
+                <a style="margin-left: -55px;">
+                    Мои сообщества
+                </a>
+            </button>
+        </div>
+        <div>
+            <button mat-button style="width: 207px;margin-left: -16px;" routerLink="/searchcommunity">
+                <a style="margin-left: -50px;">
+                    Поиск сообществ
+                </a>
+            </button>
+        </div>
+        <div fxLayout="row">
+            <mat-icon style="transform: rotate(90deg);font-size: 40px;color: rgb(37, 121, 204);margin-left: -19px;margin-top: 0px;" >remove</mat-icon>
+            <div>
+                <button mat-button style="width: 207px;margin-left: -21px;" (click)="openMyCommunity()">
+                    <a style="margin-left: -55px;">
+                        Моё сообщество
+                    </a>
+                </button>
+            </div>
+        </div>
+    </mat-card>
+</div>

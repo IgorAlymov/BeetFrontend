@@ -40,15 +40,16 @@ export class FriendPageComponent implements OnInit{
   public subscription: any;
   public allSub:any[]=[];
   private subscriptions: Subscription;
+  public avatarActUser: string;
 
   constructor(private dataService:DataService,public dialog: MatDialog,private router:Router,private activatedRoute:ActivatedRoute) {
-    
   }
 
   ngOnInit() {
     this.idFriend= this.activatedRoute.snapshot.params['id'];
     this.dataService.getUser(this.idFriend).subscribe((data:User) => this.fillingArray(data));
     this.dataService.getActiveUser().subscribe((data:User) => this.user=data);
+    this.dataService.getAvatarActiveUser().subscribe((data:any)=>this.avatarActUser=data.avatarUrl);
     this.dataService.getSub(this.idFriend).subscribe((data:any) => this.subscription=data);
     this.dataService.getSubscruptionFriends(this.idFriend).subscribe((data) => this.getAvatarFriend(data));
     this.dataService.getAvatarUser(this.idFriend).subscribe((data:any)=>this.avatarImage=data.avatarUrl);

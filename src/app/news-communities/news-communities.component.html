@@ -1,0 +1,138 @@
+<div fxLayout="row"> 
+    <div fxLayoutAlign="start" style="margin-top: 8px;"  fxLayout="column" >
+        <mat-card class="example-card-left" style="height: 50px;margin-bottom: -13px;">
+            <div fxLayout="row">
+                <mat-form-field appearance="outline" style="width: 100%;margin-left: 0px;margin-top: -5px;" >
+                    <div fxLayout="row">
+                        <div style="margin-top: -10px;width: 100%;">
+                            <input style="margin-top: -10px;margin-left: 10px;" (input)="changeSearchText(searchText)" [(ngModel)]="searchText" matInput placeholder="Поиск новостей..." >
+                        </div>
+                        <div fxLayoutAlign="end" style="margin-top: -22px;height: 10px;">
+                            <button mat-icon-button (click)="clearSearchText()" style="margin-right: -10px;">
+                                <mat-icon style="color: gray;">close</mat-icon>
+                            </button>
+                        </div>
+                        <div fxLayoutAlign="end" style="margin-top: -13px;margin-left: 10px;" *ngIf="searchButtonView">
+                            <button mat-button (click)="searchingText(searchText)" style="background-color: rgb(37, 121, 204);margin-right: -12px;margin-top: -12px;margin-bottom: -16px;">
+                                <mat-icon style="color: white;">search</mat-icon>
+                            </button>
+                        </div>
+                    </div>
+
+                </mat-form-field>
+            </div>
+        </mat-card>
+
+        <div style="margin-top: 0px;">
+            <mat-card *ngFor="let post of comPosts" class="example-card-left" style="height: auto;margin-bottom: 15px;">
+                <div fxLayout="row">
+                    <button [routerLink]="['/communitypage',post.authorId]"  mat-icon-button style="border-radius: 100px;width: 55px;height: 55px;">
+                        <img style="height: 55px;width: 55px;" mat-card-avatar src={{post.avatar}}>
+                    </button>
+                    <div style="margin-left: 20px;" fxLayout="column">
+                        <a [routerLink]="['/communitypage',post.authorId]" class="normal-font-name" style="height: 25px;margin-top: 7px;text-decoration: none;">{{post.name}}</a>
+                        <p class="normal-font-gray" style="height: 10px;margin-top: -3px;">{{ post.date | date:'MMM d HH:mm' }} </p>
+                    </div>
+                </div>
+                <div fxLayout="column">
+                    <p style="margin-top: 25px;height: auto;margin-bottom: 5px;" class="normal-font-black">{{post.text}}</p>
+                    <button mat-button *ngIf="post.photo" style="margin-top: 10px;" (click)="openDialog(post.photo,post.avatar,post.name)">
+                        <img mat-card-image style="margin-top: 0px;margin-bottom: 0%;border-radius: 5px;" src={{post.photo}} >
+                    </button>
+                </div>
+                <br/>
+                <mat-divider></mat-divider>
+                <!--лайк-->
+                <div fxLayout="row">
+                    <button mat-button style="margin-top: 10px;margin-left: -10px;" (click)="addLike(post.likeIcon,post.postId,post)">
+                        <div fxLayout="row" style="height: 30px;margin-left: -7px;">
+                            <div>
+                                <mat-icon style="color: red;margin-top: 3px;">{{post.likeIcon}}</mat-icon>
+                            </div>
+                            <div>
+                                <p style="color: red;margin-top: -2px;margin-left: 5px;">{{post.likesCounter}}</p>
+                            </div>
+                        </div>
+                    </button>
+                    <!--Комментарии кнопка-->
+                    <button mat-button style="margin-top: 10px;" (click)="showComments(post)">
+                        <div fxLayout="row" style="height: 30px;margin-left: -7px;color: gray;">
+                            <div>
+                                <mat-icon style="margin-top: 3px;">chat_bubble_outline</mat-icon>
+                            </div>
+                            <div>
+                                <p style="margin-top: -2px;margin-left: 5px;">{{post.CommentsCounter}}</p>
+                            </div>
+                        </div>
+                    </button>
+                </div>
+                <!--Комментарии-->
+                <div *ngIf="post.showComments">
+                    <div *ngFor="let comment of post.Comments"> 
+                        <mat-divider style="margin-top: 5px;"></mat-divider>
+                        <br/>
+                        <div fxLayout="row">
+
+                            <img mat-card-avatar src={{comment.avatarAuthor}}>
+
+                            <div style="margin-left: 20px;" fxLayout="column">
+
+                                <p class="normal-font" style="height: 10px;margin-top: 0px;">{{comment.authorName }}</p>
+                                
+                                <p class="normal-font-black" style="margin-top: 0px;width: 450px;">{{comment.text}}</p>
+                                <p class="normal-font-gray" style="height: 10px;margin-top: -3px;">{{ comment.date | date:'MMM d HH:mm' }} </p>
+                            </div>
+                            <div fxLayoutAlign="end" style="margin-top: -15px;" *ngIf="comment.authorId==activeUser.socialUserId">
+                                <button mat-icon-button (click)="deleteComment(comment)">
+                                    <mat-icon style="color: gray;">close</mat-icon>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Оставить комментарий-->
+                    <div fxLatout="row" style="margin-bottom: -20px;">
+                        <mat-divider style="margin-top: 5px;"></mat-divider>
+                        <br/>
+                        <img style="margin-bottom: -15px;" mat-card-avatar src={{avatarImage}}>
+                        <mat-form-field appearance="outline" style="width: 82%;margin-left: 15px;" >
+                            <div style="margin-top: -10px;width: 100%;">
+                                <input matInput (input)="changeComment(post)" [(ngModel)]="post.textComment" placeholder="Оставьте комментарий..." >
+                            </div>
+                            <div fxLayoutAlign="end" style="margin-top: -30px;height: 30px;">
+                                <button mat-icon-button (click)="clearCommentText(post) " style="margin-right: -8px;">
+                                    <mat-icon style="color: gray;">close</mat-icon>
+                                </button>
+                            </div>
+                        </mat-form-field>
+                        <button *ngIf="post.showBtnSendCom"  mat-icon-button style="color: rgb(20, 114, 207);margin-bottom: 0;" (click)="addComment(post)">
+                            <mat-icon style="margin-top: -10px;">send</mat-icon>
+                        </button>
+                    </div>
+                </div>
+
+            </mat-card>
+        </div>
+
+    </div>
+    <mat-card class="example-card-right"  style="margin-top: 17px;width: 173px;height: 57px;">
+        <div fxLayout="row">
+            <div>
+                <button mat-button style="width: 207px;margin-left: -18px;margin-top: -28px;" routerLink="/news">
+                    <a style="margin-left: -5px;">
+                        Новости пользователей
+                    </a>
+                </button>
+            </div>
+        </div>
+        <div fxLayout="row">
+            <mat-icon style="transform: rotate(90deg);font-size: 40px;color: rgb(37, 121, 204);margin-left: -19px;margin-top: -3px;" >remove</mat-icon>
+            <div>
+                <button mat-button style="width: 207px;margin-left: -23px;margin-top: 0px;" routerLink="/newscommunities">
+                    <a style="margin-left: -30px;">
+                        Новости сообществ
+                    </a>
+                </button>
+            </div>
+        </div>
+    </mat-card>
+</div>
