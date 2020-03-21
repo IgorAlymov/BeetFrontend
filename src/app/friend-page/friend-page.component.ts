@@ -18,7 +18,7 @@ export interface DialogData {
   styleUrls: ['./friend-page.component.css']
 })
 export class FriendPageComponent implements OnInit{
-  public idFriend:number;
+  public idSub:number;
   public activeUser:User=new User();
   public user:User=new User();
   public userPosts:any[];
@@ -46,15 +46,15 @@ export class FriendPageComponent implements OnInit{
   }
 
   ngOnInit() {
-    this.idFriend= this.activatedRoute.snapshot.params['id'];
-    this.dataService.getUser(this.idFriend).subscribe((data:User) => this.fillingArray(data));
+    this.idSub= this.activatedRoute.snapshot.params['id'];
+    this.dataService.getUser(this.idSub).subscribe((data:User) => this.fillingArray(data));
     this.dataService.getActiveUser().subscribe((data:User) => this.user=data);
     this.dataService.getAvatarActiveUser().subscribe((data:any)=>this.avatarActUser=data.avatarUrl);
-    this.dataService.getSub(this.idFriend).subscribe((data:any) => this.subscription=data);
-    this.dataService.getSubscruptionFriends(this.idFriend).subscribe((data) => this.getAvatarFriend(data));
-    this.dataService.getAvatarUser(this.idFriend).subscribe((data:any)=>this.avatarImage=data.avatarUrl);
-    this.dataService.getPhotosFriend(this.idFriend).subscribe((data:any)=> this.allPhotoLength = data.listPhoto.length);
-    this.dataService.getFriendPost(this.idFriend).subscribe((data:any[])=>this.getPosts(data));
+    this.dataService.getSub(this.idSub).subscribe((data:any) => this.subscription=data);
+    this.dataService.getSubscruptionFriends(this.idSub).subscribe((data) => this.getAvatarFriend(data));
+    this.dataService.getAvatarUser(this.idSub).subscribe((data:any)=>this.avatarImage=data.avatarUrl);
+    this.dataService.getPhotosFriend(this.idSub).subscribe((data:any)=> this.allPhotoLength = data.listPhoto.length);
+    this.dataService.getFriendPost(this.idSub).subscribe((data:any[])=>this.getPosts(data));
   }
 
   getAvatarFriend(subscribers:any[]){
@@ -93,7 +93,7 @@ export class FriendPageComponent implements OnInit{
       this.subscriptions = this.activatedRoute.params.subscribe(
         params=>
         {
-          if(this.idFriend!=Number(params['id']))
+          if(this.idSub!=Number(params['id']))
           this.ngOnInit();
         }
       );

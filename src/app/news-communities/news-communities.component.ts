@@ -29,6 +29,14 @@ export class NewsCommunitiesComponent implements OnInit {
     this.dataService.getAvatarActiveUser().subscribe((data:any)=>this.avatarImage=data.avatarUrl);
   }
 
+  pageFriend(idF:number){
+    if(this.activeUser.socialUserId!=idF){
+      this.router.navigate(['/friendpage',idF]);
+    }
+    else
+    this.router.navigate(['/mypage']);
+  }
+
   openDialog(image:string,avatar:string,name:string):void {
     const dialogRef = this.dialog.open(DialogDataExampleDialogComNews, {
       height:"85%",

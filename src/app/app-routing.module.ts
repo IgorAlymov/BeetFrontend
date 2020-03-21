@@ -15,6 +15,8 @@ import { MyCommunitiesComponent } from './my-communities/my-communities.componen
 import { PageCommunityComponent } from './page-community/page-community.component';
 import { PageMyCommunityComponent } from './page-my-community/page-my-community.component';
 import { NewsCommunitiesComponent } from './news-communities/news-communities.component';
+import { ChatComponent } from './chat/chat.component';
+import { ChatsComponent } from './chats/chats.component';
 
 
 const routes: Routes = [
@@ -24,6 +26,8 @@ const routes: Routes = [
    {path:'photos',component: PhotosComponent},
    {path:'news',component: NewsComponent},
    {path:'newscommunities',component: NewsCommunitiesComponent},
+   {path:'chat/:id',component: ChatComponent},
+   {path:'chats',component: ChatsComponent},
    {path:'settings',component: SettingsComponent},
    {path:'searchSubscribers',component: SearchSubscribersComponent},
    {path:'subscribers',component: SubscribersComponent},

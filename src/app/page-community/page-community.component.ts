@@ -32,6 +32,14 @@ export class PageCommunityComponent implements OnInit {
     this.dataService.getAvatarActiveUser().subscribe((data:any)=>this.avatarImage=data.avatarUrl);
   }
 
+  pageFriend(idF:number){
+    if(this.activeUser.socialUserId!=idF){
+      this.router.navigate(['/friendpage',idF]);
+    }
+    else
+    this.router.navigate(['/mypage']);
+  }
+
   getAvatarCommunity(community:any){
     community.avatar = this.dataService.getAvatarCommunity(community.groupId).subscribe((data:any)=>community.avatar=data.avatarUrl);
     community.subscribersLength = this.dataService.getCommunitySubscribers(community.groupId).subscribe((data:any) => community.subscribersLength=data.length),

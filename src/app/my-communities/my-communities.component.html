@@ -13,10 +13,10 @@
                 <mat-form-field appearance="outline" style="width: 100%;margin-left: 0px;margin-top: 13px;" >
                     <div fxLayout="row">
                         <div style="margin-top: -10px;width: 100%;">
-                            <input style="margin-top: -10px;margin-left: 10px;" (input)="changeSearchText(searchText)" [(ngModel)]="searchText" matInput placeholder="Поиск сообществ..." >
+                            <input autocomplete="off" style="margin-top: -10px;margin-left: 10px;" (input)="changeSearchText(searchText)" [(ngModel)]="searchText" matInput placeholder="Поиск сообществ..." >
                         </div>
                         <div fxLayoutAlign="end" style="margin-top: -22px;height: 10px;">
-                            <button mat-icon-button (click)="clearSearchText()" style="margin-right: -10px;">
+                            <button matTooltip="Очистить" mat-icon-button (click)="clearSearchText()" style="margin-right: -10px;">
                                 <mat-icon style="color: gray;">close</mat-icon>
                             </button>
                         </div>

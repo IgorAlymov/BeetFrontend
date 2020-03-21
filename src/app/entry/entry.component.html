@@ -18,7 +18,7 @@
                     <mat-label>Пароль</mat-label>
                     <div fxLayout="row" style="height: 25px;">
                       <input style="height: 30px;" matInput required type={{viewPassword}} [formControl]="passwortFormControl" [(ngModel)]="entryUser.password">
-                      <button mat-icon-button class="show-password" (click)="showPassword(viewPassword)">
+                      <button matTooltip="Видимость" mat-icon-button class="show-password" (click)="showPassword(viewPassword)">
                         <mat-icon mat-icon-button style="height: 30px;width: 30px;margin-top: -5px;">remove_red_eye</mat-icon>
                       </button>
                     </div>

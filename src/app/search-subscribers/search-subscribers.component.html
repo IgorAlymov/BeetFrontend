@@ -13,10 +13,10 @@
                 <mat-form-field appearance="outline" style="width: 100%;margin-left: 0px;margin-top: 13px;" >
                     <div fxLayout="row">
                         <div style="margin-top: -10px;width: 100%;">
-                            <input style="margin-top: -10px;margin-left: 10px;" (input)="changeSearchText(searchText)" [(ngModel)]="searchText" matInput placeholder="Поиск подписчиков..." >
+                            <input autocomplete="off" style="margin-top: -10px;margin-left: 10px;" (input)="changeSearchText(searchText)" [(ngModel)]="searchText" matInput placeholder="Поиск подписчиков..." >
                         </div>
                         <div fxLayoutAlign="end" style="margin-top: -22px;height: 10px;">
-                            <button mat-icon-button (click)="clearSearchText()" style="margin-right: -10px;">
+                            <button  matTooltip="Очистить" matTooltip="Очистить" mat-icon-button (click)="clearSearchText()" style="margin-right: -10px;">
                                 <mat-icon style="color: gray;">close</mat-icon>
                             </button>
                         </div>
@@ -36,7 +36,7 @@
                     </button>
                     <div style="margin-left: 20px;margin-top: 15px;" fxLayout="column">
                         <a class="normal-font-black" style="height: 30px;margin-top: 7px;text-decoration: none;" [routerLink]="['/friendpage',user.socialUserId]">{{user.firstname + " " + user.lastname}}</a>
-                        <a class="normal-font-gray" style="height: 10px;margin-top: -3px;text-decoration: none;" >Написать сообщение </a>
+                        <a [routerLink]="['/chat',user.socialUserId]" class="normal-font-gray" style="height: 10px;margin-top: -3px;text-decoration: none;" >Написать сообщение </a>
                     </div>
                 </div>
                 <div fxLayoutAlign="end" style="margin-top: -100px;">

@@ -4,6 +4,7 @@ import { DataService } from '../data.service';
 import { User } from '../models/user';
 import { RouterLink, RouterModule, Router, ActivatedRoute } from '@angular/router';
 import { AppComponent } from '../app.component';
+import { MessageService } from '../message.service';
 
 @Component({
   selector: 'app-entry',
@@ -11,6 +12,7 @@ import { AppComponent } from '../app.component';
   styleUrls: ['./entry.component.css']
 })
 export class EntryComponent implements OnInit {
+
   entryUser:User=new User();
   firstFormGroup: FormGroup;
   passwortFormControl = new FormControl('', [
@@ -28,7 +30,11 @@ export class EntryComponent implements OnInit {
   ];
   viewPassword:string="password";
 
-  constructor(private _formBuilder: FormBuilder, private dataService:DataService,private router:Router,private appCom:AppComponent) {
+  constructor(private _formBuilder: FormBuilder, 
+              private dataService:DataService,
+              private router:Router,
+              private appCom:AppComponent,
+              private messageService:MessageService) {
     appCom.fullView=false;
    }
 
@@ -44,8 +50,9 @@ export class EntryComponent implements OnInit {
       this.progressBarOn=true;
       this.dataService.postEntry(this.entryUser)
     .subscribe(myPage=>this.myPageNavigation(),
-      error=>this.errorValid(error),
+      error=>this.errorValid(error)
     );
+      this.messageService.connectionHub();
     }
   }
 

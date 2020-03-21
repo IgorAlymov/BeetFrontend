@@ -32,7 +32,7 @@
                 <mat-divider></mat-divider>
                 <!--лайк-->
                 <div fxLayout="row">
-                    <button mat-button style="margin-top: 10px;margin-left: -10px;" (click)="addLike(post.likeIcon,post.postId,post)">
+                    <button matTooltip="Нравится" mat-button style="margin-top: 10px;margin-left: -10px;" (click)="addLike(post.likeIcon,post.postId,post)">
                         <div fxLayout="row" style="height: 30px;margin-left: -7px;">
                             <div>
                                 <mat-icon style="color: red;margin-top: 3px;">{{post.likeIcon}}</mat-icon>
@@ -43,7 +43,7 @@
                         </div>
                     </button>
                     <!--Комментарии кнопка-->
-                    <button mat-button style="margin-top: 10px;" (click)="showComments(post)">
+                    <button matTooltip="Комментарии" mat-button style="margin-top: 10px;" (click)="showComments(post)">
                         <div fxLayout="row" style="height: 30px;margin-left: -7px;color: gray;">
                             <div>
                                 <mat-icon style="margin-top: 3px;">chat_bubble_outline</mat-icon>
@@ -60,18 +60,18 @@
                         <mat-divider style="margin-top: 5px;"></mat-divider>
                         <br/>
                         <div fxLayout="row">
-
-                            <img mat-card-avatar src={{comment.avatarAuthor}}>
-
+                            <button  (click)="pageFriend(comment.authorId)" mat-icon-button style="border-radius: 100px;width: 40px;height: 40px;">
+                                <img mat-card-avatar src={{comment.avatarAuthor}}>
+                            </button>
                             <div style="margin-left: 20px;" fxLayout="column">
 
-                                <p class="normal-font" style="height: 10px;margin-top: 0px;">{{comment.authorName }}</p>
+                                <a  [routerLink]="" (click)="pageFriend(comment.authorId)" class="normal-font" style="height: 20px;margin-top: 0px;text-decoration: none;">{{comment.authorName }}</a>
                                 
                                 <p class="normal-font-black" style="margin-top: 0px;width: 450px;">{{comment.text}}</p>
                                 <p class="normal-font-gray" style="height: 10px;margin-top: -3px;">{{ comment.date | date:'MMM d HH:mm' }} </p>
                             </div>
                             <div fxLayoutAlign="end" style="margin-top: -15px;" *ngIf="comment.authorId==activeUser.socialUserId">
-                                <button mat-icon-button (click)="deleteComment(comment)">
+                                <button matTooltip="Удалить" mat-icon-button (click)="deleteComment(comment)" style="margin-left: -10px;">
                                     <mat-icon style="color: gray;">close</mat-icon>
                                 </button>
                             </div>
@@ -81,18 +81,20 @@
                     <div fxLatout="row" style="margin-bottom: -20px;">
                         <mat-divider style="margin-top: 5px;"></mat-divider>
                         <br/>
-                        <img style="margin-bottom: -15px;" mat-card-avatar src={{avatarImage}}>
+                        <button  routerLink="/mypage" mat-icon-button style="border-radius: 100px;width: 40px;height: 40px;">
+                            <img mat-card-avatar src={{avatarImage}}>
+                        </button>
                         <mat-form-field appearance="outline" style="width: 82%;margin-left: 15px;" >
                             <div style="margin-top: -10px;width: 100%;">
-                                <input matInput (input)="changeComment(post)" [(ngModel)]="post.textComment" placeholder="Оставьте комментарий..." >
+                                <input autocomplete="off" matInput (input)="changeComment(post)" [(ngModel)]="post.textComment" placeholder="Оставьте комментарий..." >
                             </div>
                             <div fxLayoutAlign="end" style="margin-top: -30px;height: 30px;">
-                                <button mat-icon-button (click)="clearCommentText(post) " style="margin-right: -8px;">
+                                <button matTooltip="Очистить" mat-icon-button (click)="clearCommentText(post) " style="margin-right: -8px;">
                                     <mat-icon style="color: gray;">close</mat-icon>
                                 </button>
                             </div>
                         </mat-form-field>
-                        <button *ngIf="post.showBtnSendCom"  mat-icon-button style="color: rgb(20, 114, 207);margin-bottom: 0;" (click)="addComment(post)">
+                        <button matTooltip="Отправить" *ngIf="post.showBtnSendCom"  mat-icon-button style="color: rgb(20, 114, 207);margin-bottom: 0;" (click)="addComment(post)">
                             <mat-icon style="margin-top: -10px;">send</mat-icon>
                         </button>
                     </div>

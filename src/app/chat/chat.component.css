@@ -1,0 +1,46 @@
+.example-card-left {
+    width: 565px;
+    margin: 8px;
+    height: auto;
+  }
+  .example-card-right {
+    width: 205px;
+    margin: 8px;
+    height: 70px;
+  }
+    .large-font{
+      font-weight: normal;
+      font-size: 22px;
+      height: 15px;
+    }
+    .large-font-gray{
+      font-weight: normal;
+      font-size: 22px;
+      height: 15px;
+      color: gray;
+    }
+    .simple-button{
+      background-color:rgb(37, 121, 204);
+      color:white;
+    }
+    .normal-font-black{
+        color: black;
+        font-size: 16px;
+    }
+      .normal-font-gray{
+        font-size: 14px;
+        color: gray;
+      }
+      .chat {
+        height:75vh;
+        width: 105.5% ;
+        margin-left: -15px;
+      }
+      .normal-font{
+        color:rgb(37, 121, 204);
+        font-size: 14px;
+      }
+      .normal-font-message{
+        color: black;
+        font-size: 14px;
+      }

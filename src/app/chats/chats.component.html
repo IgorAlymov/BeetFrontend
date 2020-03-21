@@ -1,0 +1,64 @@
+<div fxLayout="row"> 
+    <div fxLayoutAlign="start" style="margin-top: 8px;">
+        <mat-card class="example-card-left">
+            <div fxLayout="row" style="margin-bottom: -10px;margin-top: -17px;">
+                <mat-form-field appearance="outline" style="width: 100%;margin-left: 0px;margin-top: 13px;" >
+                    <div fxLayout="row">
+                        <div style="margin-top: -10px;width: 100%;">
+                            <input autocomplete="off" style="margin-top: -10px;margin-left: 10px;" (input)="changeSearchText(searchText)" [(ngModel)]="searchText" matInput placeholder="Поиск диалогов..." >
+                        </div>
+                        <div fxLayoutAlign="end" style="margin-top: -22px;height: 10px;">
+                            <button matTooltip="Очистить" mat-icon-button (click)="clearSearchText()" style="margin-right: -10px;">
+                                <mat-icon style="color: gray;">close</mat-icon>
+                            </button>
+                        </div>
+                        <div fxLayoutAlign="end" style="margin-top: -13px;margin-left: 10px;" *ngIf="searchButtonView">
+                            <button mat-button (click)="searchingText(searchText)" style="background-color: rgb(37, 121, 204);margin-right: -12px;margin-top: -12px;margin-bottom: -16px;">
+                                <mat-icon style="color: white;">search</mat-icon>
+                            </button>
+                        </div>
+                    </div>
+                </mat-form-field>
+            </div>
+                <div style="margin-bottom: -17px;">
+                <button *ngFor="let dialog of dialogs" [routerLink]="['/chat',dialog.page]" mat-button style="width: 597px;height: auto;margin-left: -16px;">
+                    <mat-divider></mat-divider>
+                    <div style="height: 87px;">
+                        <div fxLayout="row" style="margin-top: -3px;">
+                            <button [routerLink]="['/friendpage',dialog.page]"  mat-button style="margin-top: 14px;margin-bottom: -1%;border-radius: 100px;height: 62px;width: 52px;">
+                                <img style="height: 60px;width: 60px;margin-left: -14px;" mat-card-avatar src="{{dialog.avatar}}">
+                            </button>
+                            <div style="margin-left: 20px;margin-top: 0px;" fxLayout="column" >
+                                <a fxLayout="start" class="normal-font-black" style="height: 30px;margin-top: 7px;text-decoration: none;" > {{dialog.name}}</a>
+                                <a fxLayout="start" class="normal-font-gray" style="height: 10px;margin-top: -3px;text-decoration: none;" >{{dialog.lastMessage}} </a>
+                            </div>
+                        </div>
+                        <div fxLayoutAlign="end" style="margin-top: -68px;">
+                            <a class="normal-font-gray" style="height: 10px;margin-top: 3px;text-decoration: none;" >{{dialog.date | date:'MMM d HH:mm'}} </a>
+                            <button matTooltip="Удалить" mat-icon-button (click)="deleteDialog(dialog.dialogId)">
+                                <mat-icon style="color: gray;">close </mat-icon>
+                            </button>
+                        </div>
+                        <div fxLayoutAlign="end" *ngIf="!dialog.read">
+                            <mat-icon style="color: rgb(37, 121, 204);margin-right: 8px;">fiber_manual_record</mat-icon>
+                        </div>
+                    </div>
+                </button>
+            </div>
+        </mat-card>
+    </div>
+
+
+    <mat-card class="example-card-right" style="margin-top: 17px;width: 173px;height: 20px;">
+        <div fxLayout="row">
+            <mat-icon style="transform: rotate(90deg);font-size: 40px;color: rgb(37, 121, 204);margin-left: -19px;margin-top: -11px;" >remove</mat-icon>
+            <div>
+                <button mat-button style="width: 207px;margin-left: -23px;margin-top: -11px;" routerLink="/chats">
+                    <a style="margin-left: -60px;">
+                        Все сообщения
+                    </a>
+                </button>
+            </div>
+        </div>
+    </mat-card>
+</div>

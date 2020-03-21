@@ -18,6 +18,7 @@ import { MatProgressBarModule} from '@angular/material/progress-bar';
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { HttpClientModule} from '@angular/common/http'
 import { DataService } from './data.service';
+import { MessageService } from './message.service';
 import { RegistrationComponent } from './registration/registration.component';
 import { EntryComponent } from './entry/entry.component';
 import {MatBadgeModule} from '@angular/material/badge';
@@ -40,6 +41,11 @@ import { MyCommunitiesComponent } from './my-communities/my-communities.componen
 import { PageCommunityComponent, DialogDataExampleDialogCom } from './page-community/page-community.component';
 import { PageMyCommunityComponent, DialogDataExampleDialogMyCom } from './page-my-community/page-my-community.component';
 import { NewsCommunitiesComponent, DialogDataExampleDialogComNews } from './news-communities/news-communities.component';
+import { ChatComponent } from './chat/chat.component';
+import { ChatsComponent} from './chats/chats.component';
+import {ScrollingModule} from '@angular/cdk/scrolling';
+import {MatTooltipModule} from '@angular/material/tooltip';
+
 
 @NgModule({
   declarations: [
@@ -67,7 +73,9 @@ import { NewsCommunitiesComponent, DialogDataExampleDialogComNews } from './news
     PageMyCommunityComponent,
     DialogDataExampleDialogMyCom,
     NewsCommunitiesComponent,
-    DialogDataExampleDialogComNews
+    DialogDataExampleDialogComNews,
+    ChatComponent,
+    ChatsComponent
   ],
   imports: [
     BrowserModule,
@@ -94,7 +102,9 @@ import { NewsCommunitiesComponent, DialogDataExampleDialogComNews } from './news
     MatDialogModule,
     MatGridListModule,
     MatTabsModule,
-    MatMenuModule
+    MatMenuModule,
+    ScrollingModule,
+    MatTooltipModule
   ],
   entryComponents:[
     DialogDataExampleDialog,
@@ -108,7 +118,10 @@ import { NewsCommunitiesComponent, DialogDataExampleDialogComNews } from './news
     DialogDataExampleDialogComNews
   ],
   exports: [],
-  providers: [DataService],
+  providers: [
+    DataService,
+    MessageService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

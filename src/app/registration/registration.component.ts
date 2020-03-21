@@ -5,6 +5,7 @@ import { DataService } from '../data.service';
 import { MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
 import { AppComponent } from '../app.component';
+import { MessageService } from '../message.service';
 
 export interface Gender {
   value: string;
@@ -50,7 +51,8 @@ export class RegistrationComponent implements OnInit {
     private dataService:DataService, 
     private _snackBar: MatSnackBar,
     private router:Router,
-    private appCom:AppComponent) {
+    private appCom:AppComponent,
+    private messageService:MessageService) {
       appCom.fullView=false;
     }
 
@@ -69,6 +71,7 @@ export class RegistrationComponent implements OnInit {
     .subscribe( myPage=>this.myPageNavigation(),
       error=>this.errorValid(error)
     );
+    this.messageService.connectionHub()
   }
 
   myPageNavigation(){

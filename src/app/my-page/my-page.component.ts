@@ -5,6 +5,9 @@ import {MatDialog, MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog
 import { Subscriber } from 'rxjs';
 import { FriendPageComponent } from '../friend-page/friend-page.component';
 import { Router } from '@angular/router';
+import { AppComponent } from '../app.component';
+import { Dialog } from '../models/dialog';
+import { MessageService } from '../message.service';
 
 export interface DialogData {
   avatarImage:string;
@@ -38,8 +41,15 @@ export class MyPageComponent implements OnInit {
   public likesAllPosts:FileList[];
   public allSub:any[]=[];
   public allCom:any[]=[];
+  public counter:number=null;
 
-  constructor(private dataService:DataService,public dialog: MatDialog,private router:Router) { }
+  constructor(private dataService:DataService,
+    public dialog: MatDialog,
+    private router:Router,
+    private appCom:AppComponent,
+    private messageService:MessageService) {
+      appCom.dialogReadCounter=null;
+    }
 
   ngOnInit() {
     this.dataService.getActiveUser().subscribe((data:User) => this.fillingArray(data));
@@ -47,9 +57,48 @@ export class MyPageComponent implements OnInit {
     this.dataService.getAllPhotos().subscribe((data:any)=> this.allPhotoLength = data.listPhoto.length);
     this.dataService.getSubscribers().subscribe((data) => this.getAvatarFriend(data));
     this.dataService.getActiveUserPost().subscribe((data:any[])=>this.getPosts(data));
+    this.messageService.getMyDialogs().subscribe((data:Dialog[])=>this.fillingDialogs(data));
+  }
+
+  fillingDialogs(dialogs:Dialog[]){
+    dialogs.forEach(element => {
+      if(element.author!=this.activeUser.socialUserId){
+        this.dataService.getUser(element.author).subscribe((data:User)=> { element.name = data.firstname + " " +  data.lastname });
+        this.dataService.getAvatarUser(element.author).subscribe((data:any)=> { element.avatar = data.avatarUrl });
+        element.page=element.author;
+        if(element.author==this.activeUser.socialUserId){
+          element.read=element.readAuthor;
+        }else{
+          element.read=element.readReciver;
+        }
+      }
+      else{
+        this.dataService.getUser(element.reciver).subscribe((data:User)=> {element.name =  data.firstname + " " +  data.lastname});
+        this.dataService.getAvatarUser(element.reciver).subscribe((data:any)=> { element.avatar = data.avatarUrl });
+        element.page=element.reciver;
+        if(element.author==this.activeUser.socialUserId){
+          element.read=element.readAuthor;
+        }else{
+          element.read=element.readReciver;
+        }
+      }
+    });
+    dialogs.forEach(element => {
+      if(element.read==false)
+        this.counter++;
+    });
+    this.appCom.dialogReadCounter=this.counter;
   }
 
   updatePage(){
+    this.ngOnInit();
+  }
+
+  pageFriend(idF:number){
+    if(this.activeUser.socialUserId!=idF){
+      this.router.navigate(['/friendpage',idF]);
+    }
+    else
     this.ngOnInit();
   }
 

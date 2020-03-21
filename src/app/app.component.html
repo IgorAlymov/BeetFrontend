@@ -9,19 +9,28 @@
   </div>
 </div>
 <div  style="background-color:rgb(241, 241, 241);height: auto;">
-  <div fxFlex="30" fxLayoutAlign="end start" style="color: rgb(37, 121, 204);margin-right: 10px;margin-top: 15px;height: 900px;">
-    <div *ngIf="fullView" fxLayout="column" style="margin-right: 10px;">
+  <div fxFlex="30" fxLayoutAlign="end start" style="color: rgb(37, 121, 204);margin-right: 10px;margin-top: 15px;height: 100vh;">
+    <div *ngIf="fullView" fxLayout="column" style="margin-right: 8px;">
       <button mat-button fxLayoutAlign="start" routerLink="/mypage">
         <mat-icon style="margin-right: 5px;">home</mat-icon>
         Моя страница
       </button>
-      <button mat-button fxLayoutAlign="start" routerLink="/photos">
-        <mat-icon style="margin-right: 5px;">photo</mat-icon>
-        Фото
-      </button>
       <button mat-button fxLayoutAlign="start" routerLink="/news">
         <mat-icon style="margin-right: 5px;">library_books</mat-icon>
         Новости
+      </button>
+      <button  mat-button fxLayoutAlign="start" routerLink="/chats">
+        <mat-icon style="margin-right: 5px;margin-top: 5px;">message</mat-icon>
+          Сообщения
+          <div fxFlex="row" style="width: 25px;" >
+            <div *ngIf="dialogReadCounter" style="background-color: rgb(37, 121, 204);height: 33px;margin-right: -15px;border-radius: 5px;margin-top: 2px;margin-left: 10px;margin-bottom: -10px;" >
+              <label style="color: white;margin-top: -50%;">{{dialogReadCounter}}</label>
+            </div>
+          </div>
+      </button>
+      <button mat-button fxLayoutAlign="start" routerLink="/photos">
+        <mat-icon style="margin-right: 5px;">photo</mat-icon>
+        Фото
       </button>
       <button mat-button fxLayoutAlign="start" routerLink="/subscribers">
         <mat-icon style="margin-right: 5px;">emoji_people</mat-icon>
@@ -30,13 +39,6 @@
       <button mat-button fxLayoutAlign="start" routerLink="/mycommunities">
         <mat-icon style="margin-right: 5px;">people</mat-icon>
         Сообщества
-      </button>
-      <button mat-button fxLayoutAlign="start" >
-        <mat-icon style="margin-right: 5px;">message</mat-icon>
-        Сообщения
-        <!--
-        <strong style="margin-left: 10px;">0</strong>
-        -->
       </button>
       <button mat-button fxLayoutAlign="start">
         <mat-icon style="margin-right: 5px;">videocam</mat-icon>

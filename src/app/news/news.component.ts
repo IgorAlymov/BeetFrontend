@@ -167,6 +167,15 @@ export class NewsComponent implements OnInit {
      }
    }
   }
+
+  clearCommentText(post:any){
+    this.userPosts.forEach(element => {
+      if(element.postId==post.postId){
+        element.textComment="";
+        element.showBtnSendCom=false;
+      }
+    });
+   }
   //поиск
   changeSearchText(searchText:string){
     if(searchText==""){
