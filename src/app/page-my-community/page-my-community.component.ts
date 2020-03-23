@@ -16,7 +16,7 @@ export class PageMyCommunityComponent implements OnInit {
   subscribers:any[]=[];
   activeUser:User=new User();
   adminGroup:User=new User();
-  public textPost:string;
+  public textPost:string="";
   public textPostFull:boolean=false;
   public photoPostFull:boolean=false;
   public filesPostPhotoDisplay: any;
@@ -304,5 +304,6 @@ export class DialogDataExampleDialogMyCom {
   
   onNoClick(): void {
     this.dialogRef.close();
+    location.reload();
   }
 }

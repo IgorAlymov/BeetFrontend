@@ -32,7 +32,7 @@ export class MyPageComponent implements OnInit {
   public allPhotoLength:number;
   public allSubLength:number;
   public allComLength:number;
-  public textPost:string;
+  public textPost:string="";
   public imageUrl: string;
   public textPostFull:boolean=false;
   public photoPostFull:boolean=false;
@@ -198,6 +198,7 @@ export class MyPageComponent implements OnInit {
       this.dataService.getComment(element.postId).subscribe(data=>element.CommentsCounter=data.length);
     });
     this.userPosts=posts;
+    console.log(this.userPosts);
   }
 
   selectPostPhoto(event) {
@@ -365,10 +366,15 @@ export class MyPageComponent implements OnInit {
   templateUrl: 'dialog-data-example-dialog.html',
 })
 export class DialogDataExampleDialog {
+
   constructor(public dialogRef: MatDialogRef<DialogDataExampleDialog>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
   
   onNoClick(): void {
     this.dialogRef.close();
+  }
+
+  myPageClick(){
+    location.reload();
   }
 }

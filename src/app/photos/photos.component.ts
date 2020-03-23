@@ -155,7 +155,7 @@ export class DialogDataExampleDialogPhoto {
       }
     }
   }
-
+  
   onNoClick(): void {
     this.dialogRef.close();
   }

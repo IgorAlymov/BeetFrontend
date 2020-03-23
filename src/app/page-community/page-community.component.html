@@ -105,7 +105,7 @@
     </div>
     <div fxLayout="column">
         <mat-card class="example-card-left">
-            <button mat-button (click)="openDialog(community.avatar)">
+            <button mat-button (click)="openDialog(community.avatar,community.groupId)">
                 <img mat-card-image style="margin-top: 0px;margin-bottom: -1%;border-radius: 5px;" src={{community.avatar}} >
             </button>
             <button class="long-button" style="margin-top: 20px;" mat-raised-button *ngIf="!community.subscription" (click)="addSubscriber(community.groupId)">

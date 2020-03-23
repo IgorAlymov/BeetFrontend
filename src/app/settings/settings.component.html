@@ -93,7 +93,6 @@
                 </div>
                 <mat-form-field appearance="outline" style="width: 300px;margin-left: 10px;" >
                     <div style="margin-top: -10px;width: 100%;height: 15px;" fxLayout="row">
-                        <span matPrefix>+7 &nbsp;</span>
                         <input placeholder="{{activeUser.phoneNumber}}" disabled={{!change[4]}} style="margin-bottom: -4px;" type="number" matInput [(ngModel)]="activeUser.phoneNumber">
                     </div>
                 </mat-form-field>
@@ -141,7 +140,7 @@
         <mat-icon style="transform: rotate(90deg);font-size: 40px;color: rgb(37, 121, 204);margin-left: -19px;margin-top: -11px;" >remove</mat-icon>
         <div>
             <button mat-button style="width: 207px;margin-left: -22px;margin-top: -25px;" routerLink="/settings">
-                <a style="margin-left: -120px;">
+                <a fxLayoutAlign="start"  style="margin-left: 2px;">
                     Общее
                 </a>
                 

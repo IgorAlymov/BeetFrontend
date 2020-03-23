@@ -52,6 +52,7 @@ export class EntryComponent implements OnInit {
     .subscribe(myPage=>this.myPageNavigation(),
       error=>this.errorValid(error)
     );
+    if(!this.messageService.connection)
       this.messageService.connectionHub();
     }
   }

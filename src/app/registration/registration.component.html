@@ -34,7 +34,7 @@
                 <mat-form-field  appearance="outline" >
                   <mat-label>Пароль</mat-label>
                   <div fxLayout="row" style="height: 25px;">
-                    <input style="height: 30px;" matInput required type={{viewPassword}} [formControl]="passwortFormControl" [(ngModel)]="regUser.password">
+                    <input style="height: 30px;width: 80%;" matInput required type={{viewPassword}} [formControl]="passwortFormControl" [(ngModel)]="regUser.password">
                     <button matTooltip="Видимость" mat-icon-button class="show-password" (click)="showPassword(viewPassword)">
                       <mat-icon mat-icon-button style="height: 30px;width: 30px;margin-top: -5px;">remove_red_eye</mat-icon>
                     </button>
@@ -64,7 +64,6 @@
               <div fxLayoutAlign="center">
                 <mat-form-field  appearance="outline" style="width: 210px;">
                   <mat-label>Телефон</mat-label>
-                  <span matPrefix>+7 &nbsp;</span>
                   <input style="margin-bottom: -4px;" type="number" [formControl]="nameFormControl" matInput [(ngModel)]="regUser.phonenumber">
                 </mat-form-field>
               </div>

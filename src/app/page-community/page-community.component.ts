@@ -66,7 +66,7 @@ export class PageCommunityComponent implements OnInit {
     }
   }
 
-  openDialog(image:string):void {
+  openDialog(image:string,idC:number):void {
     const dialogRef = this.dialog.open(DialogDataExampleDialogCom, {
       height:"85%",
       maxHeight:"710px",
@@ -74,7 +74,8 @@ export class PageCommunityComponent implements OnInit {
       data: {
         avatarImage:this.community.avatar,
         image:image,
-        activeCom:this.community}
+        activeCom:this.community,
+        idC:idC}
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -246,5 +247,6 @@ export class DialogDataExampleDialogCom {
   
   onNoClick(): void {
     this.dialogRef.close();
+    location.reload();
   }
 }

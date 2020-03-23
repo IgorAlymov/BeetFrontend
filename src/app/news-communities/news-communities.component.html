@@ -36,7 +36,7 @@
                 </div>
                 <div fxLayout="column">
                     <p style="margin-top: 25px;height: auto;margin-bottom: 5px;" class="normal-font-black">{{post.text}}</p>
-                    <button mat-button *ngIf="post.photo" style="margin-top: 10px;" (click)="openDialog(post.photo,post.avatar,post.name)">
+                    <button mat-button *ngIf="post.photo" style="margin-top: 10px;" (click)="openDialog(post.photo,post.avatar,post.name,post.authorId)">
                         <img mat-card-image style="margin-top: 0px;margin-bottom: 0%;border-radius: 5px;" src={{post.photo}} >
                     </button>
                 </div>

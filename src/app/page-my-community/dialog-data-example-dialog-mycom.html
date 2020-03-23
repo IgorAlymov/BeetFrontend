@@ -12,8 +12,13 @@
         <mat-divider style="margin-left: 2%;" [vertical]="true"></mat-divider>
         <div fxFlex >
             <div fxLayout="row">
-                <img mat-card-avatar style="margin:5px"  src={{data.avatarImage}} >
-                <p class="normal-font" style="width: 150px;">{{data.activeCom.name}}</p>
+                <button (click)="onNoClick()" mat-icon-button style="border-radius: 100px;width: 45px;height: 45px;margin-left: 5px;margin-bottom: 5px;margin-right: 10px;">
+                    <img style="height: 45px;width: 45px;" mat-card-avatar src={{data.avatarImage}}>
+                </button>
+                <div fxLayout="column">
+                    <a (click)="onNoClick()" [routerLink]="['/mycommunitypage']"  class="normal-font" style="width: 150px;text-decoration: none;">{{data.activeCom.name}}</a>
+                </div>
+
                 <button mat-button style="height: 50%;margin-top: -17px;" (click)="onNoClick()">
                     <mat-icon>close</mat-icon>
                 </button>

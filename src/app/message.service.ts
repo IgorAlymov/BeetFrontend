@@ -9,24 +9,31 @@ import { HubConnection, HubConnectionBuilder } from '@aspnet/signalr';
   providedIn: 'root'
 })
 export class MessageService {
-
-  public hubConnection: HubConnection = new HubConnectionBuilder().withUrl("http://localhost:5001/chat").build();;
-  private userUrl="http://localhost:5001/api/"
+  public hubConnection: HubConnection = new HubConnectionBuilder().withUrl("http://localhost:5001/chat").build();
+  private userUrl="http://localhost:5001/api/";
   headers:any={ headers: new HttpHeaders(), withCredentials: true };
+  public connection:boolean=false;
 
   constructor(private http:HttpClient) { }
   
   public connectionHub(){
     this.hubConnection
       .start()
-      .then(() => console.log('Connection started!'))
+      .then(() => 
+      {
+        console.log('Connection started!');
+        this.connection=true;
+      })
       .catch(err => console.log('Error connection!'));
   }
   
   public unconnectionHub(){
     this.hubConnection
       .stop()
-      .then(() => console.log('Connection stop!'))
+      .then(() => {
+        console.log('Connection stop!');
+        this.connection=false;
+      })
       .catch(err => console.log('Error while establishing connection :('));
   }
 

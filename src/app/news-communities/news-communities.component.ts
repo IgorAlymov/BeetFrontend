@@ -37,7 +37,7 @@ export class NewsCommunitiesComponent implements OnInit {
     this.router.navigate(['/mypage']);
   }
 
-  openDialog(image:string,avatar:string,name:string):void {
+  openDialog(image:string,avatar:string,name:string,idC:number):void {
     const dialogRef = this.dialog.open(DialogDataExampleDialogComNews, {
       height:"85%",
       maxHeight:"710px",
@@ -45,7 +45,8 @@ export class NewsCommunitiesComponent implements OnInit {
       data: {
         avatarImage:avatar,
         image:image,
-        activeCom:name}
+        activeCom:name,
+        idC:idC}
     });
     dialogRef.afterClosed().subscribe(result => {
     });
@@ -225,7 +226,9 @@ export class NewsCommunitiesComponent implements OnInit {
 })
 export class DialogDataExampleDialogComNews {
   constructor(public dialogRef: MatDialogRef<DialogDataExampleDialogComNews>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+    @Inject(MAT_DIALOG_DATA) public data: DialogData) {
+      console.log(data);
+    }
   
   onNoClick(): void {
     this.dialogRef.close();

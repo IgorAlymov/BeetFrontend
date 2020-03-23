@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
 export interface DialogData {
   avatarImage:string;
   image:string;
-  activeUser:User;
+  user:User;
 }
 
 @Component({
@@ -76,7 +76,7 @@ export class NewsComponent implements OnInit {
       data: {
         avatarImage:avatar,
         image:image,
-        activeUser:author}
+        user:author}
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -224,12 +224,23 @@ export class NewsComponent implements OnInit {
   templateUrl: 'dialog-data-example-dialog-news.html',
 })
 export class DialogDataExampleDialogNews {
+
+  activeUser:User=new User();
+
   constructor(public dialogRef: MatDialogRef<DialogDataExampleDialogNews>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) {
-      console.log(data);
+    @Inject(MAT_DIALOG_DATA) public data: DialogData,
+    private dataService:DataService,
+    private router:Router) {
+      this.dataService.getActiveUser().subscribe((data:User)=>this.activeUser=data);
     }
   
   onNoClick(): void {
+
+    if(this.activeUser.socialUserId==this.data.user.socialUserId){
+      this.router.navigate(['/mypage']);
+    }else{
+      this.router.navigate(['/friendpage',this.data.user.socialUserId]);
+    }
     this.dialogRef.close();
   }
 }

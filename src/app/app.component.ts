@@ -18,8 +18,8 @@ export class AppComponent implements OnInit{
   public fullView:boolean;
   public activeUser:User=new User();
   public dialogs:Dialog[]=[];
-  public dialogReadCounter:number;
-  public counter:number=null;
+  public dialogReadCounter:number=0;
+  public counter:number=0;
   public nick:string=null;
   public dialog:Dialog=new Dialog();
   public idReciver:string=null;
@@ -34,19 +34,17 @@ export class AppComponent implements OnInit{
     this.dataService.getActiveUser().subscribe((data:User) => this.activeUser = data);
     this.messageService.getMyDialogs().subscribe((data:Dialog[])=>this.fillingDialogs(data));
     this.messageService.hubConnection.on('sendToAll', (nick: string, receivedMessage: string,idD:string,idReciver:string) => {
-      console.log("получил");
       if( idD=="null" && parseInt(nick)!=this.activeUser.socialUserId && 
       this.activeUser.socialUserId.toString() == idReciver && this.idReciver!=idReciver){
         this.dialogReadCounter++;
         this.idReciver=idReciver;
-        console.log("вошел");
       }
+      if(this.dialogs)
       this.dialogs.forEach(element => {
           if(parseInt(nick)!=this.activeUser.socialUserId && parseInt(nick) ==element.author && parseInt(idD)==element.dialogId || 
               parseInt(nick)!=this.activeUser.socialUserId && parseInt(nick) ==element.reciver && parseInt(idD)==element.dialogId){
                 this.messageService.getDialog(parseInt(nick)).subscribe(
                   (data:Dialog)=>this.getActiveDialog(data));
-                  console.log("вошел");
           }
       });
     });

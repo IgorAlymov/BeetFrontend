@@ -260,4 +260,8 @@ export class FriendAvatarDialog {
   onNoClick(): void {
     this.dialogRef.close();
   }
+
+  friendPageClick(){
+    location.reload();
+  }
 }
