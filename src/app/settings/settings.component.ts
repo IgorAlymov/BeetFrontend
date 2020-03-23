@@ -78,6 +78,7 @@ export class SettingsComponent implements OnInit {
   }
 
   changeSave(user:User){
+    user.birthday.setDate(user.birthday.getDate() + 1);
     Object.keys(user).forEach(function(key){
       if(user[key]=="Не указано" || user[key]=="")
       user[key]=null;

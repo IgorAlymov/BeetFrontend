@@ -67,11 +67,13 @@ export class RegistrationComponent implements OnInit {
   
   public startRegistration(userReg:User) {
     this.progressBarOn=true;
+    userReg.birthday.setDate(userReg.birthday.getDate() + 1);
     this.dataService.postRegistration(userReg)
     .subscribe( myPage=>this.myPageNavigation(),
       error=>this.errorValid(error)
     );
-    this.messageService.connectionHub()
+    if(!this.messageService.connection)
+      this.messageService.connectionHub()
   }
 
   myPageNavigation(){

@@ -16,7 +16,7 @@ import { AppComponent } from '../app.component';
 export class ChatComponent implements OnInit {
 
   @ViewChild('scrollMe', {static: false}) private myScrollContainer: ElementRef;
-  public textMes:string;
+  public textMes:string="";
   public idReciver:number;
   public reciver:User=new User();
   public activeUser:User=new User();
@@ -57,6 +57,7 @@ export class ChatComponent implements OnInit {
         this.addMessage(receivedMessage,parseInt(nick))
       }
     });
+    this.appCom.idD=null;
   }
 
   handleDialogs(data:Message[]){
@@ -96,21 +97,25 @@ export class ChatComponent implements OnInit {
   }
 
   sendMessage(): void {
-    if(this.dialog==null){
-      this.messageService.sendMessageHub(this.nick, this.textMes,"null",this.idReciver.toString());
-      this.sendMes.dialogId=null;
+    if(this.textMes!=""){
+      if(this.dialog==null){
+        this.messageService.sendMessageHub(this.nick, this.textMes,"null",this.idReciver.toString());
+        this.sendMes.dialogId=null;
+      }
+      else{
+        this.sendMes.dialogId=this.dialog.dialogId;
+        this.messageService.sendMessageHub(this.nick, this.textMes,this.dialog.dialogId.toString(),"null");
+      }
+      this.sendMes.text=this.textMes;
+      this.sendMes.author=this.activeUser.socialUserId;
+      this.sendMes.reciver=this.idReciver;
+      this.messageService.sendMessage(this.sendMes).subscribe(p=> {
+        this.messageService.getDialog(this.idReciver).subscribe((data:Dialog)=>this.dialog=data);
+        this.messageService.getMyDialogs().subscribe((data:Dialog[])=>this.appCom.dialogs=data);
+      }
+      );
+      this.textMes="";
     }
-    else{
-      this.sendMes.dialogId=this.dialog.dialogId;
-      this.messageService.sendMessageHub(this.nick, this.textMes,this.dialog.dialogId.toString(),"null");
-    }
-    this.sendMes.text=this.textMes;
-    this.sendMes.author=this.activeUser.socialUserId;
-    this.sendMes.reciver=this.idReciver;
-    this.messageService.sendMessage(this.sendMes).subscribe(
-      this.messageService.getDialog(this.idReciver).subscribe((data:Dialog)=>this.dialog=data)
-    );
-    this.textMes="";
   }
 
   addMessage(message:string,idAuthor:number){

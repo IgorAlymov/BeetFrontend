@@ -5,7 +5,7 @@
   }
   .example-card-right {
     width: 538px;
-    height: 100%;
+    height: auto;
     margin: 8px;
   }
   .example-form {

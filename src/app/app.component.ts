@@ -23,6 +23,7 @@ export class AppComponent implements OnInit{
   public nick:string=null;
   public dialog:Dialog=new Dialog();
   public idReciver:string=null;
+  public idD:number=null;
 
   constructor(private dataService:DataService,
               private messageService:MessageService) {
@@ -34,23 +35,30 @@ export class AppComponent implements OnInit{
     this.dataService.getActiveUser().subscribe((data:User) => this.activeUser = data);
     this.messageService.getMyDialogs().subscribe((data:Dialog[])=>this.fillingDialogs(data));
     this.messageService.hubConnection.on('sendToAll', (nick: string, receivedMessage: string,idD:string,idReciver:string) => {
-      if( idD=="null" && parseInt(nick)!=this.activeUser.socialUserId && 
+      
+      if(this.activeUser && idD=="null" && parseInt(nick)!=this.activeUser.socialUserId && 
       this.activeUser.socialUserId.toString() == idReciver && this.idReciver!=idReciver){
         this.dialogReadCounter++;
         this.idReciver=idReciver;
       }
-      if(this.dialogs)
-      this.dialogs.forEach(element => {
-          if(parseInt(nick)!=this.activeUser.socialUserId && parseInt(nick) ==element.author && parseInt(idD)==element.dialogId || 
-              parseInt(nick)!=this.activeUser.socialUserId && parseInt(nick) ==element.reciver && parseInt(idD)==element.dialogId){
-                this.messageService.getDialog(parseInt(nick)).subscribe(
-                  (data:Dialog)=>this.getActiveDialog(data));
-          }
-      });
+      if(this.activeUser && this.dialogs){
+        
+          this.dialogs.forEach(element => {
+            console.log(parseInt(idD), element.dialogId);
+            if(parseInt(nick)!=this.activeUser.socialUserId && parseInt(nick) ==element.author && parseInt(idD)==element.dialogId && this.idD!=parseInt(idD) || 
+                parseInt(nick)!=this.activeUser.socialUserId && parseInt(nick) ==element.reciver && parseInt(idD)==element.dialogId && this.idD!=parseInt(idD)){
+                  console.log("заходит1");
+                  this.idD=parseInt(idD);
+                  this.messageService.getDialog(parseInt(nick)).subscribe(
+                    (data:Dialog)=>this.getActiveDialog(data));
+            }
+        });
+      }
     });
   }
 
   getActiveDialog(data:Dialog){
+    console.log(data);
     if(data.author==this.activeUser.socialUserId){
       data.read=data.readAuthor;
     }else{

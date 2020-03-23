@@ -139,6 +139,7 @@ export class MyPageComponent implements OnInit {
   }
 
   fillingArray(user:User){
+    this.appCom.activeUser=user;
     Object.keys(user).forEach(function(key){
        if(user[key]==null)
        user[key]="Не указано";
@@ -198,7 +199,6 @@ export class MyPageComponent implements OnInit {
       this.dataService.getComment(element.postId).subscribe(data=>element.CommentsCounter=data.length);
     });
     this.userPosts=posts;
-    console.log(this.userPosts);
   }
 
   selectPostPhoto(event) {
