@@ -243,4 +243,7 @@ export class DialogDataExampleDialogNews {
     }
     this.dialogRef.close();
   }
+  close(){
+    this.dialogRef.close();
+  }
 }

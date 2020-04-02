@@ -17,6 +17,7 @@ import { PageMyCommunityComponent } from './page-my-community/page-my-community.
 import { NewsCommunitiesComponent } from './news-communities/news-communities.component';
 import { ChatComponent } from './chat/chat.component';
 import { ChatsComponent } from './chats/chats.component';
+import { MyVideoComponent } from './my-video/my-video.component';
 
 
 const routes: Routes = [
@@ -37,6 +38,7 @@ const routes: Routes = [
    {path:'mycommunity',component: MyCommunityComponent},
    {path:'mycommunities',component: MyCommunitiesComponent},
    {path:'searchcommunity',component: SearchCommunityComponent},
+   {path: 'myvideo',component:MyVideoComponent},
    {path: '', redirectTo: '/entry', pathMatch: 'full'}
 ];
 

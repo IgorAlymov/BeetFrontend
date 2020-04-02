@@ -5,11 +5,18 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { Router } from '@angular/router';
 import {ActivatedRoute} from '@angular/router'
 import { Subscription } from 'rxjs';
+import { DialogDataExampleDialogVideo } from '../my-video/my-video.component';
+import { VideoService } from '../video.service';
 
 export interface DialogData {
   avatarImage:string;
   image:string;
   activeUser:User;
+}
+export interface DialogDataVideo {
+  video:any;
+  activeUser:User;
+  avatarImage:string;
 }
 
 @Component({
@@ -30,6 +37,7 @@ export class FriendPageComponent implements OnInit{
   public avatarImage:string;
   public allPhotoLength:number;
   public allSubLength:number;
+  public allComLength:number;
   public textPost:string;
   public imageUrl: string;
   public textPostFull:boolean=false;
@@ -39,10 +47,17 @@ export class FriendPageComponent implements OnInit{
   public likesAllPosts:FileList[];
   public subscription: any;
   public allSub:any[]=[];
+  public allCom:any[]=[];
+  public allVideo:any[]=[];
+  public videoCounter:number=0;
   private subscriptions: Subscription;
   public avatarActUser: string;
 
-  constructor(private dataService:DataService,public dialog: MatDialog,private router:Router,private activatedRoute:ActivatedRoute) {
+  constructor(private dataService:DataService,
+    public dialog: MatDialog,
+    private router:Router,
+    private activatedRoute:ActivatedRoute,
+    private serviceVideo:VideoService) {
   }
 
   ngOnInit() {
@@ -123,6 +138,9 @@ export class FriendPageComponent implements OnInit{
     else
     this.showBirthday=true;
     this.activeUser=user;
+    this.dataService.getMyCommunities(this.activeUser.socialUserId).subscribe((data) => this.getCommunities(data));
+    this.serviceVideo.getAllVideo(this.activeUser.socialUserId).subscribe((data:any) => this.getVideo(data));
+    this.serviceVideo.getAllVideo(this.activeUser.socialUserId).subscribe((data:any) => this.videoCounter = data.length);
   }
 
   openDialog(image:string):void {
@@ -140,6 +158,19 @@ export class FriendPageComponent implements OnInit{
     });
   }
 
+  //Сообщества
+ getCommunities(communities:any){
+  this.allCom=[];
+  this.allComLength=communities.length;
+  communities.forEach(element => {
+    element.avatar=this.dataService.getAvatarCommunity(element.groupId).subscribe((data:any)=>element.avatar=data.avatarUrl),
+    element.subscribers=this.dataService.getCommunitySubscribers(element.groupId).subscribe((data:any) => element.subscribers=data)
+  });
+  for(let i = 0; i < 3; i++){
+    if(communities[i]!=null)
+    this.allCom.push(communities[i]);
+  }
+ }
   //лайки постов
   addLike(likeIcon:string,idPost:number,post:any){
      
@@ -246,7 +277,27 @@ export class FriendPageComponent implements OnInit{
         p=> this.subscription=false
     );
   }
+  
+   //Видео
+   getVideo(videos:any){
+    for(let i = 0; i < 2; i++){
+      if(videos[i]!=null)
+      this.allVideo.push(videos[i]);
+    }
+   }
 
+   openVideoDialog(video:any):void {
+    const dialogRef = this.dialog.open(DialogDataExampleDialogSubscriber, {
+      data: {
+        activeUser:this.activeUser,
+        avatarImage:this.avatarImage,
+        video:video
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+    });
+  }
 }
 
 @Component({
@@ -262,6 +313,27 @@ export class FriendAvatarDialog {
   }
 
   friendPageClick(){
+    location.reload();
+  }
+}
+
+@Component({
+  selector: 'dialog-data-example-dialog-video-subscriber',
+  templateUrl: 'dialog-data-example-dialog-video-subscriber.html',
+})
+export class DialogDataExampleDialogSubscriber {
+
+  constructor(public dialogRef: MatDialogRef<DialogDataExampleDialogSubscriber>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogDataVideo,videoService:VideoService) {
+      videoService.addViewVideo(data.video.videoId).subscribe();
+      data.video.viewCounter++;
+    }
+  
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+
+  myPageClick(){
     location.reload();
   }
 }

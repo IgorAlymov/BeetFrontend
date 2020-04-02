@@ -5,7 +5,7 @@
             <button mat-button (click)="openDialog(avatarImage)">
                 <img mat-card-image style="margin-top: 0px;margin-bottom: -1%;border-radius: 5px;" src={{avatarImage}} >
             </button>
-            <input #fileInput onclick="this.value=null;" style="display: none;" type="file" name="photo" (change)="addAvatar($event)"/>
+            <input #fileInput onclick="this.value=null;" style="display: none;" type="file" accept="image/*" name="photo" (change)="addAvatar($event)"/>
             <button class="long-button" style="margin-top: 20px;" mat-raised-button (click)="fileInput.click()">
                 <div fxLayout="row" fxLayoutAlign="center">
                     <mat-icon  style="color: rgb(58, 107, 156);margin-top: 2px;"> arrow_upward</mat-icon >
@@ -61,6 +61,32 @@
                     </div>  
                 </div>
             </div>
+            <mat-divider style="margin-top: 15px;"></mat-divider>
+            <!--Видео-->
+            <div style="margin-top: 30px;">
+                <a class="normal-font-black" style="text-decoration: none;" routerLink="/myvideo">
+                    Видео
+                </a>
+                <a class="normal-font-gray" style="text-decoration: none;" routerLink="/myvideo"> 
+                    {{videoCounter}}
+                </a>
+            </div>
+            <div style="margin-top: 13px;">
+                <mat-grid-list cols="1" style="margin-top: 15px;">
+                    <mat-grid-tile *ngFor="let video of allVideo" style="border-radius: 10px;">
+                        <mat-icon  (click)="openVideoDialog(video)" style="margin-bottom: -85%;z-index: 1;color: white;">
+                            play_arrow
+                        </mat-icon>
+                        <a (click)="openVideoDialog(video)" routerLink="/myvideo" style="margin-right: -80%;margin-bottom: -85%;;text-decoration: none;z-index: 1;color: white;">
+                            {{video.name}}
+                        </a>
+                        <button mat-button (click)="openVideoDialog(video)" >
+                            <video style="height: 250%;width: 250%;margin-left: -20%;" src="{{video.path}}"></video> 
+                        </button>   
+                        
+                    </mat-grid-tile>
+                </mat-grid-list>
+            </div>
         </mat-card>
     </div>
     <div fxLayout="column">
@@ -115,6 +141,14 @@
                         подписки
                     </p>
                 </button>
+                <button mat-button routerLink="/myvideo">
+                    <p class="large-font" style="height: 0px;margin-top: 0px;color: rgb(58, 107, 156);" >
+                        {{videoCounter}}
+                    </p>
+                    <p class="normal-font-gray"  style="height: 15px;">
+                        видео
+                    </p>
+                </button>
             </div>
         </mat-card>
         <!--Поле для поста-->
@@ -135,7 +169,7 @@
                     </div>
                 </mat-form-field>
                 <input #fileInputPost (input)="changePhoto(filesPostPhotoDisplay)" onclick="this.value=null;"
-                       style="display: none;" type="file" name="photo" (change)="selectPostPhoto($event)"/>
+                       style="display: none;" type="file" accept="image/*" name="photo" (change)="selectPostPhoto($event)"/>
                 <button matTooltip="Добавить фото" mat-icon-button style="color: rgb(20, 114, 207);" (click)="fileInputPost.click()">
                     <mat-icon>photo</mat-icon>
                 </button>

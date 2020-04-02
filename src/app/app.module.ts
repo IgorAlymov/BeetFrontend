@@ -34,7 +34,7 @@ import { NewsComponent, DialogDataExampleDialogNews } from './news/news.componen
 import { SettingsComponent, SaveChanges, DeletePage } from './settings/settings.component';
 import { SearchSubscribersComponent } from './search-subscribers/search-subscribers.component';
 import { SubscribersComponent } from './subscribers/subscribers.component';
-import { FriendPageComponent, FriendAvatarDialog } from './friend-page/friend-page.component';
+import { FriendPageComponent, FriendAvatarDialog, DialogDataExampleDialogSubscriber } from './friend-page/friend-page.component';
 import { MyCommunityComponent } from './my-community/my-community.component';
 import { SearchCommunityComponent } from './search-community/search-community.component';
 import { MyCommunitiesComponent } from './my-communities/my-communities.component';
@@ -45,6 +45,7 @@ import { ChatComponent } from './chat/chat.component';
 import { ChatsComponent} from './chats/chats.component';
 import {ScrollingModule} from '@angular/cdk/scrolling';
 import {MatTooltipModule} from '@angular/material/tooltip';
+import { MyVideoComponent, DialogDataExampleDialogVideo } from './my-video/my-video.component';
 
 
 @NgModule({
@@ -75,7 +76,10 @@ import {MatTooltipModule} from '@angular/material/tooltip';
     NewsCommunitiesComponent,
     DialogDataExampleDialogComNews,
     ChatComponent,
-    ChatsComponent
+    ChatsComponent,
+    MyVideoComponent,
+    DialogDataExampleDialogVideo,
+    DialogDataExampleDialogSubscriber
   ],
   imports: [
     BrowserModule,
@@ -115,7 +119,9 @@ import {MatTooltipModule} from '@angular/material/tooltip';
     FriendAvatarDialog,
     DialogDataExampleDialogCom,
     DialogDataExampleDialogMyCom,
-    DialogDataExampleDialogComNews
+    DialogDataExampleDialogComNews,
+    DialogDataExampleDialogVideo,
+    DialogDataExampleDialogSubscriber
   ],
   exports: [],
   providers: [

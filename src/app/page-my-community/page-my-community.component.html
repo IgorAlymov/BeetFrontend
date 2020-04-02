@@ -21,7 +21,7 @@
                     </div>
                 </mat-form-field>
                 <input #fileInputPost (input)="changePhoto(filesPostPhotoDisplay)" onclick="this.value=null;"
-                       style="display: none;" type="file" name="photo" (change)="selectPostPhoto($event)"/>
+                       style="display: none;" accept="image/*" type="file" name="photo" (change)="selectPostPhoto($event)"/>
                 <button matTooltip="Добавить фото" mat-icon-button style="color: rgb(20, 114, 207);" (click)="fileInputPost.click()">
                     <mat-icon>photo</mat-icon>
                 </button>

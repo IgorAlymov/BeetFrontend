@@ -1,0 +1,49 @@
+<div fxLayout="row"> 
+    <div fxLayoutAlign="start" style="margin-top: 8px;">
+        <mat-card class="example-card-left">
+            <div fxLayoutAlign="space-between" style="height: 50px;">
+                <div fxLayout="row" style="height: 30px;margin-top: -15px;">
+                    <h3 class="large-font">Мои видео</h3>
+                    <h3 class="large-font-gray" style="margin-left: 7px;">{{videoCounter}}</h3>
+                </div>
+                <div *ngIf="files" style="width: 70%;margin-top: 5px;">
+                    <a fxLayoutAlign="end">
+                        Загрузка {{this.files[0].name}}
+                    </a>
+                    <mat-progress-bar mode="determinate" value="{{percentDone}}"></mat-progress-bar>
+                </div>
+                <input #fileInput style="display: none;" type="file" accept="video/*" name="photo" onclick="this.value=null;" (change)="addVideo($event)"/>
+                <button *ngIf="!files" (click)="fileInput.click()" mat-raised-button class="simple-button" style="margin-bottom: 15px;">Добавить видео</button>
+                
+                </div>
+            <mat-divider></mat-divider>
+            <mat-grid-list cols="3" style="margin-top: 15px;">
+                <mat-grid-tile *ngFor="let video of allVideo" >
+                    <mat-icon  (click)="openDialog(video)" style="margin-bottom: -80%;z-index: 1;color: white;">
+                        play_arrow
+                    </mat-icon>
+                    <a (click)="openDialog(video)" routerLink="/myvideo" style="margin-right: -80%;margin-bottom: -80%;;text-decoration: none;z-index: 1;color: white;">
+                        {{video.name}}
+                    </a>
+                    <button mat-button (click)="openDialog(video)">
+                        <video style="height: 250%;width: 250%;margin-left: -20%;" src="{{video.path}}"></video> 
+                    </button>   
+                    
+                </mat-grid-tile>
+            </mat-grid-list>
+        </mat-card>
+    </div>
+    <mat-card class="example-card-right" fxLayout="row" style="margin-top: 17px;">
+        <div fxLayout="row">
+            <mat-icon style="transform: rotate(90deg);font-size: 40px;color: rgb(37, 121, 204);margin-left: -19px;margin-top: -11px;" >remove</mat-icon>
+            <div>
+                <button mat-button style="width: 207px;margin-left: -22px;margin-top: -25px;" routerLink="/myvideo">
+                    <a fxLayoutAlign="start"  style="margin-left: 2px;">
+                        Видео
+                    </a>
+                    
+                </button>
+            </div>
+        </div>
+    </mat-card>
+</div>

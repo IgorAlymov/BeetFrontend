@@ -1,0 +1,45 @@
+<style>
+ .normal-font{
+    color: rgb(58, 107, 156);
+    font-size: 14px;
+  }
+  .normal-font-gray{
+    font-size: 14px;
+    color: gray;
+  }
+  .large-font{
+    font-weight: normal;
+    font-size: 22px;
+    height: 15px;
+}
+</style>
+
+<div fxLayoutAlign="center" style="background-color: black;">
+    <video autoplay controls style="height: 80%;width: 80%;margin-left: auto;margin-right: auto;"  src="{{data.video.path}}"></video>
+    <button mat-icon-button style="height: 50%;margin-top: 0px;margin-left: -35px;" (click)="onNoClick()">
+        <mat-icon style="color: white;">close</mat-icon>
+    </button> 
+</div>
+<div style="margin-top: -10px;">
+    <h3 class="large-font">
+        {{data.video.name}}
+    </h3>
+    <p fxLayoutAlign="end" class="normal-font-gray" style="height: 10px;margin-top: -30px;">Просмотров {{data.video.viewCounter}} </p>
+</div>
+<div>
+    <mat-divider style="margin-top: 20px;"></mat-divider>
+    <div fxLayout="row" style="margin-top: 10px;margin-bottom: -12px;">
+        <button (click)="onNoClick()" routerLink="/mypage"  mat-icon-button style="border-radius: 100px;width: 45px;height: 45px;margin-left: 5px;margin-right: 10px;">
+            <img style="height: 45px;width: 45px;" mat-card-avatar src={{data.avatarImage}}>
+        </button>
+        <div fxLayout="column">
+            <a (click)="onNoClick()" routerLink="/mypage"  class="normal-font" style="width: 150px;text-decoration: none;">{{data.activeUser.firstname +" "+ data.activeUser.lastname}}</a>
+            <p class="normal-font-gray" style="height: 10px;margin-top: 0px;">{{ data.video.date | date:'MMM d HH:mm' }} </p>
+        </div>
+    </div>
+    <div style="margin-top: -55px;margin-bottom: 15px;" fxLayoutAlign="end">
+        <button  mat-button style="height: 30px;" (click)="removeVideo(data.video.videoId)">
+            <p class="normal-font" style="margin-top :auto;">Удалить</p>
+        </button>
+    </div>
+</div>

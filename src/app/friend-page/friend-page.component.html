@@ -43,10 +43,62 @@
                 </div>
             </div>
         </mat-card>
+        <!--Сообщества-->
+        <mat-card class="example-card-left" style="height: auto;">
+            <div>
+                <a class="normal-font-black">
+                    Сообщества
+                </a>
+                <a class="normal-font-gray"> 
+                    {{allComLength}}
+                </a>
+            </div>
+            <div style="margin-top: 13px;">
+                <div *ngFor=" let com of allCom" >
+                    <div fxLayout="row" style="width:192px;margin-top: 15px;" >
+                        <button  [routerLink]="['/communitypage',com.groupId]" mat-icon-button style="border-radius: 100px;width: 55px;height: 55px;">
+                            <img style="height: 54px;width: 54px;" mat-card-avatar src="{{com.avatar}}">
+                        </button>
+                        <div fxLayout="column">
+                            <a [routerLink]="['/communitypage',com.groupId]"  class="normal-font" style="width: auto;margin-top: 10px;text-decoration: none;margin-left: 10px;margin-top: 0px;"> 
+                                {{com.name}}
+                            </a>
+                            <a class="normal-font-gray" style="width: auto;margin-left: 10px;height: 10px;margin-top: 5px;text-decoration: none;" > {{com.subscribers.length}} подписчиков  </a>
+                        </div>
+                    </div>  
+                </div>
+            </div>
+            <mat-divider style="margin-top: 15px;"></mat-divider>
+            <!--Видео-->
+            <div style="margin-top: 30px;">
+                <a class="normal-font-black">
+                    Видео
+                </a>
+                <a class="normal-font-gray" > 
+                    {{videoCounter}}
+                </a>
+            </div>
+            <div style="margin-top: 13px;">
+                <mat-grid-list cols="1" style="margin-top: 15px;">
+                    <mat-grid-tile *ngFor="let video of allVideo" style="border-radius: 10px;">
+                        <mat-icon  (click)="openVideoDialog(video)" style="margin-bottom: -85%;z-index: 1;color: white;">
+                            play_arrow
+                        </mat-icon>
+                        <a (click)="openVideoDialog(video)" routerLink="/myvideo" style="margin-right: -80%;margin-bottom: -85%;;text-decoration: none;z-index: 1;color: white;">
+                            {{video.name}}
+                        </a>
+                        <button mat-button (click)="openVideoDialog(video)" >
+                            <video style="height: 250%;width: 250%;margin-left: -20%;" src="{{video.path}}"></video> 
+                        </button>   
+                        
+                    </mat-grid-tile>
+                </mat-grid-list>
+            </div>
+        </mat-card>
     </div>
     <div fxLayout="column">
         <!--Информация о пользователе-->
-        <mat-card class="example-card-right">
+        <mat-card class="example-card-right" style="height: auto;">
             <h3 class="large-font">{{activeUser.firstname + " " + activeUser.lastname}}</h3>
             <mat-divider></mat-divider>
             <div fxLayout="row" class="height-row-user-date">
@@ -96,10 +148,18 @@
                         подписки
                     </p>
                 </button>
+                <button mat-button disabled>
+                    <p class="large-font" style="height: 0px;margin-top: 0px;color: rgb(58, 107, 156);" >
+                        {{videoCounter}}
+                    </p>
+                    <p class="normal-font-gray"  style="height: 15px;">
+                        видео
+                    </p>
+                </button>
             </div>
         </mat-card>
         <!--Посты-->
-        <mat-card class="example-card-right">
+        <mat-card class="example-card-right" style="height: auto;">
             <mat-tab-group style="margin-top: -15px;margin-left: -17px;margin-right: -17px;">
                 <mat-tab label="Все посты"></mat-tab>
             </mat-tab-group>

@@ -8,6 +8,8 @@ import { Router } from '@angular/router';
 import { AppComponent } from '../app.component';
 import { Dialog } from '../models/dialog';
 import { MessageService } from '../message.service';
+import { VideoService } from '../video.service';
+import { DialogDataExampleDialogVideo } from '../my-video/my-video.component';
 
 export interface DialogData {
   avatarImage:string;
@@ -41,13 +43,16 @@ export class MyPageComponent implements OnInit {
   public likesAllPosts:FileList[];
   public allSub:any[]=[];
   public allCom:any[]=[];
+  public allVideo:any[]=[];
+  public videoCounter:number=0;
   public counter:number=null;
 
   constructor(private dataService:DataService,
     public dialog: MatDialog,
     private router:Router,
     private appCom:AppComponent,
-    private messageService:MessageService) {
+    private messageService:MessageService,
+    private videoService:VideoService) {
       appCom.dialogReadCounter=null;
     }
 
@@ -94,14 +99,6 @@ export class MyPageComponent implements OnInit {
     this.ngOnInit();
   }
 
-  pageFriend(idF:number){
-    if(this.activeUser.socialUserId!=idF){
-      this.router.navigate(['/friendpage',idF]);
-    }
-    else
-    this.ngOnInit();
-  }
-
  //Сообщества
  getCommunities(communities:any){
   this.allCom=[];
@@ -129,6 +126,14 @@ export class MyPageComponent implements OnInit {
       this.allSub.push(subscribers[i]);
     }
   }
+
+  pageFriend(idF:number){
+    if(this.activeUser.socialUserId!=idF){
+      this.router.navigate(['/friendpage',idF]);
+    }
+    else
+    this.ngOnInit();
+  }
   
   //информация о пользователе
   showFullInformation(){
@@ -150,6 +155,8 @@ export class MyPageComponent implements OnInit {
     this.showBirthday=true;
     this.activeUser=user;
     this.dataService.getMyCommunities(this.activeUser.socialUserId).subscribe((data) => this.getCommunities(data));
+    this.videoService.getAllVideo(this.activeUser.socialUserId).subscribe((data:any) => this.getVideo(data));
+    this.videoService.getAllVideo(this.activeUser.socialUserId).subscribe((data:any) => this.videoCounter = data.length);
   }
   //аватар
   addAvatar(event) {
@@ -359,6 +366,34 @@ export class MyPageComponent implements OnInit {
       }
     });
    }
+
+   //Видео
+   getVideo(videos:any){
+     this.allVideo=[];
+    for(let i = 0; i < 2; i++){
+      if(videos[i]!=null)
+      this.allVideo.push(videos[i]);
+    }
+   }
+
+   openVideoDialog(video:any):void {
+    const dialogRef = this.dialog.open(DialogDataExampleDialogVideo, {
+      data: {
+        activeUser:this.activeUser,
+        avatarImage:this.avatarImage,
+        video:video
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.videoService.getAllVideo(this.activeUser.socialUserId).subscribe((data:any)=> {
+        if(data.length!=this.videoCounter){
+          this.getVideo(data);
+          this.videoService.getAllVideo(this.activeUser.socialUserId).subscribe((data:any) => this.videoCounter = data.length);
+        }
+      });
+    });
+  }
 }
 
 @Component({
