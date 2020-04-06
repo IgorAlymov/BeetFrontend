@@ -41,7 +41,7 @@ export class ChatsComponent implements OnInit {
     });
   }
 
-   fillingDialogs(dialogs:Dialog[]){
+  fillingDialogs(dialogs:Dialog[]){
     dialogs.forEach(element => {
       if(element.author!=this.activeUser.socialUserId){
         this.dataService.getUser(element.author).subscribe((data:User)=> { element.name = data.firstname + " " +  data.lastname });

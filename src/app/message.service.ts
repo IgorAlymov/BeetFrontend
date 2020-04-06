@@ -21,20 +21,19 @@ export class MessageService {
       .start()
       .then(() => 
       {
-        console.log('Connection started!');
+        console.log('Connection chat!');
         this.connection=true;
       })
-      .catch(err => console.log('Error connection!'));
+      .catch(err => console.log('Error chat!'));
   }
   
   public unconnectionHub(){
     this.hubConnection
       .stop()
       .then(() => {
-        console.log('Connection stop!');
+        console.log('Chat stop!');
         this.connection=false;
-      })
-      .catch(err => console.log('Error while establishing connection :('));
+      });
   }
 
   public sendMessageHub(nick:string,textMes:string,idD:string,idReciver:string){

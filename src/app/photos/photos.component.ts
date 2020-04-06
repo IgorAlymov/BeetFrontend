@@ -50,7 +50,6 @@ export class PhotosComponent implements OnInit {
    addPhoto(event) {
     let target = event.target || event.srcElement;
     this.files = target.files;
-    console.log(this.files);
     if (this.files) {
       let files :FileList = this.files;
       const formData = new FormData();

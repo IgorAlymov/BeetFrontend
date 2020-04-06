@@ -78,6 +78,7 @@ export class SettingsComponent implements OnInit {
   }
 
   changeSave(user:User){
+    if(this.change[2]==true)
     user.birthday.setDate(user.birthday.getDate() + 1);
     Object.keys(user).forEach(function(key){
       if(user[key]=="Не указано" || user[key]=="")
@@ -86,7 +87,6 @@ export class SettingsComponent implements OnInit {
    for(let i = 0; i < this.change.length; i++) {
       this.change[i]=false;
    }
-   user.birthday
   this.dataService.changeSave(user).subscribe(
       p=> this.dataService.getActiveUser().subscribe((data:User) => this.fillingArray(data))
       

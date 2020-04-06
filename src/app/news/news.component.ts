@@ -68,7 +68,6 @@ export class NewsComponent implements OnInit {
    }
 
    openDialog(image:string,avatar:string,author:User):void {
-     console.log(author);
     const dialogRef = this.dialog.open(DialogDataExampleDialogNews, {
       height:"85%",
       maxHeight:"710px",

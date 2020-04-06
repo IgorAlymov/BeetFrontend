@@ -48,10 +48,8 @@ export class AppComponent implements OnInit{
       if(this.activeUser && this.dialogs){
         
           this.dialogs.forEach(element => {
-            console.log(parseInt(idD), element.dialogId);
             if(parseInt(nick)!=this.activeUser.socialUserId && parseInt(nick) ==element.author && parseInt(idD)==element.dialogId && this.idD!=parseInt(idD) || 
                 parseInt(nick)!=this.activeUser.socialUserId && parseInt(nick) ==element.reciver && parseInt(idD)==element.dialogId && this.idD!=parseInt(idD)){
-                  console.log("заходит1");
                   this.idD=parseInt(idD);
                   this.messageService.getDialog(parseInt(nick)).subscribe(
                     (data:Dialog)=>this.getActiveDialog(data));
@@ -62,7 +60,6 @@ export class AppComponent implements OnInit{
   }
 
   getActiveDialog(data:Dialog){
-    console.log(data);
     if(data.author==this.activeUser.socialUserId){
       data.read=data.readAuthor;
     }else{

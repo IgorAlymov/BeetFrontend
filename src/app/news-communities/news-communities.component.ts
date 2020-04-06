@@ -227,7 +227,6 @@ export class NewsCommunitiesComponent implements OnInit {
 export class DialogDataExampleDialogComNews {
   constructor(public dialogRef: MatDialogRef<DialogDataExampleDialogComNews>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData) {
-      console.log(data);
     }
   
   onNoClick(): void {

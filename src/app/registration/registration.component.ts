@@ -67,6 +67,7 @@ export class RegistrationComponent implements OnInit {
   
   public startRegistration(userReg:User) {
     this.progressBarOn=true;
+    if(userReg.birthday)
     userReg.birthday.setDate(userReg.birthday.getDate() + 1);
     this.dataService.postRegistration(userReg)
     .subscribe( myPage=>this.myPageNavigation(),

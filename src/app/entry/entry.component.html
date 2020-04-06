@@ -24,7 +24,7 @@
                     </div>
                   </mat-form-field>
             </div>
-            <label fxLayoutAlign="center" *ngIf="errorMessage" class="error-message" >Неправильный Email или пароль</label>
+            <label style="height: 20px;" fxLayoutAlign="center" *ngIf="errorMessage" class="error-message" >Неправильный Email или пароль</label>
             <div fxLayoutAlign="space-between end" *ngIf="!progressBarOn">
                 <button mat-raised-button style="background-color: rgb(34, 113, 192);color: white;" (click)="startEntry()">Войти</button>
                 <button mat-button routerLink="/registration">Зарегистрироваться</button>
