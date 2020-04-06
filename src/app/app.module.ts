@@ -46,6 +46,7 @@ import { ChatsComponent} from './chats/chats.component';
 import {ScrollingModule} from '@angular/cdk/scrolling';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import { MyVideoComponent, DialogDataExampleDialogVideo } from './my-video/my-video.component';
+import { MyMusicComponent } from './my-music/my-music.component';
 
 
 @NgModule({
@@ -79,7 +80,8 @@ import { MyVideoComponent, DialogDataExampleDialogVideo } from './my-video/my-vi
     ChatsComponent,
     MyVideoComponent,
     DialogDataExampleDialogVideo,
-    DialogDataExampleDialogSubscriber
+    DialogDataExampleDialogSubscriber,
+    MyMusicComponent
   ],
   imports: [
     BrowserModule,

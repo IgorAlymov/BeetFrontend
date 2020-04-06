@@ -6,3 +6,8 @@
     color: white;
     font-weight: 600;
   }
+  .large-font{
+    font-weight: normal;
+    font-size: 15px;
+    height: 10px;
+}

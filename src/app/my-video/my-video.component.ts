@@ -30,8 +30,8 @@ export class MyVideoComponent implements OnInit {
     public dialog: MatDialog) { }
 
   ngOnInit() {
-    this.dataService.getActiveUser().subscribe((data:User) => this.user=data);
     this.dataService.getActiveUser().subscribe((data:User) => {
+      this.user=data;
       this.serviceVideo.getAllVideo(data.socialUserId).subscribe((data:any) => this.allVideo = data);
       this.serviceVideo.getAllVideo(data.socialUserId).subscribe((data:any) => this.videoCounter = data.length);
     });

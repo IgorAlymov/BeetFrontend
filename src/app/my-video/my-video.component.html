@@ -12,7 +12,7 @@
                     </a>
                     <mat-progress-bar mode="determinate" value="{{percentDone}}"></mat-progress-bar>
                 </div>
-                <input #fileInput style="display: none;" type="file" accept="video/*" name="photo" onclick="this.value=null;" (change)="addVideo($event)"/>
+                <input #fileInput style="display: none;" type="file" accept="video/*" onclick="this.value=null;" (change)="addVideo($event)"/>
                 <button *ngIf="!files" (click)="fileInput.click()" mat-raised-button class="simple-button" style="margin-bottom: 15px;">Добавить видео</button>
                 
                 </div>

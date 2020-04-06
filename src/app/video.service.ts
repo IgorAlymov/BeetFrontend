@@ -12,8 +12,6 @@ export class VideoService {
   constructor(private http:HttpClient) { }
 
   public addVideo(formData:FormData){
-    //return this.http.post(this.userUrl + "AddVideo",formData,this.headers);
-
     return this.http.post<any>(this.userUrl + "AddVideo", formData, {
       reportProgress: true,
       headers: new HttpHeaders(), 
@@ -26,8 +24,8 @@ export class VideoService {
     return this.http.get(this.userUrl + "GetAllVideo/" + id,this.headers);
   }
 
-  public addViewVideo(idVideo:number){
-    return this.http.put(this.userUrl + "AddViewVideo/" + idVideo,this.headers);
+  public addViewVideo(videoId:number){
+    return this.http.put(this.userUrl + "AddViewVideo/" + videoId,this.headers);
   }
 
   public deleteVideo(videoId: number) {

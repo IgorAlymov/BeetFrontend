@@ -1,0 +1,55 @@
+<div fxLayout="row"> 
+    <div fxLayoutAlign="start" style="margin-top: 8px;" fxLayout="column">
+        <mat-card class="example-card-left" style="height: 60px;">
+            <label style="margin-left: 20px;">{{musicName}}</label>
+            <audio #player fxLayoutAlign="start" controls src="{{musicPlay}}" style="width: 100%;" >
+            </audio>
+        </mat-card>
+        <mat-card class="example-card-left">
+            <div fxLayoutAlign="space-between" style="height: 50px;">
+                <div fxLayout="row" style="height: 30px;margin-top: -15px;">
+                    <h3 class="large-font">Моя музыка</h3>
+                    <h3 class="large-font-gray" style="margin-left: 7px;">{{musicCounter}}</h3>
+                </div>
+                <div *ngIf="files" style="width: 70%;margin-top: 5px;">
+                    <a fxLayoutAlign="end">
+                        Загрузка {{this.files[0].name}}
+                    </a>
+                    <mat-progress-bar mode="determinate" value="{{percentDone}}"></mat-progress-bar>
+                </div>
+                <input #fileInput style="display: none;" type="file" accept="audio/*" onclick="this.value=null;" (change)="addMusic($event)"/>
+                <button *ngIf="!files" (click)="fileInput.click()" mat-raised-button class="simple-button" style="margin-bottom: 15px;">Добавить музыку</button>
+                
+                </div>
+            <mat-divider></mat-divider>
+            <div style="margin-top: 15px;">
+                <button style="width: 100%;height: 50px;" mat-button *ngFor="let music of allMusic" (click)="playMusic(music.path,music.name);">
+                    <div fxLayout="row" style="width: 100%;">
+                        <mat-icon style="margin-left: -5px;margin-top: 5px;margin-right: 10px;">play_arrow</mat-icon>
+                        <a fxLayoutAlign="start">{{music.name}}</a>
+                    </div>
+                    <div fxLayoutAlign="end" >
+                        <button mat-button style="margin-top: -35px;margin-right: -10px;" (click)="deleteMusic(music.musicId)">
+                            <mat-icon>close</mat-icon>
+                        </button>
+                    </div>
+                </button>
+                
+            </div>
+            
+        </mat-card>
+    </div>
+    <mat-card class="example-card-right" fxLayout="row" style="margin-top: 17px;">
+        <div fxLayout="row">
+            <mat-icon style="transform: rotate(90deg);font-size: 40px;color: rgb(37, 121, 204);margin-left: -19px;margin-top: -11px;" >remove</mat-icon>
+            <div>
+                <button mat-button style="width: 207px;margin-left: -22px;margin-top: -25px;" routerLink="/mymusic">
+                    <a fxLayoutAlign="start"  style="margin-left: 2px;">
+                        Музыка
+                    </a>
+                    
+                </button>
+            </div>
+        </div>
+    </mat-card>
+</div>

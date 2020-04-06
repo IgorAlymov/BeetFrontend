@@ -94,6 +94,24 @@
                     </mat-grid-tile>
                 </mat-grid-list>
             </div>
+            <mat-divider style="margin-top: 15px;"></mat-divider>
+            <!--Музыка-->
+            <div style="margin-top: 30px;">
+                <a class="normal-font-black" style="text-decoration: none;">
+                    Музыка
+                </a>
+                <a class="normal-font-gray" style="text-decoration: none;"> 
+                    {{musicCounter}}
+                </a>
+            </div>
+            <div style="margin-top: 13px;">
+                <button style="width: 100%;height: 50px;" mat-button *ngFor="let music of allMusic" (click)="playMusic(music.path,music.name);">
+                    <div fxLayout="row" style="width: 100%;">
+                        <mat-icon style="margin-left: -5px;margin-top: 5px;margin-right: 10px;">play_arrow</mat-icon>
+                        <a fxLayoutAlign="start">{{music.name}}</a>
+                    </div>
+                </button>
+            </div>
         </mat-card>
     </div>
     <div fxLayout="column">

@@ -10,6 +10,7 @@ import { Dialog } from '../models/dialog';
 import { MessageService } from '../message.service';
 import { VideoService } from '../video.service';
 import { DialogDataExampleDialogVideo } from '../my-video/my-video.component';
+import { MusicService } from '../music.service';
 
 export interface DialogData {
   avatarImage:string;
@@ -44,15 +45,18 @@ export class MyPageComponent implements OnInit {
   public allSub:any[]=[];
   public allCom:any[]=[];
   public allVideo:any[]=[];
+  public allMusic:any[]=[];
   public videoCounter:number=0;
   public counter:number=null;
+  public musicCounter:number=0;
 
   constructor(private dataService:DataService,
     public dialog: MatDialog,
     private router:Router,
     private appCom:AppComponent,
     private messageService:MessageService,
-    private videoService:VideoService) {
+    private videoService:VideoService,
+    private musicService:MusicService) {
       appCom.dialogReadCounter=null;
     }
 
@@ -157,6 +161,11 @@ export class MyPageComponent implements OnInit {
     this.dataService.getMyCommunities(this.activeUser.socialUserId).subscribe((data) => this.getCommunities(data));
     this.videoService.getAllVideo(this.activeUser.socialUserId).subscribe((data:any) => this.getVideo(data));
     this.videoService.getAllVideo(this.activeUser.socialUserId).subscribe((data:any) => this.videoCounter = data.length);
+    this.musicService.getAllMusic(this.activeUser.socialUserId).subscribe((data:any) => {
+      this.getMusic(data);
+      this.musicCounter = data.length;
+      this.appCom.playList=data;
+    });
   }
   //аватар
   addAvatar(event) {
@@ -393,6 +402,22 @@ export class MyPageComponent implements OnInit {
         }
       });
     });
+  }
+  //музыка
+  getMusic(music:any){
+    this.allMusic=[];
+    for(let i = 0; i < 3; i++){
+      if(music[i]!=null){
+        music[i].name=music[i].name.slice(0,20);
+        this.allMusic.push(music[i]);
+      }
+    }
+  }
+
+  playMusic(path:string,name:string){
+    this.appCom.musicPlay=path;
+    this.appCom.musicName=name;
+    this.appCom.iconPlayer="pause";
   }
 }
 

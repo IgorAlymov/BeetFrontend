@@ -18,6 +18,7 @@ import { NewsCommunitiesComponent } from './news-communities/news-communities.co
 import { ChatComponent } from './chat/chat.component';
 import { ChatsComponent } from './chats/chats.component';
 import { MyVideoComponent } from './my-video/my-video.component';
+import { MyMusicComponent } from './my-music/my-music.component';
 
 
 const routes: Routes = [
@@ -39,6 +40,7 @@ const routes: Routes = [
    {path:'mycommunities',component: MyCommunitiesComponent},
    {path:'searchcommunity',component: SearchCommunityComponent},
    {path: 'myvideo',component:MyVideoComponent},
+   {path:'mymusic',component:MyMusicComponent},
    {path: '', redirectTo: '/entry', pathMatch: 'full'}
 ];
 

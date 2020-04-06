@@ -7,6 +7,8 @@ import {ActivatedRoute} from '@angular/router'
 import { Subscription } from 'rxjs';
 import { DialogDataExampleDialogVideo } from '../my-video/my-video.component';
 import { VideoService } from '../video.service';
+import { MusicService } from '../music.service';
+import { AppComponent } from '../app.component';
 
 export interface DialogData {
   avatarImage:string;
@@ -49,15 +51,19 @@ export class FriendPageComponent implements OnInit{
   public allSub:any[]=[];
   public allCom:any[]=[];
   public allVideo:any[]=[];
+  public allMusic:any[]=[];
   public videoCounter:number=0;
   private subscriptions: Subscription;
   public avatarActUser: string;
+  public musicCounter:number=0;
 
   constructor(private dataService:DataService,
     public dialog: MatDialog,
     private router:Router,
+    private appCom:AppComponent,
     private activatedRoute:ActivatedRoute,
-    private serviceVideo:VideoService) {
+    private serviceVideo:VideoService,
+    private musicService:MusicService) {
   }
 
   ngOnInit() {
@@ -141,6 +147,11 @@ export class FriendPageComponent implements OnInit{
     this.dataService.getMyCommunities(this.activeUser.socialUserId).subscribe((data) => this.getCommunities(data));
     this.serviceVideo.getAllVideo(this.activeUser.socialUserId).subscribe((data:any) => this.getVideo(data));
     this.serviceVideo.getAllVideo(this.activeUser.socialUserId).subscribe((data:any) => this.videoCounter = data.length);
+    this.musicService.getAllMusic(this.activeUser.socialUserId).subscribe((data:any) => {
+      this.getMusic(data);
+      this.musicCounter = data.length;
+      this.appCom.playList=data;
+    });
   }
 
   openDialog(image:string):void {
@@ -280,6 +291,7 @@ export class FriendPageComponent implements OnInit{
   
    //Видео
    getVideo(videos:any){
+    this.allVideo=[];
     for(let i = 0; i < 2; i++){
       if(videos[i]!=null)
       this.allVideo.push(videos[i]);
@@ -297,6 +309,22 @@ export class FriendPageComponent implements OnInit{
 
     dialogRef.afterClosed().subscribe(result => {
     });
+  }
+  //музыка
+  getMusic(music:any){
+    this.allMusic=[];
+    for(let i = 0; i < 3; i++){
+      if(music[i]!=null){
+        music[i].name=music[i].name.slice(0,20);
+        this.allMusic.push(music[i]);
+      }
+    }
+  }
+
+  playMusic(path:string,name:string){
+    this.appCom.musicPlay=path;
+    this.appCom.musicName=name;
+    this.appCom.iconPlayer="pause";
   }
 }
 

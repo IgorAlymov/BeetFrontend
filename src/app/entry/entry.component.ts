@@ -36,6 +36,9 @@ export class EntryComponent implements OnInit {
               private appCom:AppComponent,
               private messageService:MessageService) {
     appCom.fullView=false;
+    appCom.musicName="";
+    appCom.musicPlay="";
+    appCom.iconPlayer="play_arrow";
    }
 
   ngOnInit() {

@@ -24,6 +24,10 @@ export class AppComponent implements OnInit{
   public dialog:Dialog=new Dialog();
   public idReciver:string=null;
   public idD:number=null;
+  public musicPlay:string;
+  public musicName:string;
+  public iconPlayer:string="play_arrow";
+  public playList:any[]=[];
 
   constructor(private dataService:DataService,
               private messageService:MessageService) {
@@ -107,5 +111,35 @@ export class AppComponent implements OnInit{
       this.counter++;
     });
     this.dialogReadCounter=this.counter;
+  }
+
+  playMusic(){
+    this.iconPlayer="pause";
+  }
+
+  pauseMusic(){
+    this.iconPlayer="play_arrow";
+  }
+
+  playPrevious(){
+    for(let i = 0; i < this.playList.length; i++){
+      if(this.playList[i].name==this.musicName && this.playList[i-1]){
+        this.musicPlay=this.playList[i-1].path;
+        this.musicName=this.playList[i-1].name;
+        this.iconPlayer="pause";
+        return;
+      }
+    }
+  }
+
+  playNext(){
+    for(let i = 0; i < this.playList.length; i++){
+      if(this.playList[i].name==this.musicName && this.playList[i+1]){
+        this.musicPlay=this.playList[i+1].path;
+        this.musicName=this.playList[i+1].name;
+        this.iconPlayer="pause";
+        return;
+      }
+    }
   }
 }
